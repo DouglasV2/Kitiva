@@ -608,7 +608,7 @@ const DICTIONARY: Record<string, Entry> = {
   'print.remaining': { hr: 'Ostaje', en: 'Remaining' },
   'print.over': { hr: 'Preko budžeta', en: 'Over budget' },
   'print.byStore': { hr: 'Po trgovinama', en: 'By store' },
-  'print.disclaimer': { hr: 'Cijene su procjene prikupljene od trgovaca i mogu biti zastarjele; provjeriti u trgovini prije kupnje.', en: 'Prices are estimates gathered from retailers and may be out of date; check in-store before buying.' },
+  'print.disclaimer': { hr: 'Cijene su procjene prikupljene od trgovaca i mogu biti zastarjele; provjeriti u trgovini prije kupnje.', en: 'Prices are estimates gathered from retailers and may be out of date; worth checking in-store before buying.' },
   'print.madeWith': { hr: 'Složeno na budgetspace', en: 'Made with budgetspace' },
   'results.emptyGetLabel': { hr: 'Uključuje:', en: 'Includes:' },
   'results.emptyGetItems': { hr: 'konkretne proizvode · ukupnu cijenu · popis za kupnju', en: 'concrete products · total price · shopping list' },
@@ -689,7 +689,7 @@ const DICTIONARY: Record<string, Entry> = {
   'results.secondHandConditionTitle': { hr: 'Stanje koje je naveo prodavatelj', en: 'Condition stated by the seller' },
   'results.secondHandLocation': { hr: '📍 {location}', en: '📍 {location}' },
   'results.secondHandApproxPrice': { hr: '≈ {price}', en: '≈ {price}' },
-  'results.secondHandPriceNote': { hr: 'cijena okvirna · provjeriti dostupnost', en: 'approx. price · check availability' },
+  'results.secondHandPriceNote': { hr: 'cijena okvirna · provjeriti dostupnost', en: 'approx. price · availability to confirm' },
   'results.secondHandOpenListing': { hr: 'Otvori oglas ↗', en: 'Open listing ↗' },
   // Sprint 10.53: honest account seam. Plans are session-scoped (this browser) today; Google login lands later.
   'account.title': { hr: 'Planovi', en: 'Plans' },

@@ -474,7 +474,7 @@
   "results.secondHandConditionTitle": "Skick angivet av säljaren",
   "results.secondHandLocation": "📍 {location}",
   "results.secondHandApproxPrice": "≈ {price}",
-  "results.secondHandPriceNote": "ungefärligt pris · kolla tillgänglighet",
+  "results.secondHandPriceNote": "ungefärligt pris · tillgänglighet att bekräfta",
   "results.secondHandOpenListing": "Öppna annons ↗",
   "account.title": "Mina planer",
   "account.hint": "Just nu sparas de i den här webbläsaren. Genom inloggning kopplas de till kontot.",

@@ -350,7 +350,7 @@
   "results.wantDifferent": "¿Algo diferente?",
   "results.compareVersions": "Comparación de una versión más barata o más bonita",
   "results.overBudgetAmount": "{amount} por encima del presupuesto",
-  "results.remainsAmount": "{amount} ostaje",
+  "results.remainsAmount": "{amount} restantes",
   "results.planDetails": "Detalles del plan",
   "results.planDetailsSub": "Por qué se eligió esto y a dónde va el dinero",
   "results.whatYouGet": "Lo que se obtiene con este presupuesto",
