@@ -645,7 +645,7 @@
   "kitchen.completeSubtitle": "Conjuntos modulares prontos dentro do orçamento",
   "kitchen.modularNote": "Estes são conjuntos modulares prontos, não uma cozinha por medida configurada. Para uma cozinha embutida, usa-se o planeador de cozinhas IKEA.",
   "kitchen.plannerLink": "Abrir o planeador de cozinhas IKEA",
-  "kitchen.understood": "Percebemos: {details}",
+  "kitchen.understood": "Compreendido: {details}",
   "kitchen.withAppliances": "com eletrodomésticos",
   "kitchen.emptySets": "Nenhum conjunto completo abaixo de {budget}. Pode ajudar um orçamento maior ou peças individuais (em breve).",
   "kitchen.openSet": "Abrir cozinha",

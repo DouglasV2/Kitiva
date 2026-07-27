@@ -128,7 +128,7 @@ const DICTIONARY: Record<string, Entry> = {
 
   'footer.tagline': { hr: 'Planer koji iz budžeta i želja slaže konkretan popis za kupnju.', en: 'A planner that turns a budget and wishes into a concrete shopping list.' },
   // Sprint 10.163 (trademark / non-affiliation): a small muted echo near the tagline that we are independent.
-  'footer.independence': { hr: 'Nismo povezani s IKEA-om, JYSK-om, eBayem ni bilo kojim trgovcem. Zaštitni znakovi pripadaju vlasnicima.', en: 'Not affiliated with IKEA, JYSK, eBay or any retailer. Trademarks belong to their owners.' },
+  'footer.independence': { hr: 'BudgetSpace nije povezan s IKEA-om, JYSK-om, eBayem ni bilo kojim trgovcem. Zaštitni znakovi pripadaju vlasnicima.', en: 'Not affiliated with IKEA, JYSK, eBay or any retailer. Trademarks belong to their owners.' },
   'footer.backToTop': { hr: 'Natrag gore ↑', en: 'Back to top ↑' },
   // Sprint 10.72: legal + GDPR account deletion.
   'footer.legalNav': { hr: 'Pravno', en: 'Legal' },
@@ -198,7 +198,7 @@ const DICTIONARY: Record<string, Entry> = {
   'pricing.proPlusF2': { hr: 'Naprednija AI analiza', en: 'More advanced AI analysis' },
   'pricing.proPlusF3': { hr: 'Prioritetne značajke', en: 'Priority features' },
   'pricing.proPlusF4': { hr: 'Analiza slike sobe (kasnije)', en: 'Room photo analysis (later)' },
-  'pricing.footnote': { hr: 'Preporuke proizvoda biramo prema budžetu i stilu; partnerski linkovi, kad ih bude, neće mijenjati koji je proizvod najbolji.', en: 'We pick product recommendations based on budget and style; affiliate links, when added, will never change which product is best.' },
+  'pricing.footnote': { hr: 'Preporuke proizvoda idu prema budžetu i stilu; partnerski linkovi, kad ih bude, neće mijenjati koji je proizvod najbolji.', en: 'Product recommendations follow budget and style; affiliate links, when added, will never change which product is best.' },
 
   'saved.title': { hr: 'Moji planovi', en: 'My plans' },
   'saved.countLine': { hr: '{saved} spremljeno · {favorites} favorita', en: '{saved} saved · {favorites} favorites' },
@@ -233,7 +233,7 @@ const DICTIONARY: Record<string, Entry> = {
   'planner.noticeLoaded': { hr: 'Učitan je spremljeni plan. Može se kopirati, mijenjati ili složiti nova verzija.', en: 'A saved plan was loaded. It can be copied, edited or rebuilt as a new version.' },
   'planner.errorNotFound': { hr: 'Spremljeni plan nije pronađen. Možda je link pogrešan ili server nije pokrenut.', en: 'The saved plan couldn\'t be found. The link may be wrong or the server isn\'t running.' },
   'planner.partialNone': { hr: 'Nema dovoljno proizvoda za ovaj zahtjev. Može pomoći veći budžet ili uklanjanje ograničenja trgovine.', en: 'Not enough products for this request. Raising the budget or removing the store restriction may help.' },
-  'planner.partialBest': { hr: 'Nemamo još dovoljno proizvoda za kompletan plan. Ovo je najbolja dostupna kombinacija.', en: 'We don\'t have enough products for a complete plan yet. This is the best available combination.' },
+  'planner.partialBest': { hr: 'Još nema dovoljno proizvoda za kompletan plan. Ovo je najbolja dostupna kombinacija.', en: 'There aren\'t enough products for a complete plan yet. This is the best available combination.' },
   'planner.errorUnavailable': { hr: 'Plan trenutno nije dostupan. Vrijedi pokušati za koju minutu.', en: 'The plan isn\'t available right now. Try again in a few minutes.' },
   'planner.errorReplace': { hr: 'Zamjena proizvoda nije uspjela. Vrijedi pokušati ponovno.', en: 'The product couldn\'t be replaced. Please try again.' },
   'planner.noticeLinkCopied': { hr: 'Link za plan je kopiran. Plan je spremljen i nalazi se u Mojim planovima.', en: 'The plan link was copied. The plan is saved and available in My plans.' },
@@ -286,7 +286,7 @@ const DICTIONARY: Record<string, Entry> = {
   'moveIn.keepProduct': { hr: 'Zadrži ovaj proizvod', en: 'Keep this product' },
   'moveIn.keepProductHint': {
     hr: 'Neće se zamijeniti pri prilagodbi ostatka plana.',
-    en: 'We won\'t swap it while the rest of the plan is adjusted.'
+    en: 'It won\'t be swapped while the rest of the plan is adjusted.'
   },
   'moveIn.unlockProduct': { hr: 'Ponovno mijenjanje proizvoda', en: 'Edit this product again' },
   'moveIn.keptSwapOff': { hr: 'Zadržano. Za zamjenu je potrebno otključati.', en: 'Kept. Unlock to swap.' },
@@ -295,14 +295,14 @@ const DICTIONARY: Record<string, Entry> = {
     en: 'The items to keep already exceed the new budget. Remove one or raise the budget.'
   },
   'moveIn.retainedMarketCleared': {
-    hr: 'Promjenom države maknuli smo zadržane proizvode iz prethodnog tržišta.',
+    hr: 'Promjenom države maknuti su zadržani proizvodi iz prethodnog tržišta.',
     en: 'With the country changed, kept products from the previous market were cleared.'
   },
   // Sprint 10.183: adjust the whole apartment.
   'moveIn.adjustHeading': { hr: 'Što promijeniti?', en: 'What to change?' },
   'moveIn.adjustHint': {
     hr: 'Mijenja se samo ono što nije zadržano.',
-    en: 'We\'ll only change what isn\'t kept.'
+    en: 'Only what isn\'t kept will change.'
   },
   'moveIn.adjustReduce': { hr: 'Smanjenje ukupne cijene', en: 'Lower the total price' },
   'moveIn.adjustFewerStores': { hr: 'Kupnja u manje trgovina', en: 'Shop in fewer stores' },
@@ -317,16 +317,16 @@ const DICTIONARY: Record<string, Entry> = {
     en: 'This plan already uses the smallest realistic number of stores for this budget.'
   },
   'moveIn.adjustUseRemainingDone': {
-    hr: 'Iskoristili smo dio preostalog budžeta tamo gdje donosi najveću razliku.',
-    en: 'We used part of the remaining budget where it makes the biggest difference.'
+    hr: 'Dio preostalog budžeta iskorišten je tamo gdje donosi najveću razliku.',
+    en: 'Part of the remaining budget went where it makes the biggest difference.'
   },
   'moveIn.adjustUseRemainingNone': {
     hr: 'Nema značajnog ostatka budžeta za korisnu nadogradnju.',
     en: 'There\'s no meaningful budget left for a useful upgrade.'
   },
   'moveIn.adjustNoChange': {
-    hr: 'Nismo našli bolju kombinaciju bez diranja onoga što je zadržano.',
-    en: 'We couldn\'t find a better combination without touching what\'s kept.'
+    hr: 'Nema bolje kombinacije bez diranja onoga što je zadržano.',
+    en: 'No better combination was found without touching what\'s kept.'
   },
   // Sprint 10.183: apartment status overview.
   'moveIn.statusRooms': { hr: 'Sobe: {count}', en: 'Rooms: {count}' },
@@ -501,7 +501,7 @@ const DICTIONARY: Record<string, Entry> = {
   'form.styleLabel': { hr: 'Kakav izgled?', en: 'What look?' },
   'form.locationLabel': { hr: 'Grad ili država', en: 'City or country' },
   'form.locationAriaLabel': { hr: 'Lokacija', en: 'Location' },
-  'form.locationHelp': { hr: 'Koristimo ovo kasnije za dostupnost i trgovine u blizini.', en: 'We use this later for availability and nearby stores.' },
+  'form.locationHelp': { hr: 'Koristi se kasnije za dostupnost i trgovine u blizini.', en: 'Used later for availability and nearby stores.' },
   'form.countryLabel': { hr: 'Država', en: 'Country' },
   'form.countryHelp': { hr: 'Određuje katalog i valutu (cijene su u valuti tog tržišta).', en: 'Sets the catalog and currency (prices shown in that market\'s currency).' },
   'form.cityLabel': { hr: 'Grad (nije obavezno)', en: 'City (optional)' },
@@ -590,7 +590,7 @@ const DICTIONARY: Record<string, Entry> = {
   'results.resultHeading': { hr: 'Plan za kupnju', en: 'The shopping plan' },
   'results.resultSubtitle': { hr: 'U 10 sekundi treba biti jasno što se dobiva, koliko košta i što je najisplativije.', en: 'In 10 seconds it should be clear what\'s included, how much it costs and what\'s the best value.' },
   'results.errorBadge': { hr: 'Nešto ne radi', en: 'Something\'s not working' },
-  'results.errorHeading': { hr: 'Nismo uspjeli složiti plan.', en: 'We couldn\'t build the plan.' },
+  'results.errorHeading': { hr: 'Plan nije složen.', en: 'The plan couldn\'t be built.' },
   'results.errorHint': { hr: 'Vrijedi pokušati za koju minutu ili provjeriti je li aplikacija pokrenuta.', en: 'A retry in a few minutes helps, or a check that the app is running.' },
   'results.loadingBadge': { hr: 'Slažemo plan', en: 'Building the plan' },
   'results.loadingHeading': { hr: 'Tražimo što se stvarno isplati kupiti...', en: 'Looking for what\'s really worth buying...' },
@@ -615,7 +615,7 @@ const DICTIONARY: Record<string, Entry> = {
   'results.partialPlan': { hr: 'Plan je djelomičan', en: 'The plan is partial' },
   // Sprint 10.105: free-beta notice for the one-time Design Session model (premium temporarily free).
   'beta.notice': { hr: 'Rani beta pristup: sve Design Session funkcije su zasad besplatne, tijekom poboljšavanja proizvoda.', en: 'Early beta access: all Design Session features are free for now, while the product improves.' },
-  'results.kitchenNote': { hr: 'Planiramo slobodnostojeći kuhinjski namještaj: otok/kolica, police i rasvjetu, ne ugradbene kuhinje po mjeri.', en: 'We plan freestanding kitchen furniture: island/cart, shelves and lighting, not fitted built-in kitchens.' },
+  'results.kitchenNote': { hr: 'BudgetSpace planira slobodnostojeći kuhinjski namještaj: otok/kolica, police i rasvjetu, ne ugradbene kuhinje po mjeri.', en: 'BudgetSpace plans freestanding kitchen furniture: island/cart, shelves and lighting, not fitted built-in kitchens.' },
   'results.kitchenFittedNote': { hr: 'Treba ugradbena kuhinja po mjeri? BudgetSpace planira slobodnostojeći namještaj. Za kuhinju po mjeri koristi se IKEA-in planer kuhinje ili posjet trgovini.', en: 'Looking for a fitted, made-to-measure kitchen? BudgetSpace plans freestanding pieces. For a fitted kitchen, use IKEA\'s kitchen planner or visit a store.' },
   'results.kitchenFittedLink': { hr: 'Otvori IKEA', en: 'Open IKEA' },
 
@@ -624,7 +624,7 @@ const DICTIONARY: Record<string, Entry> = {
   'kitchen.completeSubtitle': { hr: 'Gotovi modularni setovi unutar budžeta', en: 'Ready modular sets within budget' },
   'kitchen.modularNote': { hr: 'Ovo su gotovi modularni setovi, ne konfigurirana kuhinja po mjeri. Za kuhinju po mjeri koristi se IKEA-in planer kuhinje.', en: 'These are ready modular sets, not a configured made-to-measure kitchen. For a fitted kitchen, use IKEA’s kitchen planner.' },
   'kitchen.plannerLink': { hr: 'Otvori IKEA planer kuhinje', en: 'Open IKEA kitchen planner' },
-  'kitchen.understood': { hr: 'Razumjeli smo: {details}', en: 'We understood: {details}' },
+  'kitchen.understood': { hr: 'Prepoznato: {details}', en: 'Understood: {details}' },
   'kitchen.withAppliances': { hr: 's uređajima', en: 'with appliances' },
   'kitchen.emptySets': { hr: 'Nema kompletnog seta ispod {budget}. Može pomoći viši budžet ili pojedinačni dijelovi (uskoro).', en: 'No complete set under {budget}. Try a higher budget or individual parts (soon).' },
   'kitchen.openSet': { hr: 'Otvori kuhinju', en: 'Open kitchen' },
@@ -672,7 +672,7 @@ const DICTIONARY: Record<string, Entry> = {
   'results.priceEstimateNote': { hr: 'Cijene i dostupnost su procjene prikupljene od trgovaca i mogu biti zastarjele; provjeriti na stranici trgovca prije kupnje. BudgetSpace nije prodavatelj.', en: 'Prices and availability are estimates gathered from retailers and may be out of date; always check on the retailer\'s page before buying. BudgetSpace is not the seller.' },
   // Sprint 10.168: a short ALWAYS-VISIBLE version of the UCPD caveat (the full text stays behind the "?").
   'results.priceEstimateShort': { hr: 'Cijene su procjene; provjeriti u trgovini.', en: 'Prices are estimates; best checked in-store.' },
-  'results.illustrationTitle': { hr: 'Nemamo stvarnu fotografiju ovog proizvoda, prikazana je ilustracija kategorije.', en: 'We don\'t have an actual photo of this product, a category illustration is shown.' },
+  'results.illustrationTitle': { hr: 'Za ovaj proizvod nema stvarne fotografije, prikazana je ilustracija kategorije.', en: 'There is no actual photo of this product, a category illustration is shown.' },
   'results.illustrationChip': { hr: 'ilustracija', en: 'illustration' },
   'results.onSale': { hr: 'Akcija', en: 'On sale' },
   // Sprint 10.33: discount / sale tracking. The saving is shown both ways (percent + euro). {amount} and
