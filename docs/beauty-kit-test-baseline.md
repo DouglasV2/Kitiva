@@ -11,9 +11,17 @@ before any beauty work. They are pinned here so every later phase can prove it a
 
 ### The rule every phase B–K must satisfy
 
-> Backend runs **957 tests** with **exactly the 7 failures below** and **zero new ones**.
+> Backend runs with **exactly the 7 failures below** and **zero new ones**.
 > An 8th failure, or any change to this list that is not explained by a phase deliberately
 > replacing that surface, is a regression and blocks the commit.
+
+The **total** test count grows as phases add tests — that is expected and is not the thing being pinned.
+The failure *set* is what is pinned. Progression so far:
+
+| Phase | Total | Failures | Note |
+|---|---|---|---|
+| A (baseline) | 957 | 7 | inherited from `8a536db` |
+| B | 971 | 7 | +14 brief/spec schema tests, zero new failures |
 
 ### The 7
 
