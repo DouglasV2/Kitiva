@@ -15,54 +15,22 @@ export interface MarketConfig {
   flag: string;
 }
 
-// Sprint 10.28: all six EUR markets are now exposed. HR is Croatian; the other markets render in English
-// Sprint 10.32: each market now renders in its own language (HR Croatian, SI Slovenian, AT/DE German,
-// IT Italian, FI Finnish), with English as the fallback for any missing key. Each has a verified,
-// currency-correct EUR catalog. `flag` drives the country picker.
+// Beauty Kit Phase A: the launch market is Croatia ONLY. Every other market was removed from the
+// picker because no beauty/nail catalog exists for it — offering a country we cannot build a kit for
+// is exactly the false-completeness failure the product exists to avoid.
+//
+// What was deliberately NOT removed: the `Lang` union, the endonym table and the lazy-loaded
+// `src/messages/*.json` overlays. Those are working multi-language infrastructure; an HR-only launch
+// is a market decision, not a reason to delete translation capability. Re-adding a market means
+// restoring its row here AND shipping a verified, currency-correct beauty catalog for it.
 export const MARKETS: MarketConfig[] = [
-  { code: 'HR', label: 'Hrvatska', currency: 'EUR', locale: 'hr-HR', lang: 'hr', available: true, flag: '🇭🇷' },
-  { code: 'SI', label: 'Slovenija', currency: 'EUR', locale: 'sl-SI', lang: 'sl', available: true, flag: '🇸🇮' },
-  { code: 'AT', label: 'Österreich', currency: 'EUR', locale: 'de-AT', lang: 'de', available: true, flag: '🇦🇹' },
-  { code: 'DE', label: 'Deutschland', currency: 'EUR', locale: 'de-DE', lang: 'de', available: true, flag: '🇩🇪' },
-  { code: 'IT', label: 'Italia', currency: 'EUR', locale: 'it-IT', lang: 'it', available: true, flag: '🇮🇹' },
-  { code: 'FI', label: 'Suomi', currency: 'EUR', locale: 'fi-FI', lang: 'fi', available: true, flag: '🇫🇮' },
-  // Sprint 10.35: France — EUR, fully French-localised, verified IKEA catalog (IKEA-only, no JYSK in FR).
-  { code: 'FR', label: 'France', currency: 'EUR', locale: 'fr-FR', lang: 'fr', available: true, flag: '🇫🇷' },
-  // Sprint 10.37: Netherlands — EUR, Dutch-localised, verified IKEA + JYSK catalog.
-  { code: 'NL', label: 'Nederland', currency: 'EUR', locale: 'nl-NL', lang: 'nl', available: true, flag: '🇳🇱' },
-  // Sprint 10.38: Slovakia — EUR, Slovak-localised, verified IKEA + JYSK catalog.
-  { code: 'SK', label: 'Slovensko', currency: 'EUR', locale: 'sk-SK', lang: 'sk', available: true, flag: '🇸🇰' },
-  // Sprint 10.39: Spain — EUR, Spanish-localised, verified IKEA catalog (IKEA-only).
-  { code: 'ES', label: 'España', currency: 'EUR', locale: 'es-ES', lang: 'es', available: true, flag: '🇪🇸' },
-  // Sprint 10.41: Portugal — EUR, Portuguese-localised, verified IKEA catalog (IKEA-only).
-  { code: 'PT', label: 'Portugal', currency: 'EUR', locale: 'pt-PT', lang: 'pt', available: true, flag: '🇵🇹' },
-  // Sprint 10.46: Scandinavia — non-EUR (NOK/SEK/DKK), natively localised, verified IKEA + JYSK catalogs.
-  { code: 'NO', label: 'Norge', currency: 'NOK', locale: 'nb-NO', lang: 'no', available: true, flag: '🇳🇴' },
-  { code: 'SE', label: 'Sverige', currency: 'SEK', locale: 'sv-SE', lang: 'sv', available: true, flag: '🇸🇪' },
-  { code: 'DK', label: 'Danmark', currency: 'DKK', locale: 'da-DK', lang: 'da', available: true, flag: '🇩🇰' },
-  // Sprint 10.55: United Kingdom — GBP, English, verified IKEA GB catalog (IKEA-only; JYSK has no UK stores).
-  // eBay runs a real EBAY_GB site, so "Rabljeno" can cover the UK once the eBay key is set.
-  { code: 'GB', label: 'United Kingdom', currency: 'GBP', locale: 'en-GB', lang: 'en', available: true, flag: '🇬🇧' }
+  { code: 'HR', label: 'Hrvatska', currency: 'EUR', locale: 'hr-HR', lang: 'hr', available: true, flag: '🇭🇷' }
 ];
 
 // Sprint 10.30: major cities per market for the optional city picker (datalist suggestions; the user can
 // always type a different city). Kept in sync with the prompt city-detection patterns below.
 export const CITIES_BY_MARKET: Record<string, string[]> = {
   HR: ['Zagreb', 'Split', 'Rijeka', 'Osijek', 'Zadar', 'Pula', 'Slavonski Brod', 'Karlovac', 'Varaždin', 'Šibenik', 'Dubrovnik', 'Sisak'],
-  SI: ['Ljubljana', 'Maribor', 'Celje', 'Kranj', 'Koper', 'Velenje', 'Novo Mesto', 'Ptuj'],
-  AT: ['Wien', 'Graz', 'Linz', 'Salzburg', 'Innsbruck', 'Klagenfurt', 'Villach', 'Wels'],
-  DE: ['Berlin', 'München', 'Hamburg', 'Köln', 'Frankfurt', 'Stuttgart', 'Düsseldorf', 'Leipzig', 'Dresden', 'Hannover'],
-  IT: ['Roma', 'Milano', 'Napoli', 'Torino', 'Palermo', 'Genova', 'Bologna', 'Firenze', 'Venezia', 'Verona'],
-  FI: ['Helsinki', 'Espoo', 'Tampere', 'Vantaa', 'Oulu', 'Turku', 'Jyväskylä', 'Lahti'],
-  FR: ['Paris', 'Marseille', 'Lyon', 'Toulouse', 'Nice', 'Nantes', 'Strasbourg', 'Montpellier', 'Bordeaux', 'Lille'],
-  NL: ['Amsterdam', 'Rotterdam', 'Den Haag', 'Utrecht', 'Eindhoven', 'Groningen', 'Tilburg', 'Almere', 'Breda', 'Nijmegen'],
-  SK: ['Bratislava', 'Košice', 'Prešov', 'Žilina', 'Nitra', 'Banská Bystrica', 'Trnava', 'Trenčín', 'Martin', 'Poprad'],
-  ES: ['Madrid', 'Barcelona', 'Valencia', 'Sevilla', 'Zaragoza', 'Málaga', 'Murcia', 'Palma', 'Bilbao', 'Alicante'],
-  PT: ['Lisboa', 'Porto', 'Vila Nova de Gaia', 'Braga', 'Coimbra', 'Amadora', 'Funchal', 'Setúbal', 'Almada', 'Faro'],
-  NO: ['Oslo', 'Bergen', 'Trondheim', 'Stavanger', 'Drammen', 'Fredrikstad', 'Kristiansand', 'Tromsø', 'Sandnes', 'Ålesund'],
-  SE: ['Stockholm', 'Göteborg', 'Malmö', 'Uppsala', 'Västerås', 'Örebro', 'Linköping', 'Helsingborg', 'Norrköping', 'Lund'],
-  DK: ['København', 'Aarhus', 'Odense', 'Aalborg', 'Esbjerg', 'Randers', 'Kolding', 'Horsens', 'Vejle', 'Roskilde'],
-  GB: ['London', 'Manchester', 'Birmingham', 'Leeds', 'Glasgow', 'Liverpool', 'Bristol', 'Sheffield', 'Edinburgh', 'Cardiff'],
 };
 
 export function citiesForMarket(code?: string): string[] {
@@ -115,21 +83,9 @@ export function marketFromBrowser(): string | undefined {
 // Sprint 10.13 (#3): detect the country from the user's prompt (city/country names) so people who
 // just type "stan u Ljubljani" still get the right market. Diacritics are stripped before matching,
 // so patterns are written in their plain-ASCII form. Only matches markets we actually support.
+// HR-only launch: only Croatia is detectable. `isSupportedMarket` would reject every other entry
+// anyway, so keeping them would be dead code that reads as if multi-market detection still works.
 const MARKET_DETECTION: Array<{ market: string; pattern: RegExp }> = [
-  { market: 'SI', pattern: /\b(slovenij\w*|slovenia|ljubljan\w*|maribor|celje|kranj|koper|velenje)\b/ },
-  { market: 'AT', pattern: /\b(austrij\w*|osterreich|austria|wien|bec|vienna|graz|salzburg|linz|innsbruck)\b/ },
-  { market: 'DE', pattern: /\b(njemack\w*|deutschland|germany|berlin|munchen|munich|hamburg|koln|cologne|frankfurt|stuttgart|dresden|leipzig)\b/ },
-  { market: 'IT', pattern: /\b(italij\w*|italia|italy|\brim\b|roma|rome|milano|milan|napulj|napoli|torino|firenze|venecij\w*|venezia)\b/ },
-  { market: 'FI', pattern: /\b(finsk\w*|finland|suomi|helsink\w*|espoo|tampere|turku|oulu)\b/ },
-  { market: 'FR', pattern: /\b(francusk\w*|france|pariz\w*|paris|marseille|lyon|toulouse|\bnica\b|nice|nantes|strasbourg|bordeaux|lille|montpellier)\b/ },
-  { market: 'NL', pattern: /\b(nizozemsk\w*|netherlands|holland|nederland|amsterdam|rotterdam|den haag|utrecht|eindhoven|groningen|tilburg|nijmegen)\b/ },
-  { market: 'SK', pattern: /\b(slovack\w*|slovakia|slovensk\w*|bratislav\w*|kosic\w*|presov|zilina|nitra|banska bystrica|trnava|trencin|poprad)\b/ },
-  { market: 'ES', pattern: /\b(spanjolsk\w*|spain|espana|espanol\w*|madrid|barcelon\w*|valencia|sevilla|zaragoza|malaga|bilbao|alicante|murcia)\b/ },
-  { market: 'PT', pattern: /\b(portugalsk\w*|portugal|portugues\w*|lisbo\w*|lisbon|porto|braga|coimbra|funchal|faro|setubal|almada)\b/ },
-  { market: 'NO', pattern: /\b(norvesk\w*|norway|norge|norwegen|oslo|bergen|trondheim|stavanger|tromso|drammen|kristiansand|alesund)\b/ },
-  { market: 'SE', pattern: /\b(svedsk\w*|sweden|sverige|schweden|stockholm\w*|goteborg|gothenburg|malmo|uppsala|vasteras|orebro|linkoping|helsingborg)\b/ },
-  { market: 'DK', pattern: /\b(dansk\w*|denmark|danmark|danemark|kobenhavn|copenhagen|aarhus|odense|aalborg|esbjerg|randers|kolding|vejle|roskilde)\b/ },
-  { market: 'GB', pattern: /\b(united kingdom|uk|britain|british|england|scotland|wales|london|manchester|birmingham|leeds|glasgow|liverpool|bristol|sheffield|edinburgh|cardiff|newcastle|nottingham|leicester)\b/ },
   { market: 'HR', pattern: /\b(hrvatsk\w*|croatia|zagreb\w*|split\w*|rijek\w*|osijek|zadar|pula|dubrovnik|varazdin|karlovac|sisak)\b/ }
 ];
 

@@ -1,4 +1,28 @@
-# BudgetSpace AI — Full-stack MVP
+# Beauty Kit AI — pivot in progress (from BudgetSpace AI)
+
+> **What this repository is.** A clone of BudgetSpace AI on branch `beauty-kit-pivot`, being turned into an
+> **outcome-to-cart planner for makeup and nails** — launch market **Croatia only**. The user describes an
+> outcome ("kratki almond nokti boje višnje s cat-eye efektom, do 90 €"), states a budget and what she already
+> owns, and gets a **validated, complete, editable shopping kit of real catalog products** — or an honest
+> reason why one cannot be built.
+>
+> - **Audit:** [`docs/superpowers/specs/2026-07-28-beauty-kit-audit.md`](docs/superpowers/specs/2026-07-28-beauty-kit-audit.md)
+> - **Phased plan:** [`docs/superpowers/plans/2026-07-28-beauty-kit-pivot.md`](docs/superpowers/plans/2026-07-28-beauty-kit-pivot.md)
+>
+> **Remote safety.** The upstream remote is `budgetspace-upstream` (fetch-only; its push URL is deliberately
+> invalid). The original BudgetSpace repository must stay untouched — never re-point a remote at it.
+>
+> **Status.** Phase A complete. The furniture planner below still works and is the baseline the pivot replaces
+> phase by phase. Everything under "furniture" below remains accurate until the phase that retires it.
+>
+> **Not yet true, and must not be claimed:** there is no beauty or nail catalog, no safety gate, and no
+> one-time payment flow. Consumer at-home **gel polish is deliberately disabled** until every SKU carries
+> verified ingredient, professional-status, compatibility, prep and removal data. Builder gel, polygel,
+> acrygel and acrylic systems are **never** recommended to consumers.
+
+---
+
+## Furniture baseline (BudgetSpace AI — being replaced)
 
 AI-powered furnishing planner for users who want to equip a room inside a budget using retailers such as IKEA, JYSK, Pevex, Emmezeta and Decathlon.
 

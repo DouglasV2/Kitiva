@@ -1,5 +1,13 @@
 # BudgetSpace AI — Architecture
 
+> **⚠️ This repository is being pivoted.** It is the `beauty-kit-pivot` branch of a clone of BudgetSpace,
+> being turned into an **outcome-to-cart planner for makeup and nails** (Croatia only). This document still
+> describes the **furniture** product, which remains the working baseline while the pivot lands phase by phase.
+> For the new direction read, in order:
+> [`docs/superpowers/specs/2026-07-28-beauty-kit-audit.md`](docs/superpowers/specs/2026-07-28-beauty-kit-audit.md)
+> then [`docs/superpowers/plans/2026-07-28-beauty-kit-pivot.md`](docs/superpowers/plans/2026-07-28-beauty-kit-pivot.md).
+> Sections below are corrected where the audit found them factually stale; they are **not** rewritten for beauty yet.
+
 Prompt-first furniture & room budget planner. The user writes a free-text wish ("Imam 1500 € za
 dnevni boravak, moderno, već imam TV") and gets 3 concrete, priced shopping plans built from a
 **local, web-verified product catalog**.
@@ -17,8 +25,12 @@ dnevni boravak, moderno, već imam TV") and gets 3 concrete, priced shopping pla
   chunk that `LocaleProvider` fetches on demand, so the main bundle (~77 kB gzip) no longer grows per market. `translate()` is a plain key lookup (English fallback until
   the chunk loads). Keys that map backend `plan.name` tiers or feed the rule-based prompt parser stay Croatian.
 - **Backend**: Spring Boot 3.3.5, Java 17/21 (`backend/`). REST API on **http://localhost:8090**.
-- **DB**: PostgreSQL 16 (docker) on 5432. `ddl-auto=create` → schema rebuilt each start; `data.sql`
-  seeds samples, then `RealCatalogSeeder` imports verified catalog snapshots.
+- **DB**: PostgreSQL 16 (docker) on 5432. **Dev**: `ddl-auto=create` rebuilds the schema each start and
+  Flyway is **off** (`application.yml` `spring.flyway.enabled: false`); `RealCatalogSeeder` then imports the
+  verified catalog snapshots. **Prod**: `application-prod.yml` turns Flyway **on** with `ddl-auto=validate`,
+  so migrations own the schema. Consequence worth knowing: a broken migration is **invisible in dev** — the
+  only guard is `ProdSchemaBootIT`, which silently skips unless `BUDGETSPACE_BOOTTEST_DB_URL` is set.
+  *(Audit correction 2026-07-28: this previously claimed `data.sql` seeds samples — that file does not exist.)*
 - **Run dev**: `docker compose up` (compose + override). Backend boots ~30-40s; wait for
   `Started BudgetspaceApplication` before using the app. DevTools auto-restart is **disabled** in the
   override (it loop-restarted under the Windows bind mount); restart the backend container manually to
@@ -55,11 +67,10 @@ dnevni boravak, moderno, već imam TV") and gets 3 concrete, priced shopping pla
 - **ai/** — `LlmClient` (+ `OpenAiLlmClient`/`AnthropicLlmClient`), `LlmClientFactory`, `LlmProperties`,
   `AiUsageTracker` (monthly-USD + per-day + per-session caps). Off by default.
 - **saved/**, **tracking/** — saved plans; product-click / plan-feedback events.
-- **pricewatch/** — opt-in price-drop alerts (Sprint 10.34): `PriceWatch` entity + `POST /api/price-watch`
-  (explicit GDPR consent, idempotent) + one-click unsubscribe; a scheduled `PriceWatchRecheckService`
-  (**off by default**, `budgetspace.price-watch.recheck-enabled`) that reuses a deterministic `LivePriceProbe`
-  (raw HTTP + JSON-LD price) and a `PriceWatchNotifier` **seam** (`LoggingPriceWatchNotifier` default via
-  `@ConditionalOnMissingBean`; a real email provider plugs in via backend env — no committed creds).
+- **pricewatch/** — *(Audit correction 2026-07-28: the Price Watch feature was **retired** in Sprint 10.188.
+  `V5__drop_price_watches.sql` drops the table, and there is no `PriceWatch` entity, no `POST /api/price-watch`
+  endpoint and no notifier any more.)* What remains is the deterministic price probe only: `LivePriceProbe` +
+  `HttpLivePriceProbe` (raw HTTP + JSON-LD price), still used by the catalog freshness path.
 - **geo/** — geo-IP market hint (Sprint 10.42): `GET /api/geo` returns the visitor's 2-letter country read
   from a CDN/proxy header (`CF-IPCountry`, CloudFront, Vercel, …) — no IP stored, no third-party call;
   `null` when no header (local/no-CDN). The frontend prefers it over the browser-locale guess on a fresh visit.
