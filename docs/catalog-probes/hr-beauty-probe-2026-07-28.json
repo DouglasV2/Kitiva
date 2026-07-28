@@ -1,0 +1,736 @@
+{
+  "probeVersion": 1,
+  "checkedAtUtc": "2026-07-28T09:42:05.293Z",
+  "runtimeEnvironment": {
+    "node": "v24.13.0",
+    "platform": "win32 x64",
+    "userAgent": "BudgetSpaceCollector/0.1 (+dev; controlled product fetch)",
+    "timeoutMs": 15000,
+    "repeatsPerUrl": 2,
+    "delayMsBetweenRequests": 2500,
+    "note": "Probed from a single residential HR-adjacent connection. A different network, or a CDN edge with different bot rules, can produce different results — re-run before relying on these classifications."
+  },
+  "ethics": {
+    "bypassAttempted": false,
+    "statement": "No proxy, browser fingerprint, cookie replay, header spoofing or retry storm was used. A 403 is recorded as a finding and never worked around. Classification only — no catalog was extracted, no link was crawled, no page was paginated."
+  },
+  "caveats": [
+    "retrievable.* are POSITIVE signal tests over the server HTML. false means \"could not confirm\", never \"absent\".",
+    "feedAvailable and affiliateProgramme are null because they require a human to check a partner portal — null means UNCHECKED, not none.",
+    "suggestedStatus is advisory. A human assigns the real status in CatalogSourcePolicy after reading this file.",
+    "A 200 with likelyJsOnlyShell=true means the price is rendered client-side and is NOT in the response we received.",
+    "guessedCategoryUrl is our guess at a category path. When it 404s the probe falls back to the homepage and fellBackToHomepage=true — such a verdict reflects the HOMEPAGE only and says nothing about product-page data.",
+    "A homepage-only verdict must never be promoted past OFFICIAL_FEED_REQUIRED without probing a real product URL first."
+  ],
+  "results": [
+    {
+      "retailer": "Notino HR",
+      "kind": "makeup",
+      "homepage": "https://www.notino.hr/",
+      "probedUrl": "https://www.notino.hr/makeup/",
+      "guessedCategoryUrl": "https://www.notino.hr/makeup/",
+      "fellBackToHomepage": false,
+      "requestMethod": "GET",
+      "attempts": [
+        {
+          "status": 403,
+          "ok": false,
+          "finalUrl": "https://www.notino.hr/makeup/",
+          "redirected": false,
+          "contentType": "text/html; charset=UTF-8",
+          "bytes": 5553,
+          "elapsedMs": 147
+        },
+        {
+          "status": 403,
+          "ok": false,
+          "finalUrl": "https://www.notino.hr/makeup/",
+          "redirected": false,
+          "contentType": "text/html; charset=UTF-8",
+          "bytes": 5553,
+          "elapsedMs": 55
+        }
+      ],
+      "stableAcrossRequests": true,
+      "retrievable": {
+        "productName": true,
+        "exactVariant": false,
+        "price": false,
+        "stock": false,
+        "canonicalUrl": false,
+        "image": false,
+        "ingredients": false,
+        "structuredData": false,
+        "likelyJsOnlyShell": false
+      },
+      "feedAvailable": null,
+      "affiliateProgramme": null,
+      "legalReviewRequired": true,
+      "legalReviewNote": "Terms of use and robots.txt not assessed by this script — manual review required before any row from this source ships.",
+      "suggestedStatus": "OFFICIAL_FEED_REQUIRED",
+      "suggestedBecause": "every request was blocked (403/401/429); a block is never bypassed"
+    },
+    {
+      "retailer": "Douglas HR",
+      "kind": "makeup",
+      "homepage": "https://www.douglas.hr/",
+      "probedUrl": "https://www.douglas.hr/hr/c/make-up/01",
+      "guessedCategoryUrl": "https://www.douglas.hr/hr/c/make-up/01",
+      "fellBackToHomepage": false,
+      "requestMethod": "GET",
+      "attempts": [
+        {
+          "status": 403,
+          "ok": false,
+          "finalUrl": "https://www.douglas.hr/hr/c/make-up/01",
+          "redirected": false,
+          "contentType": "text/html",
+          "bytes": 397,
+          "elapsedMs": 353
+        },
+        {
+          "status": 403,
+          "ok": false,
+          "finalUrl": "https://www.douglas.hr/hr/c/make-up/01",
+          "redirected": false,
+          "contentType": "text/html",
+          "bytes": 397,
+          "elapsedMs": 128
+        }
+      ],
+      "stableAcrossRequests": true,
+      "retrievable": {
+        "productName": true,
+        "exactVariant": false,
+        "price": false,
+        "stock": false,
+        "canonicalUrl": false,
+        "image": false,
+        "ingredients": false,
+        "structuredData": false,
+        "likelyJsOnlyShell": false
+      },
+      "feedAvailable": null,
+      "affiliateProgramme": null,
+      "legalReviewRequired": true,
+      "legalReviewNote": "Terms of use and robots.txt not assessed by this script — manual review required before any row from this source ships.",
+      "suggestedStatus": "OFFICIAL_FEED_REQUIRED",
+      "suggestedBecause": "every request was blocked (403/401/429); a block is never bypassed"
+    },
+    {
+      "retailer": "dm HR",
+      "kind": "makeup",
+      "homepage": "https://www.dm.hr/",
+      "probedUrl": "https://www.dm.hr/sminka",
+      "guessedCategoryUrl": "https://www.dm.hr/sminka",
+      "fellBackToHomepage": false,
+      "requestMethod": "GET",
+      "attempts": [
+        {
+          "status": 200,
+          "ok": true,
+          "finalUrl": "https://www.dm.hr/sminka",
+          "redirected": false,
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 11412,
+          "elapsedMs": 173
+        },
+        {
+          "status": 200,
+          "ok": true,
+          "finalUrl": "https://www.dm.hr/sminka",
+          "redirected": false,
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 11412,
+          "elapsedMs": 75
+        }
+      ],
+      "stableAcrossRequests": true,
+      "retrievable": {
+        "productName": true,
+        "exactVariant": false,
+        "price": false,
+        "stock": false,
+        "canonicalUrl": false,
+        "image": false,
+        "ingredients": false,
+        "structuredData": false,
+        "likelyJsOnlyShell": true
+      },
+      "feedAvailable": null,
+      "affiliateProgramme": null,
+      "legalReviewRequired": true,
+      "legalReviewNote": "Terms of use and robots.txt not assessed by this script — manual review required before any row from this source ships.",
+      "suggestedStatus": "OFFICIAL_FEED_REQUIRED",
+      "suggestedBecause": "server HTML is a client-rendered shell — no price in the response"
+    },
+    {
+      "retailer": "Muller HR",
+      "kind": "makeup",
+      "homepage": "https://www.mueller.hr/",
+      "probedUrl": "https://www.mueller.hr/",
+      "guessedCategoryUrl": "https://www.mueller.hr/parfumerija/",
+      "fellBackToHomepage": true,
+      "requestMethod": "GET",
+      "attempts": [
+        {
+          "status": 200,
+          "ok": true,
+          "finalUrl": "https://www.mueller.hr/",
+          "redirected": false,
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 360115,
+          "elapsedMs": 23
+        },
+        {
+          "status": 200,
+          "ok": true,
+          "finalUrl": "https://www.mueller.hr/",
+          "redirected": false,
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 360115,
+          "elapsedMs": 21
+        }
+      ],
+      "stableAcrossRequests": true,
+      "retrievable": {
+        "productName": true,
+        "exactVariant": false,
+        "price": false,
+        "stock": false,
+        "canonicalUrl": true,
+        "image": false,
+        "ingredients": false,
+        "structuredData": false,
+        "likelyJsOnlyShell": false
+      },
+      "feedAvailable": null,
+      "affiliateProgramme": null,
+      "legalReviewRequired": true,
+      "legalReviewNote": "Terms of use and robots.txt not assessed by this script — manual review required before any row from this source ships.",
+      "suggestedStatus": "OFFICIAL_FEED_REQUIRED",
+      "suggestedBecause": "reachable but no price signal found in the server HTML"
+    },
+    {
+      "retailer": "Bipa HR",
+      "kind": "makeup",
+      "homepage": "https://www.bipa.hr/",
+      "probedUrl": "https://www.bipa.hr/",
+      "guessedCategoryUrl": "https://www.bipa.hr/",
+      "fellBackToHomepage": false,
+      "requestMethod": "GET",
+      "attempts": [
+        {
+          "status": 200,
+          "ok": true,
+          "finalUrl": "https://bipa.hr/",
+          "redirected": true,
+          "contentType": "text/html; charset=UTF-8",
+          "bytes": 161952,
+          "elapsedMs": 319
+        },
+        {
+          "status": 200,
+          "ok": true,
+          "finalUrl": "https://bipa.hr/",
+          "redirected": true,
+          "contentType": "text/html; charset=UTF-8",
+          "bytes": 161952,
+          "elapsedMs": 106
+        }
+      ],
+      "stableAcrossRequests": true,
+      "retrievable": {
+        "productName": true,
+        "exactVariant": true,
+        "price": false,
+        "stock": false,
+        "canonicalUrl": true,
+        "image": false,
+        "ingredients": false,
+        "structuredData": false,
+        "likelyJsOnlyShell": false
+      },
+      "feedAvailable": null,
+      "affiliateProgramme": null,
+      "legalReviewRequired": true,
+      "legalReviewNote": "Terms of use and robots.txt not assessed by this script — manual review required before any row from this source ships.",
+      "suggestedStatus": "OFFICIAL_FEED_REQUIRED",
+      "suggestedBecause": "reachable but no price signal found in the server HTML"
+    },
+    {
+      "retailer": "Ljekarne HR",
+      "kind": "makeup",
+      "homepage": "https://www.ljekarne.hr/",
+      "probedUrl": "https://www.ljekarne.hr/",
+      "guessedCategoryUrl": "https://www.ljekarne.hr/",
+      "fellBackToHomepage": false,
+      "requestMethod": "GET",
+      "attempts": [
+        {
+          "status": 403,
+          "ok": false,
+          "finalUrl": "https://www.ljekarne.hr/",
+          "redirected": false,
+          "contentType": "text/html; charset=UTF-8",
+          "bytes": 5534,
+          "elapsedMs": 73
+        },
+        {
+          "status": 403,
+          "ok": false,
+          "finalUrl": "https://www.ljekarne.hr/",
+          "redirected": false,
+          "contentType": "text/html; charset=UTF-8",
+          "bytes": 5534,
+          "elapsedMs": 69
+        }
+      ],
+      "stableAcrossRequests": true,
+      "retrievable": {
+        "productName": true,
+        "exactVariant": false,
+        "price": false,
+        "stock": false,
+        "canonicalUrl": false,
+        "image": false,
+        "ingredients": false,
+        "structuredData": false,
+        "likelyJsOnlyShell": false
+      },
+      "feedAvailable": null,
+      "affiliateProgramme": null,
+      "legalReviewRequired": true,
+      "legalReviewNote": "Terms of use and robots.txt not assessed by this script — manual review required before any row from this source ships.",
+      "suggestedStatus": "OFFICIAL_FEED_REQUIRED",
+      "suggestedBecause": "every request was blocked (403/401/429); a block is never bypassed"
+    },
+    {
+      "retailer": "Golden Rose HR",
+      "kind": "makeup",
+      "homepage": "https://goldenrose.hr/",
+      "probedUrl": "https://goldenrose.hr/collections/all",
+      "guessedCategoryUrl": "https://goldenrose.hr/collections/all",
+      "fellBackToHomepage": false,
+      "requestMethod": "GET",
+      "attempts": [
+        {
+          "status": 200,
+          "ok": true,
+          "finalUrl": "https://goldenrose.hr/collections/all",
+          "redirected": false,
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 1363032,
+          "elapsedMs": 738
+        },
+        {
+          "status": 200,
+          "ok": true,
+          "finalUrl": "https://goldenrose.hr/collections/all",
+          "redirected": false,
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 1363032,
+          "elapsedMs": 131
+        }
+      ],
+      "stableAcrossRequests": true,
+      "retrievable": {
+        "productName": true,
+        "exactVariant": true,
+        "price": true,
+        "stock": true,
+        "canonicalUrl": true,
+        "image": true,
+        "ingredients": false,
+        "structuredData": false,
+        "likelyJsOnlyShell": false
+      },
+      "feedAvailable": null,
+      "affiliateProgramme": null,
+      "legalReviewRequired": true,
+      "legalReviewNote": "Terms of use and robots.txt not assessed by this script — manual review required before any row from this source ships.",
+      "suggestedStatus": "MANUAL_VERIFIED_ONLY",
+      "suggestedBecause": "reachable with a price signal but no structured data; hand verification required"
+    },
+    {
+      "retailer": "Nani Nails HR",
+      "kind": "nail",
+      "homepage": "https://www.naninails.hr/",
+      "probedUrl": "https://www.naninails.hr/",
+      "guessedCategoryUrl": "https://www.naninails.hr/gel-lak/",
+      "fellBackToHomepage": true,
+      "requestMethod": "GET",
+      "attempts": [
+        {
+          "status": 200,
+          "ok": true,
+          "finalUrl": "https://www.naninails.hr/",
+          "redirected": false,
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 773689,
+          "elapsedMs": 1198
+        },
+        {
+          "status": 200,
+          "ok": true,
+          "finalUrl": "https://www.naninails.hr/",
+          "redirected": false,
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 773716,
+          "elapsedMs": 567
+        }
+      ],
+      "stableAcrossRequests": true,
+      "retrievable": {
+        "productName": true,
+        "exactVariant": true,
+        "price": false,
+        "stock": true,
+        "canonicalUrl": false,
+        "image": true,
+        "ingredients": false,
+        "structuredData": false,
+        "likelyJsOnlyShell": false
+      },
+      "feedAvailable": null,
+      "affiliateProgramme": null,
+      "legalReviewRequired": true,
+      "legalReviewNote": "Terms of use and robots.txt not assessed by this script — manual review required before any row from this source ships.",
+      "suggestedStatus": "OFFICIAL_FEED_REQUIRED",
+      "suggestedBecause": "reachable but no price signal found in the server HTML"
+    },
+    {
+      "retailer": "Cici Nails HR",
+      "kind": "nail",
+      "homepage": "https://www.cicinails.hr/",
+      "probedUrl": "https://www.cicinails.hr/",
+      "guessedCategoryUrl": "https://www.cicinails.hr/",
+      "fellBackToHomepage": false,
+      "requestMethod": "GET",
+      "attempts": [
+        {
+          "status": 403,
+          "ok": false,
+          "finalUrl": "https://www.cicinails.hr/",
+          "redirected": false,
+          "contentType": "text/html",
+          "bytes": 2533,
+          "elapsedMs": 99
+        },
+        {
+          "status": 403,
+          "ok": false,
+          "finalUrl": "https://www.cicinails.hr/",
+          "redirected": false,
+          "contentType": "text/html",
+          "bytes": 2533,
+          "elapsedMs": 57
+        }
+      ],
+      "stableAcrossRequests": true,
+      "retrievable": {
+        "productName": true,
+        "exactVariant": false,
+        "price": false,
+        "stock": false,
+        "canonicalUrl": false,
+        "image": false,
+        "ingredients": false,
+        "structuredData": false,
+        "likelyJsOnlyShell": false
+      },
+      "feedAvailable": null,
+      "affiliateProgramme": null,
+      "legalReviewRequired": true,
+      "legalReviewNote": "Terms of use and robots.txt not assessed by this script — manual review required before any row from this source ships.",
+      "suggestedStatus": "OFFICIAL_FEED_REQUIRED",
+      "suggestedBecause": "every request was blocked (403/401/429); a block is never bypassed"
+    },
+    {
+      "retailer": "NailUxe HR",
+      "kind": "nail",
+      "homepage": "https://nailuxe.hr/",
+      "probedUrl": "https://nailuxe.hr/",
+      "guessedCategoryUrl": "https://nailuxe.hr/",
+      "fellBackToHomepage": false,
+      "requestMethod": "GET",
+      "attempts": [
+        {
+          "status": 200,
+          "ok": true,
+          "finalUrl": "https://nailuxe.hr/",
+          "redirected": false,
+          "contentType": "text/html; charset=UTF-8",
+          "bytes": 285199,
+          "elapsedMs": 339
+        },
+        {
+          "status": 200,
+          "ok": true,
+          "finalUrl": "https://nailuxe.hr/",
+          "redirected": false,
+          "contentType": "text/html; charset=UTF-8",
+          "bytes": 285199,
+          "elapsedMs": 167
+        }
+      ],
+      "stableAcrossRequests": true,
+      "retrievable": {
+        "productName": true,
+        "exactVariant": true,
+        "price": true,
+        "stock": true,
+        "canonicalUrl": true,
+        "image": true,
+        "ingredients": true,
+        "structuredData": false,
+        "likelyJsOnlyShell": false
+      },
+      "feedAvailable": null,
+      "affiliateProgramme": null,
+      "legalReviewRequired": true,
+      "legalReviewNote": "Terms of use and robots.txt not assessed by this script — manual review required before any row from this source ships.",
+      "suggestedStatus": "MANUAL_VERIFIED_ONLY",
+      "suggestedBecause": "reachable with a price signal but no structured data; hand verification required"
+    },
+    {
+      "retailer": "Beauty Shop HR",
+      "kind": "nail",
+      "homepage": "https://www.beauty-shop.hr/",
+      "probedUrl": "https://www.beauty-shop.hr/",
+      "guessedCategoryUrl": "https://www.beauty-shop.hr/",
+      "fellBackToHomepage": false,
+      "requestMethod": "GET",
+      "attempts": [
+        {
+          "status": 200,
+          "ok": true,
+          "finalUrl": "https://beauty-shop.hr/",
+          "redirected": true,
+          "contentType": "text/html; charset=UTF-8",
+          "bytes": 428462,
+          "elapsedMs": 5449
+        },
+        {
+          "status": 200,
+          "ok": true,
+          "finalUrl": "https://beauty-shop.hr/",
+          "redirected": true,
+          "contentType": "text/html; charset=UTF-8",
+          "bytes": 428462,
+          "elapsedMs": 5712
+        }
+      ],
+      "stableAcrossRequests": true,
+      "retrievable": {
+        "productName": true,
+        "exactVariant": true,
+        "price": true,
+        "stock": true,
+        "canonicalUrl": true,
+        "image": true,
+        "ingredients": false,
+        "structuredData": false,
+        "likelyJsOnlyShell": false
+      },
+      "feedAvailable": null,
+      "affiliateProgramme": null,
+      "legalReviewRequired": true,
+      "legalReviewNote": "Terms of use and robots.txt not assessed by this script — manual review required before any row from this source ships.",
+      "suggestedStatus": "MANUAL_VERIFIED_ONLY",
+      "suggestedBecause": "reachable with a price signal but no structured data; hand verification required"
+    },
+    {
+      "retailer": "Perfect Nails HR",
+      "kind": "nail",
+      "homepage": "https://perfectnails.hr/",
+      "probedUrl": "https://perfectnails.hr/",
+      "guessedCategoryUrl": "https://perfectnails.hr/",
+      "fellBackToHomepage": false,
+      "requestMethod": "GET",
+      "attempts": [
+        {
+          "status": null,
+          "ok": false,
+          "finalUrl": null,
+          "redirected": false,
+          "contentType": null,
+          "bytes": 0,
+          "elapsedMs": 20,
+          "error": "fetch failed"
+        },
+        {
+          "status": null,
+          "ok": false,
+          "finalUrl": null,
+          "redirected": false,
+          "contentType": null,
+          "bytes": 0,
+          "elapsedMs": 2,
+          "error": "fetch failed"
+        }
+      ],
+      "stableAcrossRequests": true,
+      "retrievable": {
+        "productName": false,
+        "exactVariant": false,
+        "price": false,
+        "stock": false,
+        "canonicalUrl": false,
+        "image": false,
+        "ingredients": false,
+        "structuredData": false,
+        "likelyJsOnlyShell": false
+      },
+      "feedAvailable": null,
+      "affiliateProgramme": null,
+      "legalReviewRequired": true,
+      "legalReviewNote": "Terms of use and robots.txt not assessed by this script — manual review required before any row from this source ships.",
+      "suggestedStatus": "OFFICIAL_FEED_REQUIRED",
+      "suggestedBecause": "non-200 or transport failure on at least one attempt"
+    },
+    {
+      "retailer": "Juliana Nails HR",
+      "kind": "nail",
+      "homepage": "https://www.juliana-nails.hr/",
+      "probedUrl": "https://www.juliana-nails.hr/",
+      "guessedCategoryUrl": "https://www.juliana-nails.hr/",
+      "fellBackToHomepage": false,
+      "requestMethod": "GET",
+      "attempts": [
+        {
+          "status": 200,
+          "ok": true,
+          "finalUrl": "https://juliana-nails.hr/",
+          "redirected": true,
+          "contentType": "text/html; charset=UTF-8",
+          "bytes": 822999,
+          "elapsedMs": 1411
+        },
+        {
+          "status": 200,
+          "ok": true,
+          "finalUrl": "https://juliana-nails.hr/",
+          "redirected": true,
+          "contentType": "text/html; charset=UTF-8",
+          "bytes": 822999,
+          "elapsedMs": 1304
+        }
+      ],
+      "stableAcrossRequests": true,
+      "retrievable": {
+        "productName": true,
+        "exactVariant": true,
+        "price": false,
+        "stock": true,
+        "canonicalUrl": true,
+        "image": false,
+        "ingredients": false,
+        "structuredData": false,
+        "likelyJsOnlyShell": false
+      },
+      "feedAvailable": null,
+      "affiliateProgramme": null,
+      "legalReviewRequired": true,
+      "legalReviewNote": "Terms of use and robots.txt not assessed by this script — manual review required before any row from this source ships.",
+      "suggestedStatus": "OFFICIAL_FEED_REQUIRED",
+      "suggestedBecause": "reachable but no price signal found in the server HTML"
+    },
+    {
+      "retailer": "Kozmo HR",
+      "kind": "makeup",
+      "homepage": "https://www.kozmo.hr/",
+      "probedUrl": "https://www.kozmo.hr/",
+      "guessedCategoryUrl": "https://www.kozmo.hr/",
+      "fellBackToHomepage": false,
+      "requestMethod": "GET",
+      "attempts": [
+        {
+          "status": null,
+          "ok": false,
+          "finalUrl": null,
+          "redirected": false,
+          "contentType": null,
+          "bytes": 0,
+          "elapsedMs": 209,
+          "error": "fetch failed"
+        },
+        {
+          "status": null,
+          "ok": false,
+          "finalUrl": null,
+          "redirected": false,
+          "contentType": null,
+          "bytes": 0,
+          "elapsedMs": 4,
+          "error": "fetch failed"
+        }
+      ],
+      "stableAcrossRequests": true,
+      "retrievable": {
+        "productName": false,
+        "exactVariant": false,
+        "price": false,
+        "stock": false,
+        "canonicalUrl": false,
+        "image": false,
+        "ingredients": false,
+        "structuredData": false,
+        "likelyJsOnlyShell": false
+      },
+      "feedAvailable": null,
+      "affiliateProgramme": null,
+      "legalReviewRequired": true,
+      "legalReviewNote": "Terms of use and robots.txt not assessed by this script — manual review required before any row from this source ships.",
+      "suggestedStatus": "OFFICIAL_FEED_REQUIRED",
+      "suggestedBecause": "non-200 or transport failure on at least one attempt"
+    },
+    {
+      "retailer": "Bazzar HR",
+      "kind": "makeup",
+      "homepage": "https://www.bazzar.hr/",
+      "probedUrl": "https://www.bazzar.hr/",
+      "guessedCategoryUrl": "https://www.bazzar.hr/",
+      "fellBackToHomepage": false,
+      "requestMethod": "GET",
+      "attempts": [
+        {
+          "status": 200,
+          "ok": true,
+          "finalUrl": "https://bazzar.hr/",
+          "redirected": true,
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 162716,
+          "elapsedMs": 1918
+        },
+        {
+          "status": 200,
+          "ok": true,
+          "finalUrl": "https://bazzar.hr/",
+          "redirected": true,
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 162716,
+          "elapsedMs": 1587
+        }
+      ],
+      "stableAcrossRequests": true,
+      "retrievable": {
+        "productName": true,
+        "exactVariant": true,
+        "price": false,
+        "stock": false,
+        "canonicalUrl": true,
+        "image": true,
+        "ingredients": false,
+        "structuredData": false,
+        "likelyJsOnlyShell": false
+      },
+      "feedAvailable": null,
+      "affiliateProgramme": null,
+      "legalReviewRequired": true,
+      "legalReviewNote": "Terms of use and robots.txt not assessed by this script — manual review required before any row from this source ships.",
+      "suggestedStatus": "OFFICIAL_FEED_REQUIRED",
+      "suggestedBecause": "reachable but no price signal found in the server HTML"
+    }
+  ]
+}
