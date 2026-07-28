@@ -10,7 +10,7 @@
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "living-room"
   ],
@@ -25,20 +25,21 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 849
  },
  {
   "externalId": "jysk-si-omara-jenslev-144x176-3-vrata-barva-divj-229",
   "name": "Omara JENSLEV 144x176 3 vrata barva divjega naravnega hrasta",
   "retailer": "JYSK",
   "category": "wardrobe",
-  "price": 229,
+  "price": 175,
   "productUrl": "https://jysk.si/shranjevanje/garderobne-omare/omara-jenslev-144x176-3-vrata-barva-divjega-naravnega-hrasta",
   "imageUrl": "https://cdn2.jysk.com/getimage/wd3.large/274430",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -53,7 +54,8 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 239
  },
  {
   "externalId": "jysk-si-omara-vedde-167x197-z-ogledalom-barva-di-350",
@@ -66,7 +68,7 @@
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -81,7 +83,8 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 499
  },
  {
   "externalId": "jysk-si-omara-vedde-220x197-z-ogledalom-barva-di-550",
@@ -94,7 +97,7 @@
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -109,7 +112,8 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 699
  },
  {
   "externalId": "jysk-si-jedilniska-miza-vedde-80x80-160-barva-di-150",
@@ -122,7 +126,7 @@
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "dining-room"
   ],
@@ -137,7 +141,8 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 209
  },
  {
   "externalId": "jysk-si-omara-fandrup-97x176-2-vrata-3-predali-b-160",
@@ -172,13 +177,13 @@
   "name": "Jedilniška miza FOLDINGBRO 75x38/84/130 barva toplega hrasta",
   "retailer": "JYSK",
   "category": "dining-table",
-  "price": 159,
+  "price": 125,
   "productUrl": "https://jysk.si/jedilnica/jedilne-mize/jedilniska-miza-foldingbro-75x38-84-130-barva-toplega-hrasta",
   "imageUrl": "https://cdn3.jysk.com/getimage/wd3.large/237004",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "dining-room"
   ],
@@ -193,20 +198,21 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 159
  },
  {
   "externalId": "jysk-si-jedilniski-stol-jonstrup-siva-tkanina-ba-33",
   "name": "Jedilniški stol JONSTRUP siva tkanina/barva naravnega hrasta",
   "retailer": "JYSK",
   "category": "dining-chair",
-  "price": 32.5,
+  "price": 30,
   "productUrl": "https://jysk.si/jedilnica/jedilniski-stoli/jedilniski-stol-jonstrup-siva-tkanina-barva-naravnega-hrasta",
   "imageUrl": "https://cdn4.jysk.com/getimage/wd3.large/257346",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "dining-room"
   ],
@@ -221,7 +227,8 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 44.99
  },
  {
   "externalId": "jysk-si-tv-omarica-limfjorden-2-predala-1-vrata--165",
@@ -256,13 +263,13 @@
   "name": "Zofa modul OKSBY s prostorom za shranjevanje peščena tkanina",
   "retailer": "JYSK",
   "category": "sofa",
-  "price": 189,
+  "price": 150,
   "productUrl": "https://jysk.si/dnevna-soba/sedezne-garniture/zofa-modul-oksby-s-prostorom-za-shranjevanje-pescena-tkanina",
   "imageUrl": "https://cdn3.jysk.com/getimage/wd3.large/264204",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "living-room"
   ],
@@ -277,20 +284,21 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 189
  },
  {
   "externalId": "jysk-si-modularni-dvosed-skejby-s-podaljskom-odp-655",
   "name": "Modularni dvosed SKEJBY s podaljškom/odprt konec bež tkanina",
   "retailer": "JYSK",
   "category": "sofa",
-  "price": 655,
+  "price": 650,
   "productUrl": "https://jysk.si/dnevna-soba/sedezne-garniture/modularni-dvosed-skejby-s-podaljskom-odprt-konec-bez-tkanina",
   "imageUrl": "https://cdn4.jysk.com/getimage/wd3.large/264642",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "living-room"
   ],
@@ -305,20 +313,21 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 848
  },
  {
   "externalId": "jysk-si-modularni-trosed-skejby-s-podaljskom-odp-715",
   "name": "Modularni trosed SKEJBY s podaljškom/odprt konec bež tkanina",
   "retailer": "JYSK",
   "category": "sofa",
-  "price": 715,
+  "price": 800,
   "productUrl": "https://jysk.si/dnevna-soba/sedezne-garniture/modularni-trosed-skejby-s-podaljskom-odprt-konec-bez-tkanina",
   "imageUrl": "https://cdn4.jysk.com/getimage/wd3.large/264644",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "living-room"
   ],
@@ -333,7 +342,8 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 1067
  },
  {
   "externalId": "jysk-si-tv-omarica-odense-2-vrata-1-predal-barva-100",
@@ -346,7 +356,7 @@
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "living-room"
   ],
@@ -361,7 +371,8 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 129
  },
  {
   "externalId": "jysk-si-posteljni-okvir-s-predalom-billund-90x20-125",
@@ -374,7 +385,7 @@
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -389,20 +400,21 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 179
  },
  {
   "externalId": "jysk-si-omara-jenslev-96x176-2-vrata-barva-divje-199",
   "name": "Omara JENSLEV 96x176 2 vrata barva divjega naravnega hrasta",
   "retailer": "JYSK",
   "category": "wardrobe",
-  "price": 199,
+  "price": 140,
   "productUrl": "https://jysk.si/shranjevanje/garderobne-omare/omara-jenslev-96x176-2-vrata-barva-divjega-naravnega-hrasta",
   "imageUrl": "https://cdn3.jysk.com/getimage/wd3.large/261428",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -417,7 +429,8 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 199
  },
  {
   "externalId": "jysk-si-omara-limfjorden-120x200-2-vrata-barva-d-285",
@@ -480,13 +493,13 @@
   "name": "TV-omarica MARKSKEL 2 vrata bela/barva divjega narav. hrasta",
   "retailer": "JYSK",
   "category": "tv-unit",
-  "price": 229,
+  "price": 150,
   "productUrl": "https://jysk.si/dnevna-soba/tv-omarica/tv-omarica-markskel-2-vrata-bela-barva-divjega-narav-hrasta",
   "imageUrl": "https://cdn1.jysk.com/getimage/wd3.large/258703",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "living-room"
   ],
@@ -501,20 +514,21 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 229
  },
  {
   "externalId": "jysk-si-omara-odense-120x210-3-vrata-3-predali-b-369",
   "name": "Omara ODENSE 120x210 3 vrata 3 predali barva toplega hrasta",
   "retailer": "JYSK",
   "category": "wardrobe",
-  "price": 369,
+  "price": 285,
   "productUrl": "https://jysk.si/shranjevanje/garderobne-omare/omara-odense-120x210-3-vrata-3-predali-barva-toplega-hrasta",
   "imageUrl": "https://cdn3.jysk.com/getimage/wd3.large/263240",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -529,7 +543,8 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 369
  },
  {
   "externalId": "jysk-si-jedilniski-stol-lyksborg-naravni-hrast-u-165",
@@ -542,7 +557,7 @@
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "dining-room"
   ],
@@ -557,20 +572,21 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 219
  },
  {
   "externalId": "jysk-si-jedilniska-miza-lintrup-80x140-barva-div-159",
   "name": "Jedilniška miza LINTRUP 80x140 barva divj. naravnega hrasta",
   "retailer": "JYSK",
   "category": "dining-table",
-  "price": 159,
+  "price": 95,
   "productUrl": "https://jysk.si/jedilnica/jedilne-mize/jedilniska-miza-lintrup-80x140-barva-divj-naravnega-hrasta",
   "imageUrl": "https://cdn2.jysk.com/getimage/wd3.large/259472",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "dining-room"
   ],
@@ -585,20 +601,21 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 159
  },
  {
   "externalId": "jysk-si-nocna-omarica-markskel-bela-barva-divjeg-109",
   "name": "Nočna omarica MARKSKEL bela/barva divjega naravnega hrasta",
   "retailer": "JYSK",
   "category": "nightstand",
-  "price": 109,
+  "price": 75,
   "productUrl": "https://jysk.si/spalnica/nocne-omarice/nocna-omarica-markskel-bela-barva-divjega-naravnega-hrasta",
   "imageUrl": "https://cdn3.jysk.com/getimage/wd3.large/255721",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -613,20 +630,21 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 109
  },
  {
   "externalId": "jysk-si-jedilniski-stol-jonstrup-kari-tkanina-ba-33",
   "name": "Jedilniški stol JONSTRUP kari tkanina/barva temnega hrasta",
   "retailer": "JYSK",
   "category": "dining-chair",
-  "price": 32.5,
+  "price": 25,
   "productUrl": "https://jysk.si/jedilnica/jedilniski-stoli/jedilniski-stol-jonstrup-kari-tkanina-barva-temnega-hrasta",
   "imageUrl": "https://cdn1.jysk.com/getimage/wd3.large/257363",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "dining-room"
   ],
@@ -641,7 +659,8 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 44.99
  },
  {
   "externalId": "jysk-si-jedilniski-stol-jonstrup-konjak-umetno-u-33",
@@ -682,7 +701,7 @@
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "dining-room"
   ],
@@ -697,20 +716,21 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 49.99
  },
  {
   "externalId": "jysk-si-jedilniski-stol-jonstrup-teddy-umbela-tk-33",
   "name": "Jedilniški stol JONSTRUP teddy um.bela tkanina/barva hrasta",
   "retailer": "JYSK",
   "category": "dining-chair",
-  "price": 32.5,
+  "price": 35,
   "productUrl": "https://jysk.si/jedilnica/jedilniski-stoli/jedilniski-stol-jonstrup-teddy-umbela-tkanina-barva-hrasta",
   "imageUrl": "https://cdn4.jysk.com/getimage/wd3.large/262694",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "dining-room"
   ],
@@ -725,7 +745,8 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 59.99
  },
  {
   "externalId": "jysk-si-jedilniski-stol-lyksborg-temni-hrast-tem-165",
@@ -738,7 +759,7 @@
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "dining-room"
   ],
@@ -753,20 +774,21 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 219
  },
  {
   "externalId": "jysk-si-jedilniski-stol-adslev-olivno-zelena-tka-119",
   "name": "Jedilniški stol ADSLEV olivno zelena tkanina/naravni hrast",
   "retailer": "JYSK",
   "category": "dining-chair",
-  "price": 119,
+  "price": 60,
   "productUrl": "https://jysk.si/jedilnica/jedilniski-stoli/jedilniski-stol-adslev-olivno-zelena-tkanina-naravni-hrast",
   "imageUrl": "https://cdn3.jysk.com/getimage/wd3.large/259387",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "dining-room"
   ],
@@ -781,7 +803,8 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 119
  },
  {
   "externalId": "jysk-si-boxspring-postelja-140x200-tyria-flya-si-545",
@@ -794,7 +817,7 @@
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -809,7 +832,8 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 1099
  },
  {
   "externalId": "jysk-si-boxspring-postelja-160x200-tyria-flya-si-610",
@@ -822,7 +846,7 @@
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -837,20 +861,21 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 1219
  },
  {
   "externalId": "jysk-si-boxspring-postelja-180x200-tyria-flya-si-610",
   "name": "Boxspring postelja 180x200 TYRIA + FLYA siva-23 srednje trda",
   "retailer": "JYSK",
   "category": "bed",
-  "price": 610,
+  "price": 700,
   "productUrl": "https://jysk.si/spalnica/postelje/boxspring-postelje/boxspring-postelja-180x200-tyria-flya-siva-23-srednje-trda",
   "imageUrl": "https://cdn2.jysk.com/getimage/wd3.large/282247",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -865,20 +890,21 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 1399
  },
  {
   "externalId": "jysk-si-boxspring-postelja-180x200-cm-velfjorden-815",
   "name": "Boxspring postelja 180x200 cm VELFJORDEN + FLYA siva-40 trda",
   "retailer": "JYSK",
   "category": "bed",
-  "price": 815,
+  "price": 500,
   "productUrl": "https://jysk.si/spalnica/postelje/boxspring-postelje/boxspring-postelja-180x200-cm-velfjorden-flya-siva-40-trda",
   "imageUrl": "https://cdn3.jysk.com/getimage/wd3.large/275798",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -893,20 +919,21 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 999
  },
  {
   "externalId": "jysk-si-nocna-omarica-jenslev-1-predal-barva-div-45",
   "name": "Nočna omarica JENSLEV 1 predal barva divjega narav. hrasta",
   "retailer": "JYSK",
   "category": "nightstand",
-  "price": 44.99,
+  "price": 35,
   "productUrl": "https://jysk.si/spalnica/nocne-omarice/nocna-omarica-jenslev-1-predal-barva-divjega-narav-hrasta",
   "imageUrl": "https://cdn1.jysk.com/getimage/wd3.large/255931",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -921,20 +948,21 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 44.99
  },
  {
   "externalId": "jysk-si-jedilniska-miza-lintrup-90x190-280-barva-299",
   "name": "Jedilniška miza LINTRUP 90x190/280 barva div. narav. hrasta",
   "retailer": "JYSK",
   "category": "dining-table",
-  "price": 299,
+  "price": 200,
   "productUrl": "https://jysk.si/jedilnica/jedilne-mize/jedilniska-miza-lintrup-90x190-280-barva-div-narav-hrasta",
   "imageUrl": "https://cdn1.jysk.com/getimage/wd3.large/259473",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "dining-room"
   ],
@@ -949,20 +977,21 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 299
  },
  {
   "externalId": "jysk-si-nocna-omarica-vedde-1-predal-barva-divje-55",
   "name": "Nočna omarica VEDDE 1 predal barva divjega temnega hrasta",
   "retailer": "JYSK",
   "category": "nightstand",
-  "price": 55,
+  "price": 50,
   "productUrl": "https://jysk.si/spalnica/nocne-omarice/nocna-omarica-vedde-1-predal-barva-divjega-temnega-hrasta",
   "imageUrl": "https://cdn2.jysk.com/getimage/wd3.large/257605",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -977,7 +1006,8 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 74.99
  },
  {
   "externalId": "jysk-si-tv-omarica-lintrup-2-vrata-barva-divjega-135",
@@ -990,7 +1020,7 @@
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "living-room"
   ],
@@ -1005,7 +1035,8 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 199
  },
  {
   "externalId": "jysk-si-jedilniska-miza-aabenraa-90x160-barva-to-95",
@@ -1018,7 +1049,7 @@
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "dining-room"
   ],
@@ -1033,7 +1064,8 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 199
  },
  {
   "externalId": "jysk-si-jedilniska-miza-aabenraa-80x120-barva-to-75",
@@ -1046,7 +1078,7 @@
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "dining-room"
   ],
@@ -1061,7 +1093,8 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 149
  },
  {
   "externalId": "jysk-si-jedilniski-stol-hvidovre-svetli-hrast-sv-80",
@@ -1130,7 +1163,7 @@
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "dining-room"
   ],
@@ -1145,20 +1178,21 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 189
  },
  {
   "externalId": "jysk-si-jedilniska-miza-vedde-80x120-barva-divje-135",
   "name": "Jedilniška miza VEDDE 80x120 barva divjega temnega hrasta",
   "retailer": "JYSK",
   "category": "dining-table",
-  "price": 135,
+  "price": 125,
   "productUrl": "https://jysk.si/jedilnica/jedilne-mize/jedilniska-miza-vedde-80x120-barva-divjega-temnega-hrasta",
   "imageUrl": "https://cdn4.jysk.com/getimage/wd3.large/259467",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "dining-room"
   ],
@@ -1173,20 +1207,21 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 179
  },
  {
   "externalId": "jysk-si-jedilniska-miza-markskel-90x150-193-bela-369",
   "name": "Jedilniška miza MARKSKEL 90x150/193 bela/barva d.nar.hrasta",
   "retailer": "JYSK",
   "category": "dining-table",
-  "price": 369,
+  "price": 200,
   "productUrl": "https://jysk.si/jedilnica/jedilne-mize/jedilniska-miza-markskel-90x150-193-bela-barva-dnarhrasta",
   "imageUrl": "https://cdn3.jysk.com/getimage/wd3.large/270081",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "dining-room"
   ],
@@ -1201,20 +1236,21 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 369
  },
  {
   "externalId": "jysk-si-boxspring-postelja-90x200-tyria-flya-siv-545",
   "name": "Boxspring postelja 90x200 TYRIA + FLYA siva-23 srednje trda",
   "retailer": "JYSK",
   "category": "bed",
-  "price": 545,
+  "price": 350,
   "productUrl": "https://jysk.si/spalnica/postelje/boxspring-postelje/boxspring-postelja-90x200-tyria-flya-siva-23-srednje-trda",
   "imageUrl": "https://cdn3.jysk.com/getimage/wd3.large/275980",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -1229,20 +1265,21 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 699
  },
  {
   "externalId": "jysk-si-tv-omarica-jungen-3-predali-barva-divjeg-279",
   "name": "TV-omarica JUNGEN 3 predali barva divjega temnega hrasta",
   "retailer": "JYSK",
   "category": "tv-unit",
-  "price": 279,
+  "price": 215,
   "productUrl": "https://jysk.si/dnevna-soba/tv-omarica/tv-omarica-jungen-3-predali-barva-divjega-temnega-hrasta",
   "imageUrl": "https://cdn2.jysk.com/getimage/wd3.large/258698",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "living-room"
   ],
@@ -1257,20 +1294,21 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 279
  },
  {
   "externalId": "jysk-si-nocna-omarica-hemdrup-1-predal-barva-top-55",
   "name": "Nočna omarica HEMDRUP 1 predal barva toplega hrasta/črna",
   "retailer": "JYSK",
   "category": "nightstand",
-  "price": 54.99,
+  "price": 42.5,
   "productUrl": "https://jysk.si/spalnica/nocne-omarice/nocna-omarica-hemdrup-1-predal-barva-toplega-hrasta-crna",
   "imageUrl": "https://cdn3.jysk.com/getimage/wd3.large/255963",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -1285,7 +1323,8 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 54.99
  },
  {
   "externalId": "jysk-si-nocna-omarica-odense-2-predala-barva-top-55",
@@ -1298,7 +1337,7 @@
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -1313,7 +1352,8 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 74.99
  },
  {
   "externalId": "jysk-si-tv-omarica-vedde-2-predala-barva-divjega-125",
@@ -1326,7 +1366,7 @@
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "living-room"
   ],
@@ -1341,20 +1381,21 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 189
  },
  {
   "externalId": "jysk-si-posteljni-okvir-s-predalom-billund-90x20-179",
   "name": "Posteljni okvir s predalom BILLUND 90x200 travertin/bež",
   "retailer": "JYSK",
   "category": "bed",
-  "price": 179,
+  "price": 125,
   "productUrl": "https://jysk.si/spalnica/postelje/otroske-postelje/posteljni-okvir-s-predalom-billund-90x200-travertin-bez",
   "imageUrl": "https://cdn1.jysk.com/getimage/wd3.large/262894",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -1369,20 +1410,21 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 179
  },
  {
   "externalId": "jysk-si-boxspring-postelja-140x200-velfjorden-fl-730",
   "name": "Boxspring postelja 140x200 VELFJORDEN + FLYA siva-40 trda",
   "retailer": "JYSK",
   "category": "bed",
-  "price": 730,
+  "price": 400,
   "productUrl": "https://jysk.si/spalnica/postelje/boxspring-postelje/boxspring-postelja-140x200-velfjorden-flya-siva-40-trda",
   "imageUrl": "https://cdn3.jysk.com/getimage/wd3.large/275797",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -1397,20 +1439,21 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 799
  },
  {
   "externalId": "jysk-si-boxspring-postelja-160x200-velfjorden-fl-815",
   "name": "Boxspring postelja 160x200 VELFJORDEN + FLYA siva-40 trda",
   "retailer": "JYSK",
   "category": "bed",
-  "price": 815,
+  "price": 450,
   "productUrl": "https://jysk.si/spalnica/postelje/boxspring-postelje/boxspring-postelja-160x200-velfjorden-flya-siva-40-trda",
   "imageUrl": "https://cdn4.jysk.com/getimage/wd3.large/275798",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -1425,7 +1468,8 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 899
  },
  {
   "externalId": "jysk-si-nocna-omarica-tapdrup-1-predal-barva-sve-24",
@@ -1460,13 +1504,13 @@
   "name": "TV-omarica HEMDRUP 2 vrata barva toplega hrasta/črna",
   "retailer": "JYSK",
   "category": "tv-unit",
-  "price": 159,
+  "price": 125,
   "productUrl": "https://jysk.si/dnevna-soba/tv-omarica/tv-omarica-hemdrup-2-vrata-barva-toplega-hrasta-crna",
   "imageUrl": "https://cdn3.jysk.com/getimage/wd3.large/267164",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "living-room"
   ],
@@ -1481,7 +1525,8 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 159
  },
  {
   "externalId": "jysk-si-nocna-omarica-olsker-1-predal-1-polica-n-70",
@@ -1494,7 +1539,7 @@
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -1509,20 +1554,21 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 89.99
  },
  {
   "externalId": "jysk-si-tv-omarica-lyngvig-120cm-2-rolo-vrata-na-269",
   "name": "TV-omarica LYNGVIG 120cm 2 rolo vrata naravni hrast",
   "retailer": "JYSK",
   "category": "tv-unit",
-  "price": 269,
+  "price": 185,
   "productUrl": "https://jysk.si/dnevna-soba/tv-omarica/tv-omarica-lyngvig-120cm-2-rolo-vrata-naravni-hrast",
   "imageUrl": "https://cdn3.jysk.com/getimage/wd3.large/260921",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "living-room"
   ],
@@ -1537,20 +1583,21 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 249
  },
  {
   "externalId": "jysk-si-tv-omarica-lyngvig-160cm-2-rolo-vrata-na-349",
   "name": "TV-omarica LYNGVIG 160cm 2 rolo vrata naravni hrast",
   "retailer": "JYSK",
   "category": "tv-unit",
-  "price": 349,
+  "price": 250,
   "productUrl": "https://jysk.si/dnevna-soba/tv-omarica/tv-omarica-lyngvig-160cm-2-rolo-vrata-naravni-hrast",
   "imageUrl": "https://cdn3.jysk.com/getimage/wd3.large/260232",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "living-room"
   ],
@@ -1565,20 +1612,21 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 349
  },
  {
   "externalId": "jysk-si-lezisce-iz-pene-160x200cm-wellpur-glomma-270",
   "name": "Ležišče iz pene 160x200cm WELLPUR GLOMMA zelo trdo",
   "retailer": "JYSK",
   "category": "mattress",
-  "price": 270,
+  "price": 250,
   "productUrl": "https://jysk.si/spalnica/vzmetnice-lezisca/lezisca-iz-pene/lezisce-iz-pene-160x200cm-wellpur-glomma-zelo-trdo",
   "imageUrl": "https://cdn1.jysk.com/getimage/wd3.large/203998",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -1593,20 +1641,21 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 539
  },
  {
   "externalId": "jysk-si-lezisce-iz-pene-140x200cm-wellpur-glomma-270",
   "name": "Ležišče iz pene 140x200cm WELLPUR GLOMMA zelo trdo",
   "retailer": "JYSK",
   "category": "mattress",
-  "price": 270,
+  "price": 230,
   "productUrl": "https://jysk.si/spalnica/vzmetnice-lezisca/lezisca-iz-pene/lezisce-iz-pene-140x200cm-wellpur-glomma-zelo-trdo",
   "imageUrl": "https://cdn4.jysk.com/getimage/wd3.large/203998",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -1621,7 +1670,8 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 489
  },
  {
   "externalId": "jysk-si-lezisce-iz-pene-180x200cm-wellpur-glomma-270",
@@ -1634,7 +1684,7 @@
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -1649,20 +1699,21 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 579
  },
  {
   "externalId": "jysk-si-lezisce-iz-pene-120x200cm-wellpur-glomma-270",
   "name": "Ležišče iz pene 120x200cm WELLPUR GLOMMA zelo trdo",
   "retailer": "JYSK",
   "category": "mattress",
-  "price": 270,
+  "price": 210,
   "productUrl": "https://jysk.si/spalnica/vzmetnice-lezisca/lezisca-iz-pene/lezisce-iz-pene-120x200cm-wellpur-glomma-zelo-trdo",
   "imageUrl": "https://cdn4.jysk.com/getimage/wd3.large/203998",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -1677,20 +1728,21 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 449
  },
  {
   "externalId": "jysk-si-lezisce-iz-pene-90x200cm-wellpur-glomma--270",
   "name": "Ležišče iz pene 90x200cm WELLPUR GLOMMA zelo trdo",
   "retailer": "JYSK",
   "category": "mattress",
-  "price": 270,
+  "price": 135,
   "productUrl": "https://jysk.si/spalnica/vzmetnice-lezisca/lezisca-iz-pene/lezisce-iz-pene-90x200cm-wellpur-glomma-zelo-trdo",
   "imageUrl": "https://cdn2.jysk.com/getimage/wd3.large/203998",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -1705,20 +1757,21 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 289
  },
  {
   "externalId": "jysk-si-lezisce-iz-pene-80x200cm-wellpur-glomma--269",
   "name": "Ležišče iz pene 80x200cm WELLPUR GLOMMA zelo trdo",
   "retailer": "JYSK",
   "category": "mattress",
-  "price": 269,
+  "price": 125,
   "productUrl": "https://jysk.si/spalnica/vzmetnice-lezisca/lezisca-iz-pene/lezisce-iz-pene-80x200cm-wellpur-glomma-zelo-trdo",
   "imageUrl": "https://cdn4.jysk.com/getimage/wd3.large/203998",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -1733,20 +1786,21 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 269
  },
  {
   "externalId": "jysk-si-lezisce-iz-pene-90x190cm-wellpur-glomma--270",
   "name": "Ležišče iz pene 90x190cm WELLPUR GLOMMA zelo trdo",
   "retailer": "JYSK",
   "category": "mattress",
-  "price": 270,
+  "price": 135,
   "productUrl": "https://jysk.si/spalnica/vzmetnice-lezisca/lezisca-iz-pene/lezisce-iz-pene-90x190cm-wellpur-glomma-zelo-trdo",
   "imageUrl": "https://cdn2.jysk.com/getimage/wd3.large/203998",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -1761,20 +1815,21 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 289
  },
  {
   "externalId": "jysk-si-lezisce-iz-pene-180x200cm-wellpur-kvita--330",
   "name": "Ležišče iz pene 180x200cm WELLPUR KVITA zelo trdo",
   "retailer": "JYSK",
   "category": "mattress",
-  "price": 330,
+  "price": 480,
   "productUrl": "https://jysk.si/spalnica/vzmetnice-lezisca/lezisca-iz-pene/lezisce-iz-pene-180x200cm-wellpur-kvita-zelo-trdo",
   "imageUrl": "https://cdn2.jysk.com/getimage/wd3.large/265167",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -1789,6 +1844,7 @@
   "sourceName": "JYSK SI",
   "sourceReference": "jysk-si-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (EUR) verificirani na jysk.si 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 959
  }
 ]

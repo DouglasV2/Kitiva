@@ -674,13 +674,13 @@
     "name": "Fotelja UDSBJERG siva tkanina/hrast",
     "retailer": "JYSK",
     "category": "chair",
-    "price": 149,
+    "price": 75,
     "productUrl": "https://jysk.hr/dnevni-boravak/fotelje/fotelja-udsbjerg-siva-tkanina-hrast",
     "imageUrl": "https://cdn4.jysk.com/getimage/wd3.large/256443",
     "imageVerified": true,
     "availabilityStatus": "in-stock",
     "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-    "lastCheckedAt": "2026-06-17",
+    "lastCheckedAt": "2026-07-27",
     "roomTags": [
       "living-room"
     ],
@@ -693,7 +693,8 @@
     "sourceName": "JYSK HR production pilot",
     "sourceReference": "ikea-jysk-hr-living-room-production-pilot-10-3",
     "dataQuality": "complete",
-    "dataQualityNotes": "Ručni production-pilot snapshot sa stvarnim product URL-ovima; prije finalne produkcije ponovno provuci collector ili službeni feed za aktualnu cijenu, sliku i zalihu."
+    "dataQualityNotes": "Ručni production-pilot snapshot sa stvarnim product URL-ovima; prije finalne produkcije ponovno provuci collector ili službeni feed za aktualnu cijenu, sliku i zalihu.",
+    "originalPrice": 149
   },
   {
     "externalId": "jysk-hr-fotelja-udsbjerg-bez",
@@ -701,13 +702,13 @@
     "name": "Fotelja UDSBJERG bež tkanina/hrast",
     "retailer": "JYSK",
     "category": "chair",
-    "price": 159,
+    "price": 80,
     "productUrl": "https://jysk.hr/dnevni-boravak/fotelje/fotelja-udsbjerg-bez-tkanina-hrast",
     "imageUrl": "https://cdn2.jysk.com/getimage/wd3.large/237487",
     "imageVerified": true,
     "availabilityStatus": "in-stock",
     "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-    "lastCheckedAt": "2026-06-17",
+    "lastCheckedAt": "2026-07-27",
     "roomTags": [
       "living-room"
     ],
@@ -720,7 +721,8 @@
     "sourceName": "JYSK HR production pilot",
     "sourceReference": "ikea-jysk-hr-living-room-production-pilot-10-3",
     "dataQuality": "complete",
-    "dataQualityNotes": "Ručni production-pilot snapshot sa stvarnim product URL-ovima; prije finalne produkcije ponovno provuci collector ili službeni feed za aktualnu cijenu, sliku i zalihu."
+    "dataQualityNotes": "Ručni production-pilot snapshot sa stvarnim product URL-ovima; prije finalne produkcije ponovno provuci collector ili službeni feed za aktualnu cijenu, sliku i zalihu.",
+    "originalPrice": 159
   },
   {
     "externalId": "jysk-hr-fotelja-lyngaa-bez",
@@ -736,7 +738,7 @@
     "imageVerified": true,
     "availabilityStatus": "limited",
     "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-    "lastCheckedAt": "2026-06-17",
+    "lastCheckedAt": "2026-07-27",
     "roomTags": [
       "living-room"
     ],
@@ -763,7 +765,7 @@
     "imageVerified": true,
     "availabilityStatus": "in-stock",
     "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-    "lastCheckedAt": "2026-06-17",
+    "lastCheckedAt": "2026-07-27",
     "roomTags": [
       "living-room"
     ],
@@ -776,7 +778,8 @@
     "sourceName": "JYSK HR production pilot",
     "sourceReference": "ikea-jysk-hr-living-room-production-pilot-10-3",
     "dataQuality": "complete",
-    "dataQualityNotes": "Ručni production-pilot snapshot sa stvarnim product URL-ovima; prije finalne produkcije ponovno provuci collector ili službeni feed za aktualnu cijenu, sliku i zalihu."
+    "dataQualityNotes": "Ručni production-pilot snapshot sa stvarnim product URL-ovima; prije finalne produkcije ponovno provuci collector ili službeni feed za aktualnu cijenu, sliku i zalihu.",
+    "originalPrice": 249
   },
   {
     "externalId": "jysk-hr-tv-stalak-favrbo-svijetli-hrast-bijela",
@@ -784,7 +787,7 @@
     "name": "TV-stalak FAVRBO boja svijetli hrast/bijela",
     "retailer": "JYSK",
     "category": "tv-unit",
-    "price": 135,
+    "price": 115,
     "originalPrice": 189,
     "saleEndsAt": "2026-06-21",
     "productUrl": "https://jysk.hr/dnevni-boravak/stalci-za-tv/tv-stalak-favrbo-boja-svijetli-hrast-bijela",
@@ -792,7 +795,7 @@
     "imageVerified": true,
     "availabilityStatus": "in-stock",
     "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-    "lastCheckedAt": "2026-06-17",
+    "lastCheckedAt": "2026-07-27",
     "roomTags": [
       "living-room"
     ],
@@ -821,7 +824,7 @@
     "imageVerified": true,
     "availabilityStatus": "in-stock",
     "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-    "lastCheckedAt": "2026-06-17",
+    "lastCheckedAt": "2026-07-27",
     "roomTags": [
       "living-room"
     ],
@@ -877,7 +880,7 @@
     "imageVerified": true,
     "availabilityStatus": "in-stock",
     "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-    "lastCheckedAt": "2026-06-17",
+    "lastCheckedAt": "2026-07-27",
     "roomTags": [
       "living-room"
     ],
@@ -925,13 +928,13 @@
     "name": "Stolić AGERBY 60x100 staklo/natur hrast",
     "retailer": "JYSK",
     "category": "table",
-    "price": 59.99,
+    "price": 100,
     "productUrl": "https://jysk.hr/dnevni-boravak/stolici-za-kavu-i-pomocni-stolici/stolic-agerby-60x100-staklo-natur-hrast",
     "imageUrl": "https://cdn3.jysk.com/getimage/wd3.large/253898",
     "imageVerified": true,
     "availabilityStatus": "in-stock",
     "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-    "lastCheckedAt": "2026-06-17",
+    "lastCheckedAt": "2026-07-27",
     "roomTags": [
       "living-room"
     ],
@@ -944,7 +947,8 @@
     "sourceName": "JYSK HR production pilot",
     "sourceReference": "ikea-jysk-hr-living-room-production-pilot-10-3",
     "dataQuality": "complete",
-    "dataQualityNotes": "Ručni production-pilot snapshot sa stvarnim product URL-ovima; prije finalne produkcije ponovno provuci collector ili službeni feed za aktualnu cijenu, sliku i zalihu."
+    "dataQualityNotes": "Ručni production-pilot snapshot sa stvarnim product URL-ovima; prije finalne produkcije ponovno provuci collector ili službeni feed za aktualnu cijenu, sliku i zalihu.",
+    "originalPrice": 189
   },
   {
     "externalId": "jysk-hr-stolic-nybo-topli-hrast-crna",
@@ -987,7 +991,7 @@
     "imageVerified": true,
     "availabilityStatus": "in-stock",
     "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-    "lastCheckedAt": "2026-06-17",
+    "lastCheckedAt": "2026-07-27",
     "roomTags": [
       "living-room"
     ],
@@ -1035,13 +1039,13 @@
     "name": "Tepih BIRK 140x200 siva",
     "retailer": "JYSK",
     "category": "rug",
-    "price": 80,
+    "price": 60,
     "productUrl": "https://jysk.hr/kucanstvo/tepisi/veliki-tepisi/tepih-birk-140x200-siva",
     "imageUrl": "https://cdn3.jysk.com/getimage/wd3.large/270249",
     "imageVerified": true,
     "availabilityStatus": "in-stock",
     "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-    "lastCheckedAt": "2026-06-17",
+    "lastCheckedAt": "2026-07-27",
     "roomTags": [
       "living-room"
     ],
@@ -1054,7 +1058,8 @@
     "sourceName": "JYSK HR production pilot",
     "sourceReference": "ikea-jysk-hr-living-room-production-pilot-10-3",
     "dataQuality": "complete",
-    "dataQualityNotes": "Ručni production-pilot snapshot sa stvarnim product URL-ovima; prije finalne produkcije ponovno provuci collector ili službeni feed za aktualnu cijenu, sliku i zalihu."
+    "dataQualityNotes": "Ručni production-pilot snapshot sa stvarnim product URL-ovima; prije finalne produkcije ponovno provuci collector ili službeni feed za aktualnu cijenu, sliku i zalihu.",
+    "originalPrice": 80
   },
   {
     "externalId": "jysk-hr-tepih-odon-krem",
@@ -1089,13 +1094,13 @@
     "name": "Tepih LUCERNE 140x200 bež",
     "retailer": "JYSK",
     "category": "rug",
-    "price": 149,
+    "price": 85,
     "productUrl": "https://jysk.hr/kucanstvo/tepisi/veliki-tepisi/tepih-lucerne-140x200-bez",
     "imageUrl": "https://cdn4.jysk.com/getimage/wd3.large/262162",
     "imageVerified": true,
     "availabilityStatus": "in-stock",
     "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-    "lastCheckedAt": "2026-06-17",
+    "lastCheckedAt": "2026-07-27",
     "roomTags": [
       "living-room"
     ],
@@ -1108,7 +1113,8 @@
     "sourceName": "JYSK HR production pilot",
     "sourceReference": "ikea-jysk-hr-living-room-production-pilot-10-3",
     "dataQuality": "complete",
-    "dataQualityNotes": "Ručni production-pilot snapshot sa stvarnim product URL-ovima; prije finalne produkcije ponovno provuci collector ili službeni feed za aktualnu cijenu, sliku i zalihu."
+    "dataQualityNotes": "Ručni production-pilot snapshot sa stvarnim product URL-ovima; prije finalne produkcije ponovno provuci collector ili službeni feed za aktualnu cijenu, sliku i zalihu.",
+    "originalPrice": 149
   },
   {
     "externalId": "jysk-hr-tepih-mogop-natur",
@@ -1116,13 +1122,13 @@
     "name": "Tepih MOGOP 140x200 natur",
     "retailer": "JYSK",
     "category": "rug",
-    "price": 119,
+    "price": 55,
     "productUrl": "https://jysk.hr/kucanstvo/tepisi/veliki-tepisi/tepih-mogop-140x200-natur",
     "imageUrl": "https://cdn4.jysk.com/getimage/wd3.large/245124",
     "imageVerified": true,
     "availabilityStatus": "in-stock",
     "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-    "lastCheckedAt": "2026-06-17",
+    "lastCheckedAt": "2026-07-27",
     "roomTags": [
       "living-room"
     ],
@@ -1135,7 +1141,8 @@
     "sourceName": "JYSK HR production pilot",
     "sourceReference": "ikea-jysk-hr-living-room-production-pilot-10-3",
     "dataQuality": "complete",
-    "dataQualityNotes": "Ručni production-pilot snapshot sa stvarnim product URL-ovima; prije finalne produkcije ponovno provuci collector ili službeni feed za aktualnu cijenu, sliku i zalihu."
+    "dataQualityNotes": "Ručni production-pilot snapshot sa stvarnim product URL-ovima; prije finalne produkcije ponovno provuci collector ili službeni feed za aktualnu cijenu, sliku i zalihu.",
+    "originalPrice": 119
   },
   {
     "externalId": "jysk-hr-podna-lampa-kristof-celik",
@@ -1319,13 +1326,13 @@
     "name": "Polični element TRAPPEDAL 7 polica topli hrast boja/crna",
     "retailer": "JYSK",
     "category": "storage",
-    "price": 99.0,
+    "price": 75,
     "productUrl": "https://jysk.hr/pohranjivanje/police-za-knjige/policni-element-trappedal-7-polica-topli-hrast-boja-crna",
     "imageUrl": "https://cdn2.jysk.com/getimage/wd3.large/245933",
     "imageVerified": true,
     "availabilityStatus": "in-stock",
     "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-    "lastCheckedAt": "2026-06-17",
+    "lastCheckedAt": "2026-07-27",
     "roomTags": [
       "living-room",
       "kitchen"
@@ -1339,7 +1346,8 @@
     "sourceName": "JYSK HR production pilot",
     "sourceReference": "ikea-jysk-hr-living-room-production-pilot-10-3",
     "dataQuality": "complete",
-    "dataQualityNotes": "Ručni production-pilot snapshot sa stvarnim product URL-ovima; prije finalne produkcije ponovno provuci collector ili službeni feed za aktualnu cijenu, sliku i zalihu."
+    "dataQualityNotes": "Ručni production-pilot snapshot sa stvarnim product URL-ovima; prije finalne produkcije ponovno provuci collector ili službeni feed za aktualnu cijenu, sliku i zalihu.",
+    "originalPrice": 99
   },
   {
     "externalId": "jysk-hr-polica-herning-bijela",
@@ -1347,13 +1355,13 @@
     "name": "Polica za knjige HERNING 5 polica bijela",
     "retailer": "JYSK",
     "category": "storage",
-    "price": 60.0,
+    "price": 50,
     "productUrl": "https://jysk.hr/pohranjivanje/police-za-knjige/polica-za-knjige-herning-5-polica-bijela",
     "imageUrl": "https://cdn2.jysk.com/getimage/wd3.large/245731",
     "imageVerified": true,
     "availabilityStatus": "in-stock",
     "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-    "lastCheckedAt": "2026-06-17",
+    "lastCheckedAt": "2026-07-27",
     "roomTags": [
       "living-room"
     ],
@@ -1366,7 +1374,8 @@
     "sourceName": "JYSK HR production pilot",
     "sourceReference": "ikea-jysk-hr-living-room-production-pilot-10-3",
     "dataQuality": "complete",
-    "dataQualityNotes": "Ručni production-pilot snapshot sa stvarnim product URL-ovima; prije finalne produkcije ponovno provuci collector ili službeni feed za aktualnu cijenu, sliku i zalihu."
+    "dataQualityNotes": "Ručni production-pilot snapshot sa stvarnim product URL-ovima; prije finalne produkcije ponovno provuci collector ili službeni feed za aktualnu cijenu, sliku i zalihu.",
+    "originalPrice": 69.99
   },
   {
     "externalId": "jysk-hr-polica-mosbjerg-bijela",
@@ -1380,7 +1389,7 @@
     "imageVerified": true,
     "availabilityStatus": "in-stock",
     "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-    "lastCheckedAt": "2026-06-17",
+    "lastCheckedAt": "2026-07-27",
     "roomTags": [
       "living-room"
     ],
@@ -1393,7 +1402,8 @@
     "sourceName": "JYSK HR production pilot",
     "sourceReference": "ikea-jysk-hr-living-room-production-pilot-10-3",
     "dataQuality": "complete",
-    "dataQualityNotes": "Ručni production-pilot snapshot sa stvarnim product URL-ovima; prije finalne produkcije ponovno provuci collector ili službeni feed za aktualnu cijenu, sliku i zalihu."
+    "dataQualityNotes": "Ručni production-pilot snapshot sa stvarnim product URL-ovima; prije finalne produkcije ponovno provuci collector ili službeni feed za aktualnu cijenu, sliku i zalihu.",
+    "originalPrice": 99
   },
   {
     "externalId": "jysk-hr-policni-element-astrup-crna",

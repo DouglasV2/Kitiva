@@ -396,13 +396,13 @@
   "name": "Kontinentalseng 180x200 HEMLA + TOSEN sand-91 Myk/Medium",
   "retailer": "JYSK",
   "category": "bed",
-  "price": 12000,
+  "price": 13000,
   "productUrl": "https://jysk.no/soverom/senger/kontinentalsenger/kontinentalseng-180x200-hemla-tosen-sand-91-myk-medium",
   "imageUrl": "https://cdn1.jysk.com/getimage/wd3.large/275825",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -417,20 +417,21 @@
   "sourceName": "JYSK NO",
   "sourceReference": "jysk-no-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (NOK) verificirani na jysk.no 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (NOK) verificirani na jysk.no 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 20999
  },
  {
   "externalId": "jysk-no-kontinentalseng-180x200-nevla-kola-sand--12999",
   "name": "Kontinentalseng 180x200 NEVLA + KOLA sand-91 Medium/Fast",
   "retailer": "JYSK",
   "category": "bed",
-  "price": 12999,
+  "price": 9000,
   "productUrl": "https://jysk.no/soverom/senger/kontinentalsenger/kontinentalseng-180x200-nevla-kola-sand-91-medium-fast",
   "imageUrl": "https://cdn1.jysk.com/getimage/wd3.large/275899",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -445,7 +446,8 @@
   "sourceName": "JYSK NO",
   "sourceReference": "jysk-no-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (NOK) verificirani na jysk.no 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (NOK) verificirani na jysk.no 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 14999
  },
  {
   "externalId": "jysk-no-kontinentalseng-180x200-nevla-muru-sand--7000",
@@ -704,13 +706,13 @@
   "name": "Kontinentalseng 180x200 HEMLA + BRYA sand-91 Myk/Medium",
   "retailer": "JYSK",
   "category": "bed",
-  "price": 19999,
+  "price": 14000,
   "productUrl": "https://jysk.no/soverom/senger/kontinentalsenger/kontinentalseng-180x200-hemla-brya-sand-91-myk-medium",
   "imageUrl": "https://cdn2.jysk.com/getimage/wd3.large/275840",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -725,7 +727,8 @@
   "sourceName": "JYSK NO",
   "sourceReference": "jysk-no-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (NOK) verificirani na jysk.no 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (NOK) verificirani na jysk.no 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 21999
  },
  {
   "externalId": "jysk-no-sofa-abildskov-2-seter-elektrisk-svart-i-7999",
@@ -760,13 +763,13 @@
   "name": "Sofa ABILDSKOV 2-seter m/konsoll svart imitert skinn",
   "retailer": "JYSK",
   "category": "sofa",
-  "price": 11998,
+  "price": 6500,
   "productUrl": "https://jysk.no/stue/sofaer/sofa-abildskov-2-seter-m-konsoll-svart-imitert-skinn",
   "imageUrl": "https://cdn2.jysk.com/getimage/wd3.large/264634",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "living-room"
   ],
@@ -781,7 +784,8 @@
   "sourceName": "JYSK NO",
   "sourceReference": "jysk-no-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (NOK) verificirani na jysk.no 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (NOK) verificirani na jysk.no 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 11998
  },
  {
   "externalId": "jysk-no-tv-benk-odense-2-dorer-1-skuff-varm-eike-1499",
@@ -1460,13 +1464,13 @@
   "name": "Rammemadrass 150x200 FJELNA + EKSO svart-06 Medium",
   "retailer": "JYSK",
   "category": "mattress",
-  "price": 5500,
+  "price": 6000,
   "productUrl": "https://jysk.no/soverom/madrasser/rammemadrasser/rammemadrass-150x200-fjelna-ekso-svart-06-medium",
   "imageUrl": "https://cdn2.jysk.com/getimage/wd3.large/266122",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -1481,7 +1485,8 @@
   "sourceName": "JYSK NO",
   "sourceReference": "jysk-no-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (NOK) verificirani na jysk.no 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (NOK) verificirani na jysk.no 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 9998
  },
  {
   "externalId": "jysk-no-rammemadrass-160x200-fjelna-kola-svart-0-8799",
@@ -1544,13 +1549,13 @@
   "name": "Rammemadrass 160x200 FJELNA + EKSO svart-06 Medium",
   "retailer": "JYSK",
   "category": "mattress",
-  "price": 5500,
+  "price": 6000,
   "productUrl": "https://jysk.no/soverom/madrasser/rammemadrasser/rammemadrass-160x200-fjelna-ekso-svart-06-medium",
   "imageUrl": "https://cdn3.jysk.com/getimage/wd3.large/266122",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -1565,7 +1570,8 @@
   "sourceName": "JYSK NO",
   "sourceReference": "jysk-no-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (NOK) verificirani na jysk.no 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (NOK) verificirani na jysk.no 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 9998
  },
  {
   "externalId": "jysk-no-rammemadrass-180x200-fjelna-kola-svart-0-8799",
@@ -1656,13 +1662,13 @@
   "name": "Sofabord AABENRAA L110 lift-top varm eikefarget",
   "retailer": "JYSK",
   "category": "table",
-  "price": 1999,
+  "price": 1000,
   "productUrl": "https://jysk.no/stue/sofabord-og-sidebord/sofabord-aabenraa-l110-lift-top-varm-eikefarget",
   "imageUrl": "https://cdn1.jysk.com/getimage/wd3.large/256535",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "living-room"
   ],
@@ -1677,7 +1683,8 @@
   "sourceName": "JYSK NO",
   "sourceReference": "jysk-no-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (NOK) verificirani na jysk.no 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (NOK) verificirani na jysk.no 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 1899
  },
  {
   "externalId": "jysk-no-spisebord-aabenraa-80x120-varm-eikefarge-1299",
@@ -1830,7 +1837,7 @@
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "living-room"
   ],
@@ -1845,7 +1852,8 @@
   "sourceName": "JYSK NO",
   "sourceReference": "jysk-no-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (NOK) verificirani na jysk.no 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (NOK) verificirani na jysk.no 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 1299
  },
  {
   "externalId": "jysk-no-kommode-odense-33-skuffer-varm-eikefarge-2000",
@@ -1908,13 +1916,13 @@
   "name": "Spisebord NORTOFT 95x200 varm eikefarget/svart",
   "retailer": "JYSK",
   "category": "dining-table",
-  "price": 3299,
+  "price": 2000,
   "productUrl": "https://jysk.no/spisestue/spisebord/spisebord-nortoft-95x200-varm-eikefarget-svart",
   "imageUrl": "https://cdn2.jysk.com/getimage/wd3.large/259705",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "dining-room"
   ],
@@ -1929,7 +1937,8 @@
   "sourceName": "JYSK NO",
   "sourceReference": "jysk-no-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (NOK) verificirani na jysk.no 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (NOK) verificirani na jysk.no 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 2999
  },
  {
   "externalId": "jysk-no-tv-benk-lyngvig-160cm-2-sjalusidorer-nat-3999",

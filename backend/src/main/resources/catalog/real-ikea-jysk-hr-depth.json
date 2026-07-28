@@ -139,7 +139,7 @@
     "imageVerified": true,
     "availabilityStatus": "in-stock",
     "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-    "lastCheckedAt": "2026-06-17",
+    "lastCheckedAt": "2026-07-27",
     "roomTags": ["dining-room"],
     "styleTags": ["modern", "cozy"],
     "colorTags": ["grey", "natural"],
@@ -151,7 +151,8 @@
     "sourceName": "JYSK HR depth pilot",
     "sourceReference": "ikea-jysk-hr-catalog-depth-10-12",
     "dataQuality": "complete",
-    "dataQualityNotes": "Ručni snapshot (dubina kataloga); naziv, cijena i product URL provjereni 2026-06-15. Recenzije (ocjena + broj) provjerene na jysk.hr 2026-06-16. Prije produkcije ponovno provjeri cijenu, sliku i zalihu."
+    "dataQualityNotes": "Ručni snapshot (dubina kataloga); naziv, cijena i product URL provjereni 2026-06-15. Recenzije (ocjena + broj) provjerene na jysk.hr 2026-06-16. Prije produkcije ponovno provjeri cijenu, sliku i zalihu.",
+    "originalPrice": 44.99
   },
   {
     "externalId": "jysk-hr-hasla-140x200-madrac",

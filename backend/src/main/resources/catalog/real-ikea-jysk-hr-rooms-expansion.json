@@ -57,13 +57,13 @@
     "name": "Okvir kreveta VEDDE 140x200 divlji tamni hrast boja",
     "retailer": "JYSK",
     "category": "bed",
-    "price": 259,
+    "price": 175,
     "productUrl": "https://jysk.hr/spavaca-soba/kreveti/podnice-i-okviri-kreveta/okviri-kreveta/okvir-kreveta-vedde-140x200-divlji",
     "imageUrl": "https://cdn3.jysk.com/getimage/wd3.large/256645",
     "imageVerified": true,
     "availabilityStatus": "in-stock",
     "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-    "lastCheckedAt": "2026-06-17",
+    "lastCheckedAt": "2026-07-27",
     "roomTags": ["bedroom"],
     "styleTags": ["modern", "classic"],
     "colorTags": ["brown", "natural"],
@@ -75,7 +75,8 @@
     "sourceName": "JYSK HR rooms pilot",
     "sourceReference": "ikea-jysk-hr-rooms-expansion-10-11",
     "dataQuality": "complete",
-    "dataQualityNotes": "Ručni snapshot za sobe; naziv, cijena i product URL provjereni 2026-06-15. Recenzije (ocjena + broj) provjerene na jysk.hr 2026-06-16. Prije produkcije ponovno provjeri cijenu, sliku i zalihu. URL osvjezen na kanonski + slika web-provjerena 2026-06-17 (cijenu re-provjeriti)."
+    "dataQualityNotes": "Ručni snapshot za sobe; naziv, cijena i product URL provjereni 2026-06-15. Recenzije (ocjena + broj) provjerene na jysk.hr 2026-06-16. Prije produkcije ponovno provjeri cijenu, sliku i zalihu. URL osvjezen na kanonski + slika web-provjerena 2026-06-17 (cijenu re-provjeriti).",
+    "originalPrice": 259
   },
   {
     "externalId": "jysk-hr-trya-140x200-madrac",
@@ -89,7 +90,7 @@
     "imageVerified": true,
     "availabilityStatus": "in-stock",
     "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-    "lastCheckedAt": "2026-06-17",
+    "lastCheckedAt": "2026-07-27",
     "roomTags": ["bedroom"],
     "styleTags": ["modern", "minimal"],
     "materialTags": ["fabric"],
@@ -100,7 +101,8 @@
     "sourceName": "JYSK HR rooms pilot",
     "sourceReference": "ikea-jysk-hr-rooms-expansion-10-11",
     "dataQuality": "complete",
-    "dataQualityNotes": "Ručni snapshot za sobe; naziv, cijena i product URL provjereni 2026-06-15. Recenzije (ocjena + broj) provjerene na jysk.hr 2026-06-16. Prije produkcije ponovno provjeri cijenu, sliku i zalihu."
+    "dataQualityNotes": "Ručni snapshot za sobe; naziv, cijena i product URL provjereni 2026-06-15. Recenzije (ocjena + broj) provjerene na jysk.hr 2026-06-16. Prije produkcije ponovno provjeri cijenu, sliku i zalihu.",
+    "originalPrice": 1149
   },
   {
     "externalId": "jysk-hr-limfjorden-nocni-ormaric-svijetli-hrast",
@@ -296,7 +298,7 @@
     "imageVerified": true,
     "availabilityStatus": "in-stock",
     "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-    "lastCheckedAt": "2026-06-17",
+    "lastCheckedAt": "2026-07-27",
     "roomTags": ["home-office"],
     "styleTags": ["modern", "minimal"],
     "colorTags": ["white"],
@@ -308,6 +310,7 @@
     "sourceName": "JYSK HR rooms pilot",
     "sourceReference": "ikea-jysk-hr-rooms-expansion-10-11",
     "dataQuality": "complete",
-    "dataQualityNotes": "Ručni snapshot za sobe; naziv, cijena i product URL provjereni 2026-06-15. Recenzije (ocjena + broj) provjerene na jysk.hr 2026-06-16. Prije produkcije ponovno provjeri cijenu, sliku i zalihu."
+    "dataQualityNotes": "Ručni snapshot za sobe; naziv, cijena i product URL provjereni 2026-06-15. Recenzije (ocjena + broj) provjerene na jysk.hr 2026-06-16. Prije produkcije ponovno provjeri cijenu, sliku i zalihu.",
+    "originalPrice": 329
   }
 ]

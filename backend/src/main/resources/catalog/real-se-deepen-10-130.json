@@ -144,13 +144,13 @@
   "name": "Sängram m/förvaring BILLUND 90x200 travertinfärgad/beige",
   "retailer": "JYSK",
   "category": "bed",
-  "price": 1899,
+  "price": 1500,
   "productUrl": "https://jysk.se/sovrum/sangar/barnsangar/sangram-m-forvaring-billund-90x200-travertinfargad-beige",
   "imageUrl": "https://cdn1.jysk.com/getimage/wd3.large/262894",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -165,7 +165,8 @@
   "sourceName": "JYSK SE",
   "sourceReference": "jysk-se-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 1899
  },
  {
   "externalId": "jysk-se-kontinentalsang-180x200-cm-nevla-ekso-gr-9000",
@@ -200,13 +201,13 @@
   "name": "Kontinentalsäng 180x200 cm NEVLA+KOLA Sand-91 Medium/Fast",
   "retailer": "JYSK",
   "category": "bed",
-  "price": 13999,
+  "price": 9000,
   "productUrl": "https://jysk.se/sovrum/sangar/kontinentalsangar/kontinentalsang-180x200-cm-nevlakola-sand-91-medium-fast",
   "imageUrl": "https://cdn2.jysk.com/getimage/wd3.large/275899",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -221,20 +222,21 @@
   "sourceName": "JYSK SE",
   "sourceReference": "jysk-se-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 17999
  },
  {
   "externalId": "jysk-se-kontinentalsang-180x200-cm-nevlamuru-san-13999",
   "name": "Kontinentalsäng 180x200 cm NEVLA+MURU Sand-91 Medium/Fast",
   "retailer": "JYSK",
   "category": "bed",
-  "price": 13999,
+  "price": 9000,
   "productUrl": "https://jysk.se/sovrum/sangar/kontinentalsangar/kontinentalsang-180x200-cm-nevlamuru-sand-91-medium-fast",
   "imageUrl": "https://cdn1.jysk.com/getimage/wd3.large/275899",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -249,7 +251,8 @@
   "sourceName": "JYSK SE",
   "sourceReference": "jysk-se-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 17999
  },
  {
   "externalId": "jysk-se-kontinentalsang-180x200-cm-nevlaekso-san-9000",
@@ -424,13 +427,13 @@
   "name": "Kontinentalsäng 180x200 cm NEVLA+KOLA Grå-23 Medium/Fast",
   "retailer": "JYSK",
   "category": "bed",
-  "price": 13999,
+  "price": 9000,
   "productUrl": "https://jysk.se/sovrum/sangar/kontinentalsangar/kontinentalsang-180x200-cm-nevlakola-gra-23-medium-fast",
   "imageUrl": "https://cdn1.jysk.com/getimage/wd3.large/275888",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -445,20 +448,21 @@
   "sourceName": "JYSK SE",
   "sourceReference": "jysk-se-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 17999
  },
  {
   "externalId": "jysk-se-kontinentalsang-180x200-cm-nevlamuru-gra-13999",
   "name": "Kontinentalsäng 180x200 cm NEVLA+MURU Grå-23 Medium/Fast",
   "retailer": "JYSK",
   "category": "bed",
-  "price": 13999,
+  "price": 9000,
   "productUrl": "https://jysk.se/sovrum/sangar/kontinentalsangar/kontinentalsang-180x200-cm-nevlamuru-gra-23-medium-fast",
   "imageUrl": "https://cdn4.jysk.com/getimage/wd3.large/275888",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -473,20 +477,21 @@
   "sourceName": "JYSK SE",
   "sourceReference": "jysk-se-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 17999
  },
  {
   "externalId": "jysk-se-kontinentalsang-160x200-cm-cm-tronda-eks-12999",
   "name": "Kontinentalsäng 160x200 cm cm TRONDA + EKSO Grå-40 Medium",
   "retailer": "JYSK",
   "category": "bed",
-  "price": 12999,
+  "price": 6500,
   "productUrl": "https://jysk.se/sovrum/sangar/kontinentalsangar/kontinentalsang-160x200-cm-cm-tronda-ekso-gra-40-medium",
   "imageUrl": "https://cdn2.jysk.com/getimage/wd3.large/275768",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -501,7 +506,8 @@
   "sourceName": "JYSK SE",
   "sourceReference": "jysk-se-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 12999
  },
  {
   "externalId": "jysk-se-garderob-fandrup-97x176-2-dorrar-3-lador-1750",
@@ -704,13 +710,13 @@
   "name": "Resårbotten 160x200cm FJELNA + KOLA svart-06 medium",
   "retailer": "JYSK",
   "category": "mattress",
-  "price": 8199,
+  "price": 5000,
   "productUrl": "https://jysk.se/sovrum/madrasser/resarbottnar/resarbotten-160x200cm-fjelna-kola-svart-06-medium",
   "imageUrl": "https://cdn1.jysk.com/getimage/wd3.large/266122",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -725,7 +731,8 @@
   "sourceName": "JYSK SE",
   "sourceReference": "jysk-se-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 9998
  },
  {
   "externalId": "jysk-se-resarbotten-160x200cm-fjelna-muru-svart--4100",
@@ -788,13 +795,13 @@
   "name": "Resårbotten 180x200cm FJELNA + KOLA svart-06 medium",
   "retailer": "JYSK",
   "category": "mattress",
-  "price": 8199,
+  "price": 5500,
   "productUrl": "https://jysk.se/sovrum/madrasser/resarbottnar/resarbotten-180x200cm-fjelna-kola-svart-06-medium",
   "imageUrl": "https://cdn4.jysk.com/getimage/wd3.large/266122",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -809,7 +816,8 @@
   "sourceName": "JYSK SE",
   "sourceReference": "jysk-se-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 10998
  },
  {
   "externalId": "jysk-se-resarbotten-180x200cm-fjelna-muru-svart--4100",
@@ -872,13 +880,13 @@
   "name": "Resårbotten 105x200cm FJELNA + KOLA svart-06 medium",
   "retailer": "JYSK",
   "category": "mattress",
-  "price": 8199,
+  "price": 3400,
   "productUrl": "https://jysk.se/sovrum/madrasser/resarbottnar/resarbotten-105x200cm-fjelna-kola-svart-06-medium",
   "imageUrl": "https://cdn1.jysk.com/getimage/wd3.large/266120",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -893,7 +901,8 @@
   "sourceName": "JYSK SE",
   "sourceReference": "jysk-se-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 6799
  },
  {
   "externalId": "jysk-se-resarbotten-105x200cm-fjelna-muru-svart--4100",
@@ -1012,13 +1021,13 @@
   "name": "TV-bänk MARKSKEL 2 dörrar vit/natur vildekfärgad",
   "retailer": "JYSK",
   "category": "tv-unit",
-  "price": 2399,
+  "price": 1850,
   "productUrl": "https://jysk.se/vardagsrum/tv-bankar/tv-bank-markskel-2-dorrar-vit-natur-vildekfargad",
   "imageUrl": "https://cdn1.jysk.com/getimage/wd3.large/258703",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "living-room"
   ],
@@ -1033,20 +1042,21 @@
   "sourceName": "JYSK SE",
   "sourceReference": "jysk-se-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 2399
  },
  {
   "externalId": "jysk-se-matstol-jonstrup-svart-konstlader-natur--450",
   "name": "Matstol JONSTRUP svart konstläder/natur ekfärgad",
   "retailer": "JYSK",
   "category": "dining-chair",
-  "price": 450,
+  "price": 325,
   "productUrl": "https://jysk.se/matrum/matstolar/matstol-jonstrup-svart-konstlader-natur-ekfargad",
   "imageUrl": "https://cdn4.jysk.com/getimage/wd3.large/257329",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "dining-room"
   ],
@@ -1061,7 +1071,8 @@
   "sourceName": "JYSK SE",
   "sourceReference": "jysk-se-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 499
  },
  {
   "externalId": "jysk-se-tv-bank-limfjorden-2-lador-1-dorr-varm-e-1500",
@@ -1180,13 +1191,13 @@
   "name": "Soffbord AABENRAA L110 lift-top varm ekfärgat",
   "retailer": "JYSK",
   "category": "table",
-  "price": 1899,
+  "price": 950,
   "productUrl": "https://jysk.se/vardagsrum/soffbord-sidobord/soffbord-aabenraa-l110-lift-top-varm-ekfargat",
   "imageUrl": "https://cdn1.jysk.com/getimage/wd3.large/256535",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "living-room"
   ],
@@ -1201,7 +1212,8 @@
   "sourceName": "JYSK SE",
   "sourceReference": "jysk-se-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 1899
  },
  {
   "externalId": "jysk-se-tv-bank-lyngvig-120cm-2-jalusidorrar-nat-2999",
@@ -1292,13 +1304,13 @@
   "name": "Soffbord VARDE L80/160 flip-top varm ekfärgat",
   "retailer": "JYSK",
   "category": "table",
-  "price": 2299,
+  "price": 1750,
   "productUrl": "https://jysk.se/vardagsrum/soffbord-sidobord/soffbord-varde-l80-160-flip-top-varm-ekfargat",
   "imageUrl": "https://cdn3.jysk.com/getimage/wd3.large/263860",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "living-room"
   ],
@@ -1313,7 +1325,8 @@
   "sourceName": "JYSK SE",
   "sourceReference": "jysk-se-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 2299
  },
  {
   "externalId": "jysk-se-brickbord-serup-40x52-natur-appelgron-di-275",
@@ -1376,13 +1389,13 @@
   "name": "TV-bänk HEMDRUP 2 dörrar varm ekfärgad/svart",
   "retailer": "JYSK",
   "category": "tv-unit",
-  "price": 2199,
+  "price": 1750,
   "productUrl": "https://jysk.se/vardagsrum/tv-bankar/tv-bank-hemdrup-2-dorrar-varm-ekfargad-svart",
   "imageUrl": "https://cdn3.jysk.com/getimage/wd3.large/267164",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "living-room"
   ],
@@ -1397,20 +1410,21 @@
   "sourceName": "JYSK SE",
   "sourceReference": "jysk-se-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 2199
  },
  {
   "externalId": "jysk-se-tv-bank-lyngvig-120cm-2-jalusidorrar-mor-2999",
   "name": "TV-bänk LYNGVIG 120cm 2 jalusidörrar mörk ek",
   "retailer": "JYSK",
   "category": "tv-unit",
-  "price": 2999,
+  "price": 2000,
   "productUrl": "https://jysk.se/vardagsrum/tv-bankar/tv-bank-lyngvig-120cm-2-jalusidorrar-mork-ek",
   "imageUrl": "https://cdn1.jysk.com/getimage/wd3.large/260925",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "living-room"
   ],
@@ -1425,20 +1439,21 @@
   "sourceName": "JYSK SE",
   "sourceReference": "jysk-se-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 2999
  },
  {
   "externalId": "jysk-se-satsbord-munkebo-o55-o45-natur-ekfargat--549",
   "name": "Satsbord MUNKEBO Ø55/Ø45 natur ekfärgat 2 st",
   "retailer": "JYSK",
   "category": "table",
-  "price": 549,
+  "price": 275,
   "productUrl": "https://jysk.se/vardagsrum/soffbord-sidobord/satsbord-munkebo-o55-o45-natur-ekfargat-2-st",
   "imageUrl": "https://cdn2.jysk.com/getimage/wd3.large/237548",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "living-room"
   ],
@@ -1453,20 +1468,21 @@
   "sourceName": "JYSK SE",
   "sourceReference": "jysk-se-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 549
  },
  {
   "externalId": "jysk-se-tv-bank-lyngvig-160cm-2-jalusidorrar-mor-4199",
   "name": "TV-bänk LYNGVIG 160cm 2 jalusidörrar mörk ek",
   "retailer": "JYSK",
   "category": "tv-unit",
-  "price": 4199,
+  "price": 2850,
   "productUrl": "https://jysk.se/vardagsrum/tv-bankar/tv-bank-lyngvig-160cm-2-jalusidorrar-mork-ek",
   "imageUrl": "https://cdn2.jysk.com/getimage/wd3.large/237576",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "living-room"
   ],
@@ -1481,7 +1497,8 @@
   "sourceName": "JYSK SE",
   "sourceReference": "jysk-se-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 4199
  },
  {
   "externalId": "jysk-se-matstol-jonstrup-teddy-offwhite-tyg-ekfa-450",
@@ -1516,13 +1533,13 @@
   "name": "Soffbord HALSKOV 70x120 natur ekfärgat/svart",
   "retailer": "JYSK",
   "category": "table",
-  "price": 1499,
+  "price": 1150,
   "productUrl": "https://jysk.se/vardagsrum/soffbord-sidobord/soffbord-halskov-70x120-natur-ekfargat-svart",
   "imageUrl": "https://cdn3.jysk.com/getimage/wd3.large/237518",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "living-room"
   ],
@@ -1537,7 +1554,8 @@
   "sourceName": "JYSK SE",
   "sourceReference": "jysk-se-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 1499
  },
  {
   "externalId": "jysk-se-byra-limfjorden-33-lador-natur-vildekfar-1750",
@@ -1712,13 +1730,13 @@
   "name": "Matstol ADSLEV olivgrönt tyg/natur ekfärgad",
   "retailer": "JYSK",
   "category": "dining-chair",
-  "price": 800,
+  "price": 640,
   "productUrl": "https://jysk.se/matrum/matstolar/matstol-adslev-olivgront-tyg-natur-ekfargad",
   "imageUrl": "https://cdn3.jysk.com/getimage/wd3.large/259387",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "dining-room"
   ],
@@ -1733,20 +1751,21 @@
   "sourceName": "JYSK SE",
   "sourceReference": "jysk-se-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 800
  },
  {
   "externalId": "jysk-se-sangbord-odense-2-lador-varm-ekfargat-sv-949",
   "name": "Sängbord ODENSE 2 lådor varm ekfärgat/svart",
   "retailer": "JYSK",
   "category": "nightstand",
-  "price": 949,
+  "price": 475,
   "productUrl": "https://jysk.se/sovrum/sangbord/sangbord-odense-2-lador-varm-ekfargat-svart",
   "imageUrl": "https://cdn3.jysk.com/getimage/wd3.large/248036",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -1761,7 +1780,8 @@
   "sourceName": "JYSK SE",
   "sourceReference": "jysk-se-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 949
  },
  {
   "externalId": "jysk-se-sangbord-jenslev-1-lada-natur-vildekfarg-400",
@@ -1908,13 +1928,13 @@
   "name": "Hörnbord RAASTED Ø40 1 hylla varm ekfärgat",
   "retailer": "JYSK",
   "category": "table",
-  "price": 299,
+  "price": 225,
   "productUrl": "https://jysk.se/vardagsrum/soffbord-sidobord/hornbord-raasted-o40-1-hylla-varm-ekfargat",
   "imageUrl": "https://cdn4.jysk.com/getimage/wd3.large/263855",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "living-room"
   ],
@@ -1929,20 +1949,21 @@
   "sourceName": "JYSK SE",
   "sourceReference": "jysk-se-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 299
  },
  {
   "externalId": "jysk-se-matstol-jonstrup-asfalt-tyg-natur-ekfarg-450",
   "name": "Matstol JONSTRUP asfalt tyg/natur ekfärgad",
   "retailer": "JYSK",
   "category": "dining-chair",
-  "price": 450,
+  "price": 375,
   "productUrl": "https://jysk.se/matrum/matstolar/matstol-jonstrup-asfalt-tyg-natur-ekfargad",
   "imageUrl": "https://cdn4.jysk.com/getimage/wd3.large/257321",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "dining-room"
   ],
@@ -1957,20 +1978,21 @@
   "sourceName": "JYSK SE",
   "sourceReference": "jysk-se-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 499
  },
  {
   "externalId": "jysk-se-matbord-kliplev-o120-travertinfargat-bei-2999",
   "name": "Matbord KLIPLEV Ø120 travertinfärgat/beige",
   "retailer": "JYSK",
   "category": "dining-table",
-  "price": 2999,
+  "price": 2350,
   "productUrl": "https://jysk.se/matrum/matbord/matbord-kliplev-o120-travertinfargat-beige",
   "imageUrl": "https://cdn1.jysk.com/getimage/wd3.large/262529",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "dining-room"
   ],
@@ -1985,7 +2007,8 @@
   "sourceName": "JYSK SE",
   "sourceReference": "jysk-se-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 2999
  },
  {
   "externalId": "jysk-se-byra-jenslev-44-lador-natur-vildekfargad-1150",
@@ -2188,13 +2211,13 @@
   "name": "Sängbord LYNGVIG 2 jalusidörrar mörk ek",
   "retailer": "JYSK",
   "category": "nightstand",
-  "price": 1299,
+  "price": 950,
   "productUrl": "https://jysk.se/sovrum/sangbord/sangbord-lyngvig-2-jalusidorrar-mork-ek",
   "imageUrl": "https://cdn4.jysk.com/getimage/wd3.large/236378",
   "imageVerified": true,
   "availabilityStatus": "in-stock",
   "deliveryNote": "Provjeri dostavu ili preuzimanje prije kupnje.",
-  "lastCheckedAt": "2026-06-28",
+  "lastCheckedAt": "2026-07-27",
   "roomTags": [
    "bedroom"
   ],
@@ -2209,7 +2232,8 @@
   "sourceName": "JYSK SE",
   "sourceReference": "jysk-se-deepen-10-130",
   "dataQuality": "complete",
-  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130)."
+  "dataQualityNotes": "Naziv + cijena (SEK) verificirani na jysk.se 2026-06-28 (catalog-deepen 10-130).",
+  "originalPrice": 1299
  },
  {
   "externalId": "jysk-se-sangbord-nordby-1-lada-1-hylla-vit-599",
