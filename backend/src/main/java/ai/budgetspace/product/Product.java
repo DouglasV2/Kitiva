@@ -167,6 +167,131 @@ public class Product {
     @ColumnDefault("false")
     private boolean imageVerified;
 
+    // ===============================================================================================
+    // Beauty Kit — Phase C2b. Every column below is NULLABLE, so the 21k furniture rows migrate
+    // untouched and a beauty row simply fills more of them. Each one exists because a stated MVP rule
+    // reads it; the consumer is named. A column no rule consumes is a column nobody maintains, and an
+    // unmaintained safety column is worse than a missing one.
+    // ===============================================================================================
+
+    // --- Identity / variant. Consumed by owned-item matching and shade candidates. A beauty SKU is
+    // identified by brand + line + shade, not by name alone: "Ruby Woo" means nothing without "MAC".
+    @Column(name = "brand", length = 120)
+    private String brand;
+
+    @Column(name = "product_line", length = 160)
+    private String productLine;
+
+    @Column(name = "shade_name", length = 160)
+    private String shadeName;
+
+    @Column(name = "shade_code", length = 60)
+    private String shadeCode;
+
+    @Column(name = "size_ml", precision = 8, scale = 2)
+    private BigDecimal sizeMl;
+
+    // --- Makeup attributes. Consumed by MakeupKitGraph (slot filling) and the compatibility policy.
+    @Column(name = "coverage", length = 40)
+    private String coverage;
+
+    @Column(name = "finish_tag", length = 40)
+    private String finishTag;
+
+    /** liquid | cream | powder | stick | balm — decides which applicator the kit must also include. */
+    @Column(name = "formula_format", length = 40)
+    private String formulaFormat;
+
+    @Column(name = "shade_depth", length = 40)
+    private String shadeDepth;
+
+    @Column(name = "undertone", length = 40)
+    private String undertone;
+
+    @Column(name = "required_applicator", length = 80)
+    private String requiredApplicator;
+
+    /**
+     * Manufacturer CLAIMS, not our assessment — hence the name. BeautyBrief.gentleEyeAreaPreferred and
+     * fragranceFreePreferred steer selection toward these; we repeat the manufacturer's claim and never
+     * assert it ourselves, because we have not tested anything.
+     */
+    @Column(name = "eye_area_safe_claim", length = 200)
+    private String eyeAreaSafeClaim;
+
+    @Column(name = "fragrance_free_claim", length = 200)
+    private String fragranceFreeClaim;
+
+    // --- Nail system + compatibility. Consumed by NailKitGraph and BeautyCompatibilityPolicy.
+    /** regular-polish | gel-polish | press-on, or a forbidden system this catalog must never sell to consumers. */
+    @Column(name = "nail_system", length = 40)
+    private String nailSystem;
+
+    /** prep | base | color | effect | top | adhesive | removal | tool | lamp — the completeness-graph slot. */
+    @Column(name = "application_role", length = 40)
+    private String applicationRole;
+
+    @Column(name = "curing_required")
+    private Boolean curingRequired;
+
+    @Column(name = "recommended_lamp", length = 200)
+    private String recommendedLamp;
+
+    @Column(name = "cure_time_seconds")
+    private Integer cureTimeSeconds;
+
+    /** soak-off | file-off — decides which removal product the kit must include. */
+    @Column(name = "removal_method", length = 40)
+    private String removalMethod;
+
+    @Column(name = "effect_type", length = 40)
+    private String effectType;
+
+    @Column(name = "magnet_required")
+    private Boolean magnetRequired;
+
+    @Column(name = "beginner_suitability", length = 40)
+    private String beginnerSuitability;
+
+    // --- Safety. Consumed by ConsumerNailSafetyPolicy.
+    /**
+     * Substance status columns are STRINGS holding a {@code SubstancePresence} name, never booleans.
+     * A boolean would force every unknown to false, and false reads as "does not contain" — which is how
+     * missing retailer data silently becomes a safety claim. NULL parses to UNKNOWN, which blocks.
+     */
+    @Column(name = "hema_status", length = 24)
+    private String hemaStatus;
+
+    @Column(name = "di_hema_status", length = 24)
+    private String diHemaStatus;
+
+    @Column(name = "tpo_status", length = 24)
+    private String tpoStatus;
+
+    @Column(name = "professional_only")
+    private Boolean professionalOnly;
+
+    @Column(name = "inci_source", length = 300)
+    private String inciSource;
+
+    /** When a FULL ingredient list was last captured. Outside the freshness window the verdict is void. */
+    @Column(name = "inci_verified_at", length = 40)
+    private String inciVerifiedAt;
+
+    /**
+     * Cached safety verdict — a CACHE, never a truth. Invalid unless safety_ruleset_version equals the
+     * ruleset in force AND safety_verdict_at is inside the freshness window. On any mismatch the verdict
+     * is recomputed or the product is blocked; it is never trusted because it happens to be present.
+     */
+    @Column(name = "safety_verdict", length = 24)
+    private String safetyVerdict;
+
+    @Column(name = "safety_verdict_at", length = 40)
+    private String safetyVerdictAt;
+
+    @Column(name = "safety_ruleset_version", length = 40)
+    private String safetyRulesetVersion;
+
     public Product() {
     }
 
@@ -252,4 +377,69 @@ public class Product {
     public void setSellerLocation(String sellerLocation) { this.sellerLocation = sellerLocation; }
     public boolean isImageVerified() { return imageVerified; }
     public void setImageVerified(boolean imageVerified) { this.imageVerified = imageVerified; }
+
+    // --- Beauty Kit (Phase C2b). Boxed types on the nullable flags on purpose: null means "not recorded",
+    // which is a different fact from false and must not collapse into it.
+    public String getBrand() { return brand; }
+    public void setBrand(String brand) { this.brand = brand; }
+    public String getProductLine() { return productLine; }
+    public void setProductLine(String productLine) { this.productLine = productLine; }
+    public String getShadeName() { return shadeName; }
+    public void setShadeName(String shadeName) { this.shadeName = shadeName; }
+    public String getShadeCode() { return shadeCode; }
+    public void setShadeCode(String shadeCode) { this.shadeCode = shadeCode; }
+    public BigDecimal getSizeMl() { return sizeMl; }
+    public void setSizeMl(BigDecimal sizeMl) { this.sizeMl = sizeMl; }
+    public String getCoverage() { return coverage; }
+    public void setCoverage(String coverage) { this.coverage = coverage; }
+    public String getFinishTag() { return finishTag; }
+    public void setFinishTag(String finishTag) { this.finishTag = finishTag; }
+    public String getFormulaFormat() { return formulaFormat; }
+    public void setFormulaFormat(String formulaFormat) { this.formulaFormat = formulaFormat; }
+    public String getShadeDepth() { return shadeDepth; }
+    public void setShadeDepth(String shadeDepth) { this.shadeDepth = shadeDepth; }
+    public String getUndertone() { return undertone; }
+    public void setUndertone(String undertone) { this.undertone = undertone; }
+    public String getRequiredApplicator() { return requiredApplicator; }
+    public void setRequiredApplicator(String requiredApplicator) { this.requiredApplicator = requiredApplicator; }
+    public String getEyeAreaSafeClaim() { return eyeAreaSafeClaim; }
+    public void setEyeAreaSafeClaim(String eyeAreaSafeClaim) { this.eyeAreaSafeClaim = eyeAreaSafeClaim; }
+    public String getFragranceFreeClaim() { return fragranceFreeClaim; }
+    public void setFragranceFreeClaim(String fragranceFreeClaim) { this.fragranceFreeClaim = fragranceFreeClaim; }
+    public String getNailSystem() { return nailSystem; }
+    public void setNailSystem(String nailSystem) { this.nailSystem = nailSystem; }
+    public String getApplicationRole() { return applicationRole; }
+    public void setApplicationRole(String applicationRole) { this.applicationRole = applicationRole; }
+    public Boolean getCuringRequired() { return curingRequired; }
+    public void setCuringRequired(Boolean curingRequired) { this.curingRequired = curingRequired; }
+    public String getRecommendedLamp() { return recommendedLamp; }
+    public void setRecommendedLamp(String recommendedLamp) { this.recommendedLamp = recommendedLamp; }
+    public Integer getCureTimeSeconds() { return cureTimeSeconds; }
+    public void setCureTimeSeconds(Integer cureTimeSeconds) { this.cureTimeSeconds = cureTimeSeconds; }
+    public String getRemovalMethod() { return removalMethod; }
+    public void setRemovalMethod(String removalMethod) { this.removalMethod = removalMethod; }
+    public String getEffectType() { return effectType; }
+    public void setEffectType(String effectType) { this.effectType = effectType; }
+    public Boolean getMagnetRequired() { return magnetRequired; }
+    public void setMagnetRequired(Boolean magnetRequired) { this.magnetRequired = magnetRequired; }
+    public String getBeginnerSuitability() { return beginnerSuitability; }
+    public void setBeginnerSuitability(String beginnerSuitability) { this.beginnerSuitability = beginnerSuitability; }
+    public String getHemaStatus() { return hemaStatus; }
+    public void setHemaStatus(String hemaStatus) { this.hemaStatus = hemaStatus; }
+    public String getDiHemaStatus() { return diHemaStatus; }
+    public void setDiHemaStatus(String diHemaStatus) { this.diHemaStatus = diHemaStatus; }
+    public String getTpoStatus() { return tpoStatus; }
+    public void setTpoStatus(String tpoStatus) { this.tpoStatus = tpoStatus; }
+    public Boolean getProfessionalOnly() { return professionalOnly; }
+    public void setProfessionalOnly(Boolean professionalOnly) { this.professionalOnly = professionalOnly; }
+    public String getInciSource() { return inciSource; }
+    public void setInciSource(String inciSource) { this.inciSource = inciSource; }
+    public String getInciVerifiedAt() { return inciVerifiedAt; }
+    public void setInciVerifiedAt(String inciVerifiedAt) { this.inciVerifiedAt = inciVerifiedAt; }
+    public String getSafetyVerdict() { return safetyVerdict; }
+    public void setSafetyVerdict(String safetyVerdict) { this.safetyVerdict = safetyVerdict; }
+    public String getSafetyVerdictAt() { return safetyVerdictAt; }
+    public void setSafetyVerdictAt(String safetyVerdictAt) { this.safetyVerdictAt = safetyVerdictAt; }
+    public String getSafetyRulesetVersion() { return safetyRulesetVersion; }
+    public void setSafetyRulesetVersion(String safetyRulesetVersion) { this.safetyRulesetVersion = safetyRulesetVersion; }
 }
