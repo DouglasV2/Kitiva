@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "revision": "0",
+  "status": "AWAITING_PRIMARY_SOURCES",
+
+  "provenanceNote": "DELIBERATELY EMPTY. Rules are not encoded because the primary EU texts could not be retrieved: eur-lex.europa.eu serves an AWS WAF bot challenge (HTTP 202, awsWafCookieDomainList/gokuProps) to this environment, and bot challenges are never bypassed. The owner's standing constraint is that only primary EU sources may back a regulatory rule; secondary sources were available and were deliberately NOT used. Because RegulatoryRuleset fails closed, an unusable ruleset hard-blocks every consumer at-home nail kit. That is the intended behaviour: a safety subsystem with no verified rules genuinely does not know whether anything is safe, and must say so rather than wave products through.",
+
+  "howToActivate": [
+    "1. Obtain the primary texts and place them under docs/regulatory/ (OJ L PDF or the official CELEX HTML).",
+    "2. Encode one entry per restriction in `rules` below. EVERY entry needs all seven mandatory fields: ruleId, jurisdiction, officialSourceReference, effectiveDate, lastReviewedDate, affectedProductAttributes, behaviour (ALLOW|RESTRICT|BLOCK) - plus substanceKey and a Croatian noteHr shown when the rule blocks something.",
+    "3. Set `status` to \"ACTIVE\" and bump `revision`. Bumping revision changes rulesetVersion(), which invalidates every cached per-product safety verdict.",
+    "4. Run RegulatoryRulesetTest and BeautySafetyAcceptanceTest. A structurally incomplete rule fails the build rather than shipping."
+  ],
+
+  "primarySourcesNeeded": {
+    "hema": "Restriction on 2-hydroxyethyl methacrylate in nail products - believed Reg. (EU) 2020/1682 amending Annex III of Reg. (EU) 1223/2009. VERIFY the entry number, the exact professional-use condition and the mandatory warning wording against the OJ text before encoding.",
+    "di-hema-tmhdc": "Restriction on di-HEMA trimethylhexyl dicarbamate, same instrument. VERIFY separately - it is a distinct Annex III entry from HEMA.",
+    "tpo": "Prohibition of trimethylbenzoyl diphenylphosphine oxide (CAS 75980-60-8) in cosmetic products. VERIFY the amending regulation number and the exact date of application; an unverified date is worse than no rule, because it would either block legal products or permit prohibited ones.",
+    "polish-solvents": "Toluene, DBP and formaldehyde/formaldehyde-releasers as they apply to nail polish and press-on adhesives. Relevant to the press-on and regular-polish verticals that ship FIRST, so these are not deferrable behind the gel work.",
+    "professional-only": "The basis on which a product is marked professional-use-only, and what that legally requires of a consumer-facing retailer."
+  },
+
+  "reviewerChecklist": [
+    "Is the citation a PRIMARY source (OJ / CELEX / national authority), not a summary, supplier claim or recollection?",
+    "Does effectiveDate match the date of APPLICATION in the text, not the date of publication?",
+    "Is the substance identified by CAS number as well as by name, so a synonym in an INCI list cannot slip past?",
+    "Does the rule state what happens when ingredient data is MISSING? (It must not: missing data is handled by SubstancePresence.UNKNOWN, which blocks. A rule must never encode an absence as an all-clear.)",
+    "Has a named human recorded lastReviewedDate?"
+  ],
+
+  "rules": []
+}

@@ -22,6 +22,7 @@ The failure *set* is what is pinned. Progression so far:
 |---|---|---|---|
 | A (baseline) | 957 | 7 | inherited from `8a536db` |
 | B | 971 | 7 | +14 brief/spec schema tests, zero new failures |
+| C1 | 980 | 7 | +9 safety-gate tests, zero new failures |
 
 ### The 7
 
