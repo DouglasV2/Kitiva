@@ -44,6 +44,20 @@ public class ProductController {
         this.categoryDiscoveryService = categoryDiscoveryService;
     }
 
+    /**
+     * Public product listing.
+     *
+     * <p><strong>Eligibility is enforced here, not only in the planner.</strong> This endpoint used to
+     * project {@code findAll()} straight to DTOs with no gate at all, which made it a second door onto the
+     * catalog: needs-review rows, unavailable rows, legacy sample rows with no {@code sourceReference}, and
+     * feed-required retailers that never came from a feed were all publicly listable with a name, a price
+     * and a buy link — none of which the planner itself would ever show. Under the beauty pivot that same
+     * hole would publish professional-only and unclassified SKUs, entirely outside the safety gate.</p>
+     *
+     * <p>The listing now shows exactly what the planner is willing to pick, so the two can never disagree.
+     * {@link CatalogSourcePolicy#isPlannerEligible} is the shared definition; a safety-bearing filter for
+     * beauty rows layers on top of it once those columns exist.</p>
+     */
     @GetMapping("/api/products")
     public List<ProductDto> products(
             @RequestParam(required = false) String retailer,
@@ -52,6 +66,7 @@ public class ProductController {
             @RequestParam(required = false) BigDecimal maxPrice
     ) {
         return productRepository.findAll().stream()
+                .filter(CatalogSourcePolicy::isPlannerEligible)
                 .filter(product -> retailer == null || product.getRetailer().equalsIgnoreCase(retailer))
                 .filter(product -> category == null || ProductTaxonomy.normalizeCategory(category)
                         .map(normalized -> product.getCategory().equalsIgnoreCase(normalized))
