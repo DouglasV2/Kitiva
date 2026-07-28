@@ -7,6 +7,8 @@ import { LanguageSuggestion } from './components/LanguageSuggestion';
 import { HowItWorks } from './components/HowItWorks';
 import { PlannerHero } from './components/PlannerHero';
 import { Planner } from './components/Planner';
+import { useState } from 'react';
+import { NailLook } from './components/NailLook';
 import { AuthProvider, useAuth } from './AuthContext';
 import { ConsentProvider } from './ConsentContext';
 import { LocaleProvider } from './LocaleContext';
@@ -45,7 +47,9 @@ function AppShell() {
       {/* Sprint 10.182: header hero band (owner mockup) — three-beat headline + subtitle + new-plan / my-plans
           actions + a drop-in visual. Replaces the slim PlannerSubnav strip; beta state is read inside. */}
       <PlannerHero />
-      <Planner />
+      {/* Beauty pivot vertical slice: the Nail Look experience runs alongside the furniture planner while
+          the pivot lands phase by phase. Both stay mounted so switching never loses work. */}
+      <ExperienceSwitch />
       <HowItWorks />
       <Footer />
       {showGate && <AuthGate />}
@@ -53,6 +57,41 @@ function AppShell() {
           valid decision exists (or the user reopened it from the footer). Never blocks the app. */}
       <ConsentBanner />
     </main>
+  );
+}
+
+/**
+ * Two-experience switch. Both panes stay MOUNTED and are toggled with `hidden`, reusing the pattern the
+ * furniture planner already uses for its scope switch - so flipping tabs never discards a parsed brief or
+ * a generated kit.
+ */
+function ExperienceSwitch() {
+  const [experience, setExperience] = useState<'nails' | 'furniture'>('nails');
+  return (
+    <>
+      <div className="scope-toggle navtrack scope-switch shell" role="group" aria-label="Odaberi iskustvo">
+        <button
+          type="button"
+          className={experience === 'nails' ? 'scope-option active' : 'scope-option'}
+          aria-pressed={experience === 'nails'}
+          onClick={() => setExperience('nails')}
+          data-testid="tab-nails"
+        >
+          <span className="scope-text">Nail Look / Nail Kit</span>
+        </button>
+        <button
+          type="button"
+          className={experience === 'furniture' ? 'scope-option active' : 'scope-option'}
+          aria-pressed={experience === 'furniture'}
+          onClick={() => setExperience('furniture')}
+          data-testid="tab-furniture"
+        >
+          <span className="scope-text">Prostor (postojeće)</span>
+        </button>
+      </div>
+      <div hidden={experience !== 'nails'}><NailLook /></div>
+      <div hidden={experience !== 'furniture'}><Planner /></div>
+    </>
   );
 }
 

@@ -24,6 +24,7 @@ The failure *set* is what is pinned. Progression so far:
 | B | 971 | 7 | +14 brief/spec schema tests, zero new failures |
 | C1 | 980 | 7 | +9 safety-gate tests, zero new failures |
 | C2a | 987 | 7 | +7 public-listing eligibility tests; first phase to modify an existing file (`ProductController`), zero new failures |
+| Nail vertical slice | 1013 | 7 | +20 end-to-end slice tests against the real pilot catalog, zero new failures. Browser-verified: salon brief, at-home kit, owned-item removal, and both blocked states |
 | C2b | 993 | 7 | +6 column/migration drift tests. Entity change (28 nullable columns) verified against the full suite at 987/7 before the drift tests were added; V6 additionally validated end-to-end on a throwaway Postgres via `ProdSchemaBootIT` |
 
 ### The 7
