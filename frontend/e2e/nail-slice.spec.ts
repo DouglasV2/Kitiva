@@ -14,6 +14,9 @@ mkdirSync(SHOTS, { recursive: true });
 
 const PROMPT = 'Želim kratke almond burgundy cat-eye nokte s dva diskretna zlatna detalja.';
 
+// A prompt the verified catalog CAN honour: no named colour, no effect, so no capability is unprovable.
+const SUPPORTED_PROMPT = 'Želim kratke almond nokte, sjajne.';
+
 async function openApp(page: Page) {
   // The furniture app's auth gate is a modal that intercepts pointer events. Clicking through it is flaky
   // because it re-renders; setting the same sessionStorage flag its own "continue as guest" button sets is
@@ -70,6 +73,7 @@ test.describe('Nail Look slice', () => {
     await openApp(page);
     await parsePrompt(page);
     await page.getByTestId('choose-salon').click();
+    await page.getByTestId('fork-continue').click();
 
     const salon = page.getByTestId('salon-brief');
     await expect(salon).toBeVisible();
@@ -93,9 +97,10 @@ test.describe('Nail Look slice', () => {
 
   test('3. at-home regular polish: real products, exact total, essential vs optional', async ({ page }, testInfo) => {
     await openApp(page);
-    await parsePrompt(page);
+    await parsePrompt(page, SUPPORTED_PROMPT);
     await setBudget(page, '30');
     await page.getByTestId('choose-home').click();
+  await page.getByTestId('fork-continue').click();
 
     const kit = page.getByTestId('nail-kit');
     await expect(kit).toBeVisible();
@@ -128,10 +133,11 @@ test.describe('Nail Look slice', () => {
 
   test('4. at-home press-on: its own graph, adhesive and removal required', async ({ page }, testInfo) => {
     await openApp(page);
-    await parsePrompt(page);
+    await parsePrompt(page, SUPPORTED_PROMPT);
     await setBudget(page, '40');
     await page.getByTestId('f-system').selectOption('press-on');
     await page.getByTestId('choose-home').click();
+  await page.getByTestId('fork-continue').click();
 
     const kit = page.getByTestId('nail-kit');
     await expect(kit).toBeVisible();
@@ -146,9 +152,10 @@ test.describe('Nail Look slice', () => {
 
   test('5. owned products leave the total', async ({ page }, testInfo) => {
     await openApp(page);
-    await parsePrompt(page);
+    await parsePrompt(page, SUPPORTED_PROMPT);
     await setBudget(page, '30');
     await page.getByTestId('choose-home').click();
+  await page.getByTestId('fork-continue').click();
 
     const kit = page.getByTestId('nail-kit');
     const before = await kit.getByTestId('kit-total').innerText();
@@ -158,6 +165,7 @@ test.describe('Nail Look slice', () => {
     await page.getByTestId('owned-base').click();
     await page.getByTestId('owned-top').click();
     await page.getByTestId('choose-home').click();
+  await page.getByTestId('fork-continue').click();
     await expect(kit.getByTestId('kit-owned')).toBeVisible();
 
     const after = await kit.getByTestId('kit-total').innerText();
@@ -173,9 +181,10 @@ test.describe('Nail Look slice', () => {
 
   test('6. over budget is reported, never trimmed below completeness', async ({ page }, testInfo) => {
     await openApp(page);
-    await parsePrompt(page);
+    await parsePrompt(page, SUPPORTED_PROMPT);
     await setBudget(page, '3');
     await page.getByTestId('choose-home').click();
+  await page.getByTestId('fork-continue').click();
 
     const kit = page.getByTestId('nail-kit');
     await expect(kit.getByTestId('kit-status')).toContainText(/Iznad budžeta/);
@@ -188,10 +197,49 @@ test.describe('Nail Look slice', () => {
     await page.screenshot({ path: `${SHOTS}/${testInfo.project.name}-07-over-budget.png`, fullPage: true });
   });
 
+  test('6b. the primary prompt is honestly reported as unreproducible', async ({ page }, testInfo) => {
+    // Reached through the REAL flow with the REAL catalog — no fixture, no demo toggle. The catalog has no
+    // gold-detail product at all, and no press-on set that is simultaneously almond, burgundy and cat-eye.
+    // The kit used to answer this with ordinary glossy lacquer and call itself Complete with assumptions.
+    await openApp(page);
+    await parsePrompt(page, PROMPT);
+    await setBudget(page, '40');
+    await page.getByTestId('choose-home').click();
+    await page.getByTestId('fork-continue').click();
+
+    const kit = page.getByTestId('nail-kit');
+    await expect(kit.getByTestId('kit-status')).toContainText(/Nepotpun/);
+
+    // The UI must say WHAT is missing, not just that something is.
+    const missing = kit.getByTestId('kit-missing');
+    await expect(missing).toBeVisible();
+    await expect(missing).toContainText(/zlatni detalj/i);
+
+    await page.screenshot({ path: `${SHOTS}/${testInfo.project.name}-12-incomplete-real.png`, fullPage: true });
+
+    // Press-ons cannot reproduce it either.
+    await page.getByTestId('f-system').selectOption('press-on');
+    await page.getByTestId('fork-continue').click();
+    await expect(kit.getByTestId('kit-status')).toContainText(/Nepotpun/);
+    await expect(kit.getByTestId('kit-missing')).toContainText(/zlatni detalj/i);
+  });
+
+  test('6c. assumptions are listed, not hidden behind a count', async ({ page }) => {
+    await openApp(page);
+    await parsePrompt(page, PROMPT);
+
+    const assumptions = page.getByTestId('brief-assumptions');
+    await expect(assumptions).toBeVisible();
+    // Visible without opening anything, and showing the reason rather than a number.
+    await expect(assumptions.locator('li').first()).toBeVisible();
+    expect((await assumptions.innerText()).length).toBeGreaterThan(40);
+  });
+
   test('7. safety blocked: a system we do not sell to consumers', async ({ page }, testInfo) => {
     await openApp(page);
     await parsePrompt(page, 'Želim polygel nadogradnju kod kuće, jako duge nokte.');
     await page.getByTestId('choose-home').click();
+  await page.getByTestId('fork-continue').click();
 
     const kit = page.getByTestId('nail-kit');
     await expect(kit.getByTestId('kit-status')).toContainText(/sigurnosnih razloga/i);
@@ -204,6 +252,7 @@ test.describe('Nail Look slice', () => {
     await openApp(page);
     await parsePrompt(page, 'Nokat mi je upaljen i boli me, ali želim lakirati nokte kod kuće.');
     await page.getByTestId('choose-home').click();
+  await page.getByTestId('fork-continue').click();
 
     const kit = page.getByTestId('nail-kit');
     await expect(kit.getByTestId('kit-status')).toContainText(/sigurnosnih razloga/i);
@@ -215,9 +264,10 @@ test.describe('Nail Look slice', () => {
 
   test('9. replace this: swap a product, kit stays complete', async ({ page }, testInfo) => {
     await openApp(page);
-    await parsePrompt(page);
+    await parsePrompt(page, SUPPORTED_PROMPT);
     await setBudget(page, '30');
     await page.getByTestId('choose-home').click();
+  await page.getByTestId('fork-continue').click();
 
     const kit = page.getByTestId('nail-kit');
     const colorRow = kit.getByTestId('kit-row-color');
@@ -235,9 +285,10 @@ test.describe('Nail Look slice', () => {
 
   test('10. make it cheaper: total drops, essentials survive', async ({ page }, testInfo) => {
     await openApp(page);
-    await parsePrompt(page);
+    await parsePrompt(page, SUPPORTED_PROMPT);
     await setBudget(page, '30');
     await page.getByTestId('choose-home').click();
+  await page.getByTestId('fork-continue').click();
 
     const kit = page.getByTestId('nail-kit');
     const before = Math.round(parseFloat((await kit.getByTestId('kit-total').innerText()).replace(/[^\d,]/g, '').replace(',', '.')) * 100);
@@ -256,15 +307,17 @@ test.describe('Nail Look slice', () => {
 
   test('11. regenerating the same brief yields the same total', async ({ page }) => {
     await openApp(page);
-    await parsePrompt(page);
+    await parsePrompt(page, SUPPORTED_PROMPT);
     await setBudget(page, '30');
 
     await page.getByTestId('choose-home').click();
+  await page.getByTestId('fork-continue').click();
     const kit = page.getByTestId('nail-kit');
     const first = await kit.getByTestId('kit-total').innerText();
 
     // Same brief, generated again: totals are derived, not accumulated, so nothing may drift.
     await page.getByTestId('choose-home').click();
+  await page.getByTestId('fork-continue').click();
     await expect(kit.getByTestId('kit-total')).toHaveText(first);
 
     // And again after a full reload + re-parse of the same prompt.
@@ -272,6 +325,7 @@ test.describe('Nail Look slice', () => {
     await parsePrompt(page);
     await setBudget(page, '30');
     await page.getByTestId('choose-home').click();
+  await page.getByTestId('fork-continue').click();
     await expect(page.getByTestId('nail-kit').getByTestId('kit-total')).toHaveText(first);
   });
 });

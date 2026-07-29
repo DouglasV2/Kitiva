@@ -68,6 +68,7 @@ export function NailLook() {
   );
   const [budget, setBudget] = useState('');
   const [system, setSystem] = useState<'regular-polish' | 'press-on'>('regular-polish');
+  const [mode, setMode] = useState<'SALON' | 'AT_HOME' | null>(null);
   const [brief, setBrief] = useState<NailLookBrief | null>(null);
   const [diagram, setDiagram] = useState('');
   const [parseInfo, setParseInfo] = useState<NailParseResponse | null>(null);
@@ -163,6 +164,11 @@ export function NailLook() {
   return (
     <section className="nk" id="nail-look">
       <div className="nk-shell">
+        {/* The catalog is machine-captured from published retailer feeds and NOT human-approved, so the app
+            says so rather than implying a level of verification nobody has done yet. */}
+        <p className="nk-prototype" data-testid="prototype-notice">
+          Interni prototip — cijene, dostupnost i nijanse nisu ručno provjerene. Provjeri kod trgovca prije kupnje.
+        </p>
         <header className="nk-masthead">
           <p className="nk-eyebrow">Nokti · Hrvatska</p>
           <h1 className="nk-title">Opiši nokte.<br />Dobij <em>specifikaciju</em> ili <em>popis za kupnju</em>.</h1>
@@ -181,7 +187,7 @@ export function NailLook() {
           />
           <div className="nk-ask-row">
             <button type="button" className="nk-btn" onClick={handleParse} disabled={busy || !prompt.trim()} data-testid="parse">
-              {busy ? 'Čitam…' : 'Pročitaj opis'}
+              {busy ? 'Pretvaram…' : 'Pretvori u specifikaciju'}
             </button>
           </div>
         </div>
@@ -291,11 +297,17 @@ export function NailLook() {
                   Shematski dijagram — pokazuje oblik, duljinu, boju i koji nokti nose detalj. Nije fotografija.
                 </p>
 
+                {/* Assumptions are listed OPEN, not hidden behind a count. "Pretpostavili smo 3" tells the
+                    user a number and hides the only part that matters — what we guessed and why. */}
                 {brief.assumptions.length > 0 && (
-                  <details className="nk-assumptions" data-testid="brief-assumptions">
-                    <summary>Pretpostavili smo {brief.assumptions.length} — provjeri</summary>
-                    <ul>{brief.assumptions.map((a, i) => <li key={i}><strong>{a.field}:</strong> {a.reasonHr}</li>)}</ul>
-                  </details>
+                  <div className="nk-assume-list" data-testid="brief-assumptions">
+                    <p className="nk-section-label" style={{ marginTop: 18 }}>Ovo smo pretpostavili — provjeri</p>
+                    <ul className="nk-assume-items">
+                      {brief.assumptions.map((a, i) => (
+                        <li key={i}><strong>{a.assumed || a.field}</strong> — {a.reasonHr}</li>
+                      ))}
+                    </ul>
+                  </div>
                 )}
               </div>
             </div>
@@ -315,15 +327,36 @@ export function NailLook() {
                 </select>
               </div>
 
-              <div className="nk-fork-options">
-                <button type="button" className="nk-fork-btn" onClick={() => generate('SALON')} disabled={busy} data-testid="choose-salon">
+              {/* The main decision: pick one, see it selected, then continue. Two buttons that each fired
+                  immediately gave no selected state and no sense that this was THE fork in the flow. */}
+              <div className="nk-fork-options" role="radiogroup" aria-label="Kako radiš nokte">
+                <button
+                  type="button" role="radio" aria-checked={mode === 'SALON'}
+                  className={mode === 'SALON' ? 'nk-fork-btn is-chosen' : 'nk-fork-btn'}
+                  onClick={() => { setMode('SALON'); setResult(null); }} data-testid="choose-salon"
+                >
                   <span className="nk-fork-name">Idem u salon</span>
                   <span className="nk-fork-sub">Dobiješ dijagram i tekst koji pokažeš svojoj tehničarki. Bez proizvoda.</span>
                 </button>
-                <button type="button" className="nk-fork-btn" onClick={() => generate('AT_HOME')} disabled={busy} data-testid="choose-home">
+                <button
+                  type="button" role="radio" aria-checked={mode === 'AT_HOME'}
+                  className={mode === 'AT_HOME' ? 'nk-fork-btn is-chosen' : 'nk-fork-btn'}
+                  onClick={() => { setMode('AT_HOME'); setResult(null); }} data-testid="choose-home"
+                >
                   <span className="nk-fork-name">Radim sama</span>
                   <span className="nk-fork-sub">Dobiješ popis proizvoda s točnim iznosom i linkovima na trgovine.</span>
                 </button>
+              </div>
+
+              <div className="nk-fork-go">
+                <button
+                  type="button" className="nk-btn" disabled={busy || !mode} data-testid="fork-continue"
+                  onClick={() => mode && generate(mode)}
+                >
+                  {busy ? 'Slažem…' : mode === 'SALON' ? 'Složi specifikaciju za salon'
+                    : mode === 'AT_HOME' ? 'Složi popis za kupnju' : 'Odaberi jedno'}
+                </button>
+                {!mode && <span className="nk-fork-hint">Odaberi salon ili kod kuće da nastaviš.</span>}
               </div>
             </div>
           </>

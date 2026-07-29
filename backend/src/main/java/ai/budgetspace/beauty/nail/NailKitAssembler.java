@@ -215,6 +215,30 @@ public class NailKitAssembler {
             items.add(toItem(slot, required, pick, notes.isEmpty() ? null : String.join(" ", notes), system));
         }
 
+        // ---- Can this kit actually reproduce the LOOK, not just fill the categories? ----
+        // Filling prep/colour/top/removal is necessary and nowhere near sufficient. A burgundy cat-eye
+        // needs something that can make a cat-eye; without it the kit is a different manicure wearing the
+        // right slot names. Every required capability must be PROVEN by a product in the kit.
+        List<NailCapabilityEvidence.Capability> required = NailCapabilityEvidence.requiredBy(brief.design(), system);
+        List<String> unreproducible = new ArrayList<>();
+        for (NailCapabilityEvidence.Capability capability : required) {
+            boolean covered = items.stream()
+                    .map(i -> catalogProduct(i.externalId()))
+                    .anyMatch(p -> NailCapabilityEvidence.proves(p, capability));
+            if (!covered) {
+                // Is it missing from the KIT, or absent from the catalog entirely? The user can act on the
+                // difference, so the message says which.
+                boolean anywhere = catalog.products().stream()
+                        .filter(NailPilotCatalog.PilotProduct::inStock)
+                        .filter(NailPilotCatalog.PilotProduct::consumerSafe)
+                        .anyMatch(p -> NailCapabilityEvidence.proves(p, capability));
+                unreproducible.add(capability.croatianLabel()
+                        + (anywhere ? " (postoji u katalogu, ali ne uz ostale odabrane proizvode)"
+                                    : " (nema nijednog provjerenog proizvoda u katalogu)"));
+            }
+        }
+        missing.addAll(unreproducible);
+
         int essentialTotal = items.stream().filter(KitItem::essential).mapToInt(KitItem::priceCents).sum();
         int optionalTotal = items.stream().filter(i -> !i.essential()).mapToInt(KitItem::priceCents).sum();
         int total = essentialTotal + optionalTotal;
@@ -238,7 +262,12 @@ public class NailKitAssembler {
 
         KitStatus status;
         String explanation;
-        if (!missing.isEmpty()) {
+        if (!unreproducible.isEmpty()) {
+            status = KitStatus.INCOMPLETE_REQUIRED_ITEM_UNAVAILABLE;
+            explanation = "Ovaj izgled ne možemo vjerno složiti od provjerenih proizvoda. Nedostaje: "
+                    + String.join("; ", unreproducible)
+                    + ". Umjesto da ponudimo obični lak i to nazovemo istim izgledom, radije kažemo što fali.";
+        } else if (!missing.isEmpty()) {
             status = KitStatus.INCOMPLETE_REQUIRED_ITEM_UNAVAILABLE;
             explanation = "Nedostaje obavezan dio kita: " + String.join(", ", missing)
                     + ". U pilot katalogu trenutačno nema dostupnog proizvoda za taj korak.";
@@ -305,6 +334,23 @@ public class NailKitAssembler {
             if (match.isPresent()) return match.get();
         }
 
+        // Prefer a product that PROVES the most of what the design needs. Price only breaks ties. Picking
+        // the cheapest set first would have skipped the one whose retailer title actually says "Cat Eye",
+        // and then reported the look as unreproducible when the catalog could in fact partly cover it.
+        List<NailCapabilityEvidence.Capability> required =
+                NailCapabilityEvidence.requiredBy(brief.design(), system);
+        if (!required.isEmpty()) {
+            var best = candidates.stream()
+                    .max(java.util.Comparator
+                            .<NailPilotCatalog.PilotProduct>comparingLong(
+                                    p -> required.stream().filter(c -> NailCapabilityEvidence.proves(p, c)).count())
+                            .thenComparing(p -> -p.priceCents()));
+            if (best.isPresent()
+                    && required.stream().anyMatch(c -> NailCapabilityEvidence.proves(best.get(), c))) {
+                return best.get();
+            }
+        }
+
         if (!"color".equals(slot.key())) {
             return cheapest(candidates);
         }
@@ -321,6 +367,13 @@ public class NailKitAssembler {
             if (matched.isPresent()) return matched.get();
         }
         return cheapest(candidates);
+    }
+
+    /** Looks a picked item back up in the catalog so its retailer-proven capabilities can be read. */
+    private NailPilotCatalog.PilotProduct catalogProduct(String externalId) {
+        if (externalId == null) return null;
+        return catalog.products().stream()
+                .filter(p -> externalId.equals(p.externalId())).findFirst().orElse(null);
     }
 
     private NailPilotCatalog.PilotProduct cheapest(List<NailPilotCatalog.PilotProduct> candidates) {

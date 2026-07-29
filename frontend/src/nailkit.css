@@ -281,6 +281,20 @@
   padding: 12px 6px 10px; font-style: italic;
 }
 
+/* --- prototype notice ----------------------------------------------------------------------------- */
+
+.nk-prototype {
+  margin: 0 0 22px; padding: 11px 16px; border-radius: 10px;
+  background: var(--nk-gold-wash); border: 1px solid rgba(176, 141, 63, 0.4);
+  font-size: 13px; line-height: 1.5; color: #6d5320;
+}
+
+/* --- assumptions, always visible -------------------------------------------------------------------- */
+
+.nk-assume-items { margin: 4px 0 0; padding-left: 20px; }
+.nk-assume-items li { font-size: 13.5px; line-height: 1.55; padding: 5px 0; color: var(--nk-plum-soft); }
+.nk-assume-items strong { color: var(--nk-plum); }
+
 /* --- the fork ------------------------------------------------------------------------------------ */
 
 .nk-fork { margin-top: 36px; padding-top: 28px; border-top: 1px solid var(--nk-blush-deep); }
@@ -299,6 +313,18 @@
 }
 .nk-fork-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 .nk-fork-btn:focus-visible { outline: 2px solid var(--nk-plum); outline-offset: 3px; }
+
+/* Chosen state has to be unmistakable — this is the main decision in the flow. */
+.nk-fork-btn.is-chosen {
+  border-color: var(--nk-rose); background: var(--nk-rose-wash);
+  box-shadow: 0 0 0 3px rgba(196, 83, 107, 0.16), var(--nk-lift);
+}
+.nk-fork-btn.is-chosen .nk-fork-name::after {
+  content: " ✓"; color: var(--nk-rose); font-family: system-ui, sans-serif; font-size: 17px;
+}
+
+.nk-fork-go { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 20px; }
+.nk-fork-hint { font-size: 13px; color: var(--nk-mauve); font-style: italic; }
 
 .nk-fork-name {
   display: block; font-family: var(--nk-serif); font-size: 22px; font-weight: 400;

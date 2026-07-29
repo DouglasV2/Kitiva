@@ -143,7 +143,7 @@ class NailVerticalSliceTest {
 
     @Test
     void aCompleteKitTotalsExactlyTheSumOfItsItems() {
-        var kit = assembler.assemble(brief("kratki nokti, boja visnje, kod kuce",
+        var kit = assembler.assemble(brief("kratki nokti kod kuce",
                 NailLookBriefDto.ExecutionMode.AT_HOME, 0));
 
         assertThat(kit.status().isComplete()).isTrue();
@@ -182,15 +182,72 @@ class NailVerticalSliceTest {
 
     @Test
     void anUnmatchableShadeBecomesAnAssumptionNotAClaim() {
-        // This retailer numbers its shades and publishes no colour name, so the honest answer is a candidate
-        // plus the swatch - never "this is your burgundy".
-        var kit = assembler.assemble(brief("kratki nokti boje visnje kod kuce",
-                NailLookBriefDto.ExecutionMode.AT_HOME, 0));
+        // No colour was NAMED, so no colour capability is required and the kit can complete. The shade it
+        // picks is still only a candidate: this retailer numbers its shades and publishes no colour name.
+        var kit = assembler.assemble(brief("kratki nokti kod kuce", NailLookBriefDto.ExecutionMode.AT_HOME, 0));
 
         assertThat(kit.status()).isEqualTo(KitStatus.COMPLETE_WITH_ASSUMPTIONS);
         assertThat(kit.assumptions()).extracting(a -> a.field()).contains("shade");
         assertThat(kit.items()).filteredOn(i -> "color".equals(i.slot()))
                 .allSatisfy(i -> assertThat(i.noteHr()).contains("swatch"));
+    }
+
+    @Test
+    void aNamedColourWithNoRetailerEvidenceCannotBeCalledComplete() {
+        // The bug this whole capability gate exists to kill. Asking for burgundy used to return a kit
+        // containing "Ice Chic Nail Lacquer - ICE 2" and call it Complete with assumptions. A shade NUMBER
+        // is not a colour; presenting it as one is a claim the catalog cannot support.
+        var kit = assembler.assemble(brief("kratki nokti boje visnje kod kuce",
+                NailLookBriefDto.ExecutionMode.AT_HOME, 0));
+
+        assertThat(kit.status()).isEqualTo(KitStatus.INCOMPLETE_REQUIRED_ITEM_UNAVAILABLE);
+        assertThat(kit.status().isPurchasable()).isFalse();
+        assertThat(kit.missingRequiredSlots()).anySatisfy(m -> assertThat(m).contains("burgundy"));
+    }
+
+    @Test
+    void aGenericPolishCannotSatisfyACatEyeRequest() {
+        // No polish in this catalog proves a cat-eye and no magnet exists at all, so a cat-eye request must
+        // NOT be quietly answered with ordinary glossy lacquer.
+        var kit = assembler.assemble(brief("kratki nokti s cat-eye efektom kod kuce",
+                NailLookBriefDto.ExecutionMode.AT_HOME, 0));
+
+        assertThat(kit.status()).isEqualTo(KitStatus.INCOMPLETE_REQUIRED_ITEM_UNAVAILABLE);
+        assertThat(kit.missingRequiredSlots()).anySatisfy(m -> assertThat(m).contains("cat-eye"));
+        assertThat(kit.missingRequiredSlots()).anySatisfy(m -> assertThat(m).contains("magnet"));
+    }
+
+    @Test
+    void theWholePrimaryPromptIsHonestlyReportedAsUnreproducible() {
+        // The demo prompt, end to end. Neither system can reproduce it: there is no gold product anywhere,
+        // and no press-on set is simultaneously almond, burgundy and cat-eye.
+        var prompt = "Zelim kratke almond burgundy cat-eye nokte s dva diskretna zlatna detalja.";
+
+        for (String system : List.of("regular-polish", "press-on")) {
+            var kit = assembler.assemble(brief(prompt, NailLookBriefDto.ExecutionMode.AT_HOME, 0),
+                    new NailKitAssembler.Preferences(java.util.Map.of(), false, null, system));
+
+            assertThat(kit.status())
+                    .as("%s cannot reproduce the primary prompt", system)
+                    .isEqualTo(KitStatus.INCOMPLETE_REQUIRED_ITEM_UNAVAILABLE);
+            assertThat(kit.missingRequiredSlots())
+                    .as("%s must name the gold detail as missing", system)
+                    .anySatisfy(m -> assertThat(m).contains("zlatni detalj"));
+        }
+    }
+
+    @Test
+    void capabilitiesComeFromRetailerTextNeverFromAShadeNumber() {
+        var catEyeSet = catalog.products().stream()
+                .filter(p -> p.name().toLowerCase().contains("cat eye")).findFirst().orElseThrow();
+        assertThat(NailCapabilityEvidence.proves(catEyeSet, NailCapabilityEvidence.Capability.CAT_EYE))
+                .as("the retailer's own title says Cat Eye").isTrue();
+
+        var numberedShade = catalog.products().stream()
+                .filter(p -> "color".equals(p.kitSlot()) && p.shadeName() != null).findFirst().orElseThrow();
+        assertThat(NailCapabilityEvidence.proofsFor(numberedShade))
+                .as("a numbered shade like '%s' proves no colour", numberedShade.shadeName())
+                .noneMatch(pr -> pr.capability().name().startsWith("COLOR_"));
     }
 
     @Test
@@ -291,9 +348,9 @@ class NailVerticalSliceTest {
 
     @Test
     void makeItCheaperNeverDropsARequiredSlot() {
-        var normal = assembler.assemble(brief("kratki nokti boje visnje kod kuce",
+        var normal = assembler.assemble(brief("kratki nokti kod kuce",
                 NailLookBriefDto.ExecutionMode.AT_HOME, 0));
-        var cheaper = assembler.assemble(brief("kratki nokti boje visnje kod kuce",
+        var cheaper = assembler.assemble(brief("kratki nokti kod kuce",
                 NailLookBriefDto.ExecutionMode.AT_HOME, 0),
                 new NailKitAssembler.Preferences(java.util.Map.of(), true, null, null));
 
