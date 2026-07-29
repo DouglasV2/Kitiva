@@ -8,6 +8,7 @@ import { HowItWorks } from './components/HowItWorks';
 import { PlannerHero } from './components/PlannerHero';
 import { Planner } from './components/Planner';
 import { useState } from 'react';
+import './nailkit.css';
 import { NailLook } from './components/NailLook';
 import { AuthProvider, useAuth } from './AuthContext';
 import { ConsentProvider } from './ConsentContext';
@@ -41,16 +42,12 @@ function AppShell() {
 
   return (
     <main>
-      <Header />
-      {/* Sprint 10.188: one-time "your browser is English — switch?" prompt (self-gates; no-op for most). */}
-      <LanguageSuggestion />
-      {/* Beauty pivot vertical slice: the Nail Look experience runs alongside the furniture planner while
-          the pivot lands phase by phase. Both stay mounted so switching never loses work. The furniture
-          hero and how-it-works belong to the furniture product and are hidden while Nail Look is showing —
-          two competing headlines on one page is the fastest way to make a user test measure confusion
-          instead of the product. */}
+      {/* Beauty pivot vertical slice. The two experiences have different visual identities on purpose, so
+          each renders its OWN chrome: the BudgetSpace header, hero, how-it-works and footer belong to the
+          furniture product and would otherwise frame the nail page in another brand's colours — which is
+          the single loudest way to make a beauty product look like a furniture tool. Both panes stay
+          mounted so switching never discards a parsed brief or a generated kit. */}
       <ExperienceSwitch />
-      <Footer />
       {showGate && <AuthGate />}
       {/* Sprint 10.185: analytics-consent banner. Non-modal; only appears when a GA id is configured and no
           valid decision exists (or the user reopened it from the footer). Never blocks the app. */}
@@ -59,20 +56,17 @@ function AppShell() {
   );
 }
 
-/**
- * Two-experience switch. Both panes stay MOUNTED and are toggled with `hidden`, reusing the pattern the
- * furniture planner already uses for its scope switch - so flipping tabs never discards a parsed brief or
- * a generated kit.
- */
 function ExperienceSwitch() {
   const [experience, setExperience] = useState<'nails' | 'furniture'>('nails');
+  const nails = experience === 'nails';
   return (
     <>
-      <div className="scope-toggle navtrack scope-switch shell" role="group" aria-label="Odaberi iskustvo">
+      <div className={nails ? 'nk-topbar' : 'scope-toggle navtrack scope-switch shell'} role="group" aria-label="Odaberi iskustvo">
+        {nails && <span className="nk-wordmark">nokti<span>.</span></span>}
         <button
           type="button"
-          className={experience === 'nails' ? 'scope-option active' : 'scope-option'}
-          aria-pressed={experience === 'nails'}
+          className={nails ? 'nk-tab is-on' : 'scope-option'}
+          aria-pressed={nails}
           onClick={() => setExperience('nails')}
           data-testid="tab-nails"
         >
@@ -80,7 +74,7 @@ function ExperienceSwitch() {
         </button>
         <button
           type="button"
-          className={experience === 'furniture' ? 'scope-option active' : 'scope-option'}
+          className={nails ? 'nk-tab' : (experience === 'furniture' ? 'scope-option active' : 'scope-option')}
           aria-pressed={experience === 'furniture'}
           onClick={() => setExperience('furniture')}
           data-testid="tab-furniture"
@@ -88,13 +82,34 @@ function ExperienceSwitch() {
           <span className="scope-text">Prostor (postojeće)</span>
         </button>
       </div>
-      <div hidden={experience !== 'nails'}><NailLook /></div>
-      <div hidden={experience !== 'furniture'}>
+      <div hidden={!nails}>
+        <NailLook />
+        <NailFooter />
+      </div>
+      <div hidden={nails}>
+        <Header />
+        <LanguageSuggestion />
         <PlannerHero />
         <Planner />
         <HowItWorks />
+        <Footer />
       </div>
     </>
+  );
+}
+
+/** Quiet footer for the nail experience. Carries the legal links; nothing else. */
+function NailFooter() {
+  return (
+    <footer className="nk-footer">
+      <div className="nk-footer-inner">
+        <span>Cijene i dostupnost provjeri kod trgovca prije kupnje. Nismo povezani ni s jednim trgovcem.</span>
+        <nav aria-label="Pravno">
+          <a href="#privacy" onClick={(e) => e.preventDefault()}>Privatnost</a>
+          <a href="#terms" onClick={(e) => e.preventDefault()}>Uvjeti</a>
+        </nav>
+      </div>
+    </footer>
   );
 }
 

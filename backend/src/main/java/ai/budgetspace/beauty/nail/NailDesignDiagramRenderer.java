@@ -27,9 +27,13 @@ public class NailDesignDiagramRenderer {
         this.resolver = resolver;
     }
 
-    private static final String NEUTRAL_NAIL = "#E8DED6";
-    private static final String OUTLINE = "#9A8C82";
-    private static final String TEXT = "#3A3330";
+    // Palette shared with nailkit.css. Plum rather than black for the ink, blush for the ground: the
+    // diagram sits inside the page, not on top of it, and nothing about it should read as clinical.
+    private static final String NEUTRAL_NAIL = "#F0DDE2";
+    private static final String OUTLINE = "#C9A7B3";
+    private static final String TEXT = "#3D1A2B";
+    private static final String MUTED = "#9A7385";
+    private static final String GROUND = "#FFFCFD";
 
     public String render(NailDesignSpecDto design) {
         List<NailDesignResolver.NailPlacement> nails = resolver.resolve(design);
@@ -39,7 +43,15 @@ public class NailDesignDiagramRenderer {
         StringBuilder svg = new StringBuilder();
         svg.append("<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 640 340\" width=\"640\" height=\"340\" ")
            .append("role=\"img\" aria-label=\"").append(esc(ariaLabel(design))).append("\">");
-        svg.append("<rect width=\"640\" height=\"340\" fill=\"#FDFBF8\"/>");
+        svg.append("<defs><linearGradient id=\"nkg\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">")
+           .append("<stop offset=\"0\" stop-color=\"").append(GROUND).append("\"/>")
+           .append("<stop offset=\"1\" stop-color=\"#FDF3F5\"/></linearGradient>")
+           // A soft gloss down each nail plate — the one thing that makes a flat shape read as lacquer.
+           .append("<linearGradient id=\"nkgloss\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"0\">")
+           .append("<stop offset=\"0\" stop-color=\"#FFFFFF\" stop-opacity=\"0.34\"/>")
+           .append("<stop offset=\"0.42\" stop-color=\"#FFFFFF\" stop-opacity=\"0.05\"/>")
+           .append("<stop offset=\"1\" stop-color=\"#000000\" stop-opacity=\"0.07\"/></linearGradient></defs>");
+        svg.append("<rect width=\"640\" height=\"340\" fill=\"url(#nkg)\"/>");
 
         // Two hands, five nails each, in the resolver's fixed order — that order is what makes this
         // deterministic and therefore testable byte-for-byte.
@@ -57,6 +69,8 @@ public class NailDesignDiagramRenderer {
             int y = baseY - height - lift[fingerIndex];
 
             svg.append(nailShape(x, y, width, height, design.shape(), fill));
+            // Gloss goes on before effects, so a cat-eye or chrome band still sits on top of the shine.
+            svg.append(nailShape(x, y, width, height, design.shape(), "url(#nkgloss)"));
             appendEffects(svg, design, x, y, width, height);
             if (nail.accent()) {
                 // A thin crescent in the accent's OWN colour, so a two-colour request reads as two colours.
@@ -69,21 +83,21 @@ public class NailDesignDiagramRenderer {
             }
             // Finger name under each nail, so the brief and the picture name the same nail.
             svg.append("<text x=\"").append(x + width / 2).append("\" y=\"").append(baseY + 16)
-               .append("\" font-family=\"ui-monospace,monospace\" font-size=\"9.5\" fill=\"")
-               .append(nail.accent() ? TEXT : "#9A8C82")
+               .append("\" font-family=\"Georgia,serif\" font-size=\"9.5\" fill=\"")
+               .append(nail.accent() ? TEXT : MUTED)
                .append("\" text-anchor=\"middle\">").append(esc(shortFinger(nail.finger()))).append("</text>");
         }
 
-        svg.append("<line x1=\"320\" y1=\"46\" x2=\"320\" y2=\"250\" stroke=\"#E5DBD2\" stroke-width=\"1\"/>");
+        svg.append("<line x1=\"320\" y1=\"46\" x2=\"320\" y2=\"250\" stroke=\"#F0DDE2\" stroke-width=\"1\"/>");
         for (int hand = 0; hand < 2; hand++) {
             svg.append("<text x=\"").append(hand == 0 ? 172 : 494).append("\" y=\"38\" ")
-               .append("font-family=\"ui-monospace,monospace\" font-size=\"10\" letter-spacing=\"1.6\" fill=\"#9A8C82\" ")
-               .append("text-anchor=\"middle\">").append(esc(hand == 0 ? "LIJEVA RUKA" : "DESNA RUKA")).append("</text>");
+               .append("font-family=\"Georgia,serif\" font-size=\"11.5\" font-style=\"italic\" fill=\"").append(MUTED)
+               .append("\" text-anchor=\"middle\">").append(esc(hand == 0 ? "lijeva ruka" : "desna ruka")).append("</text>");
         }
-        svg.append("<text x=\"320\" y=\"296\" font-family=\"ui-monospace,monospace\" font-size=\"10.5\" fill=\"#6B625C\" ")
+        svg.append("<text x=\"320\" y=\"296\" font-family=\"Georgia,serif\" font-size=\"11.5\" fill=\"").append(MUTED).append("\" ")
            .append("text-anchor=\"middle\">").append(esc(caption(design))).append("</text>");
         if (design.hasAccent()) {
-            svg.append("<text x=\"320\" y=\"316\" font-family=\"ui-monospace,monospace\" font-size=\"10\" fill=\"")
+            svg.append("<text x=\"320\" y=\"316\" font-family=\"Georgia,serif\" font-size=\"10\" fill=\"")
                .append(design.accentColorForDiagram()).append("\" text-anchor=\"middle\">")
                .append(esc("◆ " + accentLegend(design))).append("</text>");
         }

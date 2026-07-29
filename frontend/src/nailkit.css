@@ -1,318 +1,430 @@
 /* ===================================================================================================
-   Nail Look / Nail Kit — "the salon worksheet"
+   Nail Look / Nail Kit — visual identity
    ---------------------------------------------------------------------------------------------------
-   Design direction. Two jobs live on this page: something to SHOW a nail technician, and a shopping list
-   with a total you can trust. Both are documents, not feeds — so the page is built as a worksheet: ruled
-   fields with dotted leaders, small-caps labels, and every number set in monospace so columns line up and
-   a price reads as a fact rather than as marketing.
+   Brief: this must not look like the furniture planner, and it must look like it was made for women
+   choosing nail colour. The first attempt failed both — neutral ink on paper, hairline boxes and
+   monospace numbers read as a spec sheet, which is exactly BudgetSpace's register.
 
-   The tension the design leans on is precision about a glossy thing. Structure is clinical; the only
-   saturated colour on the page belongs to the product — the lacquer the user asked for, drawn in the
-   diagram. The UI stays out of its way, which is also why the accent is a muted lacquer rose rather than
-   a bright interface blue: it belongs to this subject and never competes with a swatch.
+   Direction: LACQUER. The palette comes from the object itself — a blush ground the colour of the inside
+   of a manicure box, deep plum instead of black so nothing on the page is cold, lipstick rose for anything
+   the user acts on, and gold leaf reserved for the accent detail the design itself calls for. Cards are
+   soft-cornered and lifted rather than ruled, because a beauty product is tactile, not filed.
 
-   Signature: the ten-nail diagram, large, updating live as the brief is edited. It is the actual product,
-   not decoration, so it gets the hero slot instead of a headline.
+   Type: a warm serif carries every heading, a plain sans carries reading text, and NOTHING is monospace.
+   Numbers use tabular-nums instead, so totals still align in a column without borrowing a developer's
+   typeface — the alignment was the useful part, the technical connotation was not.
 
-   Everything is scoped under .nk- so it cannot collide with the 7,000-line furniture stylesheet.
+   Restraint: gold appears only where the nail design has gold. Rose is only ever an action or a live state.
+   The saturated colour on the page belongs to the lacquer in the diagram; the interface stays quieter than
+   the product it is describing.
+
+   Scoped under .nk- so it cannot touch the 7,000-line furniture stylesheet.
    =================================================================================================== */
 
+/* --- own chrome: top bar + footer, so no other brand frames the page ------------------------------- */
+
+.nk-topbar {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  padding: 16px 28px; background: #3d1a2b;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+.nk-wordmark {
+  font-family: Georgia, "Iowan Old Style", serif;
+  font-size: 21px; color: #fbeff1; letter-spacing: 0.01em; margin-right: 14px;
+}
+.nk-wordmark span { color: #c4536b; }
+
+.nk-tab {
+  border: 0; background: transparent; cursor: pointer; border-radius: 999px;
+  padding: 8px 16px; font-size: 13.5px; font-weight: 500; color: rgba(251, 239, 241, 0.62);
+  transition: background 0.16s ease, color 0.16s ease;
+}
+.nk-tab:hover { color: #fbeff1; background: rgba(251, 239, 241, 0.09); }
+.nk-tab.is-on { background: #c4536b; color: #fff; font-weight: 600; }
+.nk-tab:focus-visible { outline: 2px solid #fbeff1; outline-offset: 2px; }
+
+.nk-footer {
+  background: #3d1a2b; color: rgba(251, 239, 241, 0.66);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 12.5px;
+}
+.nk-footer-inner {
+  max-width: 1140px; margin: 0 auto; padding: 26px 20px;
+  display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; align-items: center;
+}
+.nk-footer a { color: rgba(251, 239, 241, 0.66); text-decoration: none; margin-left: 20px; }
+.nk-footer a:hover { color: #fbeff1; text-decoration: underline; }
+
 .nk {
-  --nk-ink: #1a1614;
-  --nk-paper: #fdfbf8;
-  --nk-card: #ffffff;
-  --nk-rule: #ded5cc;
-  --nk-rule-strong: #c3b6aa;
-  --nk-slate: #6b625c;
-  --nk-lacquer: #8e2740;
-  --nk-lacquer-soft: #f6e8ec;
-  --nk-leaf: #b08d3f;
-  --nk-ok: #2f6b46;
-  --nk-ok-soft: #e9f2ec;
-  --nk-warn: #8a5a12;
-  --nk-warn-soft: #fbf1e0;
-  --nk-stop: #8f2f24;
-  --nk-stop-soft: #fbeae8;
+  --nk-blush: #fbeff1;
+  --nk-blush-deep: #f4dfe4;
+  --nk-porcelain: #fffcfd;
+  --nk-plum: #3d1a2b;
+  --nk-plum-soft: #6d4557;
+  --nk-mauve: #9a7385;
+  --nk-rose: #c4536b;
+  --nk-rose-deep: #a63a53;
+  --nk-rose-wash: #fde8ec;
+  --nk-gold: #b08d3f;
+  --nk-gold-wash: #f7efdd;
+  --nk-ok: #4a7c59;
+  --nk-ok-wash: #e8f2ea;
+  --nk-warn: #a8722c;
+  --nk-warn-wash: #fbf0e2;
+  --nk-stop: #a63a53;
+  --nk-stop-wash: #fbe6ea;
 
-  --nk-mono: ui-monospace, "SF Mono", "Cascadia Mono", "Roboto Mono", Consolas, monospace;
+  --nk-serif: Georgia, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
   --nk-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --nk-num: var(--nk-sans);
 
-  background: var(--nk-paper);
-  color: var(--nk-ink);
+  --nk-r: 14px;
+  --nk-lift: 0 2px 10px rgba(61, 26, 43, 0.06), 0 12px 34px rgba(61, 26, 43, 0.05);
+
+  background:
+    radial-gradient(1100px 460px at 12% -8%, #fdf5f6 0%, rgba(253, 245, 246, 0) 62%),
+    radial-gradient(900px 420px at 96% 4%, var(--nk-gold-wash) 0%, rgba(247, 239, 221, 0) 58%),
+    var(--nk-blush);
+  color: var(--nk-plum);
   font-family: var(--nk-sans);
-  padding: 32px 20px 64px;
+  padding: 40px 20px 72px;
 }
 
 .nk * { box-sizing: border-box; }
-
-.nk-shell { max-width: 1120px; margin: 0 auto; }
+.nk-shell { max-width: 1140px; margin: 0 auto; }
 
 /* --- masthead ------------------------------------------------------------------------------------ */
 
-.nk-masthead { border-bottom: 2px solid var(--nk-ink); padding-bottom: 14px; margin-bottom: 28px; }
+.nk-masthead { margin-bottom: 34px; }
 
 .nk-eyebrow {
-  font-family: var(--nk-mono);
-  font-size: 11px;
-  letter-spacing: 0.16em;
+  font-size: 11.5px;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--nk-slate);
-  margin: 0 0 6px;
+  color: var(--nk-mauve);
+  margin: 0 0 12px;
+  font-weight: 600;
 }
 
 .nk-title {
-  font-size: clamp(30px, 5.5vw, 52px);
-  line-height: 0.98;
-  letter-spacing: -0.035em;
-  font-weight: 760;
+  font-family: var(--nk-serif);
+  font-size: clamp(34px, 6vw, 60px);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  font-weight: 400;
   margin: 0;
 }
 
-.nk-title em { font-style: normal; color: var(--nk-lacquer); }
+.nk-title em {
+  font-style: italic;
+  color: var(--nk-rose);
+}
 
 .nk-standfirst {
-  margin: 12px 0 0;
-  max-width: 56ch;
-  font-size: 16px;
-  line-height: 1.55;
-  color: var(--nk-slate);
+  margin: 16px 0 0;
+  max-width: 54ch;
+  font-size: 16.5px;
+  line-height: 1.6;
+  color: var(--nk-plum-soft);
 }
 
-/* --- the prompt: one wide line, like filling in a form --------------------------------------------- */
+/* --- the prompt --------------------------------------------------------------------------------- */
 
-.nk-ask { margin-bottom: 32px; }
+.nk-ask {
+  margin-bottom: 34px;
+  background: var(--nk-porcelain);
+  border-radius: var(--nk-r);
+  box-shadow: var(--nk-lift);
+  padding: 22px 24px 24px;
+}
 
-.nk-ask-label {
-  display: block;
-  font-family: var(--nk-mono);
+.nk-ask-label,
+.nk-field-label,
+.nk-section-label,
+.nk-panel-title {
   font-size: 11px;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--nk-slate);
-  margin-bottom: 8px;
+  color: var(--nk-mauve);
+  font-weight: 700;
 }
+
+.nk-ask-label { display: block; margin-bottom: 10px; }
 
 .nk-ask-field {
   width: 100%;
   border: 0;
-  border-bottom: 2px solid var(--nk-ink);
+  border-bottom: 1.5px solid var(--nk-blush-deep);
   background: transparent;
-  font-family: var(--nk-sans);
-  font-size: clamp(17px, 2.4vw, 22px);
-  line-height: 1.45;
-  color: var(--nk-ink);
-  padding: 8px 2px 12px;
+  font-family: var(--nk-serif);
+  font-size: clamp(18px, 2.4vw, 24px);
+  line-height: 1.5;
+  color: var(--nk-plum);
+  padding: 6px 2px 14px;
   resize: vertical;
-  /* Sized to the sentence it holds. A taller box reads as "write an essay" and leaves a dead gap above
-     the rule, which made the underline look detached from the text sitting on it. */
-  min-height: 2.9em;
-  height: 2.9em;
+  min-height: 2.8em;
+  height: 2.8em;
   display: block;
   overflow: hidden;
+  transition: border-color 0.18s ease;
 }
 
-.nk-ask-field:focus { outline: 2px solid var(--nk-lacquer); outline-offset: 3px; }
-.nk-ask-field::placeholder { color: #b6aca4; }
+.nk-ask-field:focus { outline: none; border-bottom-color: var(--nk-rose); }
+.nk-ask-field::placeholder { color: #d3b6bf; font-style: italic; }
 
-.nk-ask-row { display: flex; gap: 20px; align-items: flex-end; flex-wrap: wrap; margin-top: 16px; }
+.nk-ask-row { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; margin-top: 18px; }
 
 /* --- buttons ------------------------------------------------------------------------------------- */
 
 .nk-btn {
-  font-family: var(--nk-mono);
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 12px 20px;
-  border: 1.5px solid var(--nk-ink);
-  background: var(--nk-ink);
-  color: var(--nk-paper);
+  font-family: var(--nk-sans);
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 13px 26px;
+  border: 1.5px solid var(--nk-rose);
+  border-radius: 999px;
+  background: var(--nk-rose);
+  color: #fff;
   cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease, transform 0.08s ease;
+  transition: background 0.16s ease, border-color 0.16s ease, transform 0.08s ease, box-shadow 0.16s ease;
+  box-shadow: 0 4px 14px rgba(196, 83, 107, 0.24);
 }
 
-.nk-btn:hover:not(:disabled) { background: var(--nk-lacquer); border-color: var(--nk-lacquer); }
+.nk-btn:hover:not(:disabled) { background: var(--nk-rose-deep); border-color: var(--nk-rose-deep); }
 .nk-btn:active:not(:disabled) { transform: translateY(1px); }
-.nk-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-.nk-btn:focus-visible { outline: 2px solid var(--nk-lacquer); outline-offset: 3px; }
+.nk-btn:disabled { opacity: 0.42; cursor: not-allowed; box-shadow: none; }
+.nk-btn:focus-visible { outline: 2px solid var(--nk-plum); outline-offset: 3px; }
 
-.nk-btn-ghost { background: transparent; color: var(--nk-ink); }
-.nk-btn-ghost:hover:not(:disabled) { background: var(--nk-ink); color: var(--nk-paper); border-color: var(--nk-ink); }
+.nk-btn-ghost {
+  background: transparent; color: var(--nk-rose-deep);
+  border-color: rgba(196, 83, 107, 0.4); box-shadow: none;
+}
+.nk-btn-ghost:hover:not(:disabled) { background: var(--nk-rose-wash); border-color: var(--nk-rose); color: var(--nk-rose-deep); }
 
-.nk-btn-sm { padding: 7px 12px; font-size: 11px; letter-spacing: 0.08em; }
+.nk-btn-sm { padding: 8px 16px; font-size: 12.5px; }
 
-/* --- the two-column worksheet -------------------------------------------------------------------- */
+/* --- panels -------------------------------------------------------------------------------------- */
 
-.nk-work { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 36px; align-items: start; }
+.nk-work { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 34px; align-items: start; }
+@media (max-width: 900px) { .nk-work { grid-template-columns: 1fr; gap: 26px; } }
 
-@media (max-width: 900px) { .nk-work { grid-template-columns: 1fr; gap: 28px; } }
-
-.nk-panel { background: var(--nk-card); border: 1px solid var(--nk-rule); padding: 22px; }
+.nk-panel {
+  background: var(--nk-porcelain);
+  border-radius: var(--nk-r);
+  box-shadow: var(--nk-lift);
+  padding: 26px 26px 28px;
+}
 
 .nk-panel-head {
   display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
-  border-bottom: 1.5px solid var(--nk-ink); padding-bottom: 10px; margin-bottom: 4px;
+  padding-bottom: 14px; margin-bottom: 6px;
+  border-bottom: 1px solid var(--nk-blush-deep);
 }
 
-.nk-panel-title {
-  font-family: var(--nk-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
-  margin: 0; font-weight: 600;
-}
+.nk-panel-title { margin: 0; }
+.nk-panel-meta { font-size: 12px; color: var(--nk-mauve); font-style: italic; }
 
-.nk-panel-meta { font-family: var(--nk-mono); font-size: 11px; color: var(--nk-slate); }
+/* --- fields -------------------------------------------------------------------------------------- */
 
-/* --- ruled fields with dotted leaders: the worksheet device ---------------------------------------- */
-
-.nk-field { display: flex; align-items: baseline; gap: 8px; padding: 11px 0; border-bottom: 1px dotted var(--nk-rule); }
+.nk-field { display: flex; align-items: center; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--nk-blush); }
 .nk-field:last-child { border-bottom: 0; }
-
-.nk-field-label {
-  font-family: var(--nk-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--nk-slate); white-space: nowrap;
-}
-
-.nk-field-leader { flex: 1; border-bottom: 1px dotted var(--nk-rule-strong); transform: translateY(-3px); min-width: 12px; }
-
-.nk-field-value { display: flex; align-items: center; gap: 8px; }
+.nk-field-label { white-space: nowrap; }
+.nk-field-leader { flex: 1; min-width: 10px; }
+.nk-field-value { display: flex; align-items: center; gap: 9px; }
 
 .nk-select, .nk-input {
-  font-family: var(--nk-sans); font-size: 14px; color: var(--nk-ink);
-  background: transparent; border: 1px solid var(--nk-rule); padding: 6px 8px; max-width: 100%;
+  font-family: var(--nk-sans); font-size: 14.5px; color: var(--nk-plum);
+  background: var(--nk-blush); border: 1px solid transparent; border-radius: 9px;
+  padding: 8px 11px; max-width: 100%; cursor: pointer;
+  transition: border-color 0.16s ease, background 0.16s ease;
 }
 
-.nk-select:focus, .nk-input:focus { outline: 2px solid var(--nk-lacquer); outline-offset: 1px; }
-.nk-input-num { width: 92px; font-family: var(--nk-mono); }
+.nk-select:hover, .nk-input:hover { background: var(--nk-rose-wash); }
+.nk-select:focus, .nk-input:focus { outline: none; border-color: var(--nk-rose); background: var(--nk-porcelain); }
+.nk-input-num { width: 104px; font-variant-numeric: tabular-nums; cursor: text; }
 
-.nk-swatch { width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--nk-rule-strong); flex: none; }
+.nk-swatch {
+  width: 22px; height: 22px; border-radius: 50%; flex: none;
+  border: 2px solid var(--nk-porcelain);
+  box-shadow: 0 0 0 1px var(--nk-blush-deep), 0 1px 4px rgba(61, 26, 43, 0.14);
+}
 
-/* --- chips for multi-select (effects, accent fingers, owned) --------------------------------------- */
+/* --- chips --------------------------------------------------------------------------------------- */
 
-.nk-chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 0 2px; }
+.nk-chips { display: flex; flex-wrap: wrap; gap: 7px; padding: 10px 0 4px; }
 
 .nk-chip {
-  font-family: var(--nk-mono); font-size: 11px; letter-spacing: 0.04em;
-  padding: 6px 11px; border: 1px solid var(--nk-rule-strong); background: transparent;
-  color: var(--nk-slate); cursor: pointer; border-radius: 999px; transition: all 0.12s ease;
+  font-family: var(--nk-sans); font-size: 13px; font-weight: 500;
+  padding: 8px 15px; border: 1px solid var(--nk-blush-deep); background: var(--nk-blush);
+  color: var(--nk-plum-soft); cursor: pointer; border-radius: 999px;
+  transition: all 0.14s ease;
 }
 
-.nk-chip:hover { border-color: var(--nk-ink); color: var(--nk-ink); }
-.nk-chip[aria-pressed="true"] { background: var(--nk-ink); border-color: var(--nk-ink); color: var(--nk-paper); }
-.nk-chip:focus-visible { outline: 2px solid var(--nk-lacquer); outline-offset: 2px; }
+.nk-chip:hover { border-color: var(--nk-rose); color: var(--nk-rose-deep); background: var(--nk-rose-wash); }
+.nk-chip[aria-pressed="true"] {
+  background: var(--nk-rose); border-color: var(--nk-rose); color: #fff;
+  box-shadow: 0 3px 10px rgba(196, 83, 107, 0.26);
+}
+.nk-chip:focus-visible { outline: 2px solid var(--nk-plum); outline-offset: 2px; }
 
-/* --- the diagram: the signature element ------------------------------------------------------------ */
+/* --- the diagram: the signature ------------------------------------------------------------------- */
 
-.nk-diagram { background: var(--nk-card); border: 1px solid var(--nk-rule); padding: 8px; }
-.nk-diagram svg { width: 100%; height: auto; display: block; }
+.nk-diagram {
+  background: var(--nk-porcelain); border-radius: var(--nk-r);
+  box-shadow: var(--nk-lift); padding: 10px 10px 4px; overflow: hidden;
+}
+.nk-diagram svg { width: 100%; height: auto; display: block; border-radius: 10px; }
 
 .nk-diagram-caption {
-  font-family: var(--nk-mono); font-size: 11px; color: var(--nk-slate);
-  padding: 8px 10px 4px; border-top: 1px dotted var(--nk-rule); margin-top: 4px;
+  font-size: 12.5px; line-height: 1.5; color: var(--nk-mauve);
+  padding: 12px 6px 10px; font-style: italic;
 }
 
-/* --- the fork: salon vs at home ------------------------------------------------------------------- */
+/* --- the fork ------------------------------------------------------------------------------------ */
 
-.nk-fork { margin-top: 32px; border-top: 2px solid var(--nk-ink); padding-top: 22px; }
-
-.nk-fork-options { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+.nk-fork { margin-top: 36px; padding-top: 28px; border-top: 1px solid var(--nk-blush-deep); }
+.nk-fork-options { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 18px; }
 @media (max-width: 640px) { .nk-fork-options { grid-template-columns: 1fr; } }
 
 .nk-fork-btn {
-  text-align: left; padding: 18px 20px; border: 1.5px solid var(--nk-ink);
-  background: var(--nk-card); cursor: pointer; transition: background 0.15s ease, color 0.15s ease;
+  text-align: left; padding: 22px 24px; border: 1.5px solid transparent; border-radius: var(--nk-r);
+  background: var(--nk-porcelain); box-shadow: var(--nk-lift); cursor: pointer;
+  transition: border-color 0.16s ease, transform 0.12s ease, box-shadow 0.16s ease;
 }
 
-.nk-fork-btn:hover:not(:disabled) { background: var(--nk-ink); color: var(--nk-paper); }
-.nk-fork-btn:hover:not(:disabled) .nk-fork-sub { color: rgba(253, 251, 248, 0.72); }
-.nk-fork-btn:disabled { opacity: 0.45; cursor: not-allowed; }
-.nk-fork-btn:focus-visible { outline: 2px solid var(--nk-lacquer); outline-offset: 3px; }
+.nk-fork-btn:hover:not(:disabled) {
+  border-color: var(--nk-rose); transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(196, 83, 107, 0.16), 0 18px 40px rgba(61, 26, 43, 0.07);
+}
+.nk-fork-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.nk-fork-btn:focus-visible { outline: 2px solid var(--nk-plum); outline-offset: 3px; }
 
 .nk-fork-name {
-  display: block; font-size: 19px; font-weight: 700; letter-spacing: -0.015em; margin-bottom: 4px;
+  display: block; font-family: var(--nk-serif); font-size: 22px; font-weight: 400;
+  margin-bottom: 6px; color: var(--nk-plum);
 }
+.nk-fork-sub { display: block; font-size: 13.5px; line-height: 1.5; color: var(--nk-plum-soft); }
 
-.nk-fork-sub { display: block; font-size: 13px; line-height: 1.45; color: var(--nk-slate); }
+/* --- status -------------------------------------------------------------------------------------- */
 
-/* --- status banner --------------------------------------------------------------------------------- */
+.nk-status { border-radius: 12px; padding: 16px 18px; margin-bottom: 22px; border: 1px solid transparent; }
+.nk-status-name { font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 700; }
+.nk-status-why { margin: 8px 0 0; font-size: 14.5px; line-height: 1.55; color: var(--nk-plum); }
 
-.nk-status { border-left: 4px solid; padding: 14px 16px; margin-bottom: 20px; }
-.nk-status-name { font-family: var(--nk-mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; }
-.nk-status-why { margin: 6px 0 0; font-size: 14px; line-height: 1.5; }
-
-.nk-status-ok { border-color: var(--nk-ok); background: var(--nk-ok-soft); }
+.nk-status-ok { background: var(--nk-ok-wash); border-color: rgba(74, 124, 89, 0.28); }
 .nk-status-ok .nk-status-name { color: var(--nk-ok); }
-.nk-status-warn { border-color: var(--nk-warn); background: var(--nk-warn-soft); }
+.nk-status-warn { background: var(--nk-warn-wash); border-color: rgba(168, 114, 44, 0.28); }
 .nk-status-warn .nk-status-name { color: var(--nk-warn); }
-.nk-status-stop { border-color: var(--nk-stop); background: var(--nk-stop-soft); }
+.nk-status-stop { background: var(--nk-stop-wash); border-color: rgba(166, 58, 83, 0.3); }
 .nk-status-stop .nk-status-name { color: var(--nk-stop); }
 
-/* --- the kit table --------------------------------------------------------------------------------- */
+/* --- the kit --------------------------------------------------------------------------------------- */
 
-.nk-kit-row { border-bottom: 1px solid var(--nk-rule); padding: 14px 0; display: grid; grid-template-columns: 92px 1fr auto; gap: 14px; align-items: start; }
+.nk-kit-row {
+  border-bottom: 1px solid var(--nk-blush); padding: 18px 0;
+  display: grid; grid-template-columns: 128px 1fr auto; gap: 18px; align-items: start;
+}
 @media (max-width: 640px) { .nk-kit-row { grid-template-columns: 1fr auto; } .nk-kit-slot { grid-column: 1 / -1; } }
 
-.nk-kit-slot { font-family: var(--nk-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--nk-slate); padding-top: 2px; }
-.nk-kit-name { font-size: 15px; font-weight: 600; line-height: 1.35; }
-.nk-kit-name a { color: var(--nk-ink); text-decoration: underline; text-decoration-color: var(--nk-rule-strong); text-underline-offset: 3px; }
-.nk-kit-name a:hover { text-decoration-color: var(--nk-lacquer); color: var(--nk-lacquer); }
-.nk-kit-sub { font-family: var(--nk-mono); font-size: 11px; color: var(--nk-slate); margin-top: 3px; }
-.nk-kit-note { font-size: 12px; line-height: 1.45; color: var(--nk-warn); margin-top: 5px; max-width: 52ch; }
-.nk-kit-why { font-size: 12px; line-height: 1.45; color: var(--nk-slate); margin-top: 4px; max-width: 52ch; }
-.nk-kit-price { font-family: var(--nk-mono); font-size: 15px; text-align: right; white-space: nowrap; }
+.nk-kit-slot {
+  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--nk-mauve); font-weight: 700; padding-top: 4px;
+}
+.nk-kit-name { font-family: var(--nk-serif); font-size: 17px; line-height: 1.35; }
+.nk-kit-name a { color: var(--nk-plum); text-decoration: none; border-bottom: 1px solid var(--nk-blush-deep); }
+.nk-kit-name a:hover { color: var(--nk-rose-deep); border-bottom-color: var(--nk-rose); }
+.nk-kit-sub { font-size: 12.5px; color: var(--nk-mauve); margin-top: 4px; }
+.nk-kit-note { font-size: 12.5px; line-height: 1.5; color: var(--nk-warn); margin-top: 7px; max-width: 52ch; }
+.nk-kit-why { font-size: 12.5px; line-height: 1.5; color: var(--nk-plum-soft); margin-top: 5px; max-width: 52ch; }
+.nk-kit-price { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.nk-kit-price > div { font-family: var(--nk-serif); font-size: 18px; margin-bottom: 6px; }
 
-.nk-tag { font-family: var(--nk-mono); font-size: 10px; letter-spacing: 0.07em; text-transform: uppercase; padding: 2px 7px; border: 1px solid currentColor; }
-.nk-tag-essential { color: var(--nk-ink); }
-.nk-tag-optional { color: var(--nk-slate); }
+.nk-tag {
+  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700;
+  padding: 4px 9px; border-radius: 999px; display: inline-block;
+}
+.nk-tag-essential { background: var(--nk-plum); color: var(--nk-blush); }
+.nk-tag-optional { background: var(--nk-blush-deep); color: var(--nk-plum-soft); }
 
-/* --- totals: the number she came for --------------------------------------------------------------- */
+/* --- totals ---------------------------------------------------------------------------------------- */
 
-.nk-totals { margin-top: 20px; border-top: 2px solid var(--nk-ink); padding-top: 16px; }
-.nk-total-line { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; font-family: var(--nk-mono); font-size: 13px; }
-.nk-total-line span:first-child { color: var(--nk-slate); }
-.nk-total-grand { font-size: 26px; font-weight: 700; padding-top: 10px; border-top: 1px dotted var(--nk-rule-strong); margin-top: 6px; }
-.nk-total-grand span:first-child { color: var(--nk-ink); font-size: 13px; }
-.nk-over { color: var(--nk-stop); }
-.nk-under { color: var(--nk-ok); }
+.nk-totals {
+  margin-top: 24px; padding: 20px 22px; border-radius: 12px;
+  background: linear-gradient(180deg, var(--nk-rose-wash), var(--nk-blush));
+}
+.nk-total-line {
+  display: flex; justify-content: space-between; align-items: baseline; padding: 6px 0;
+  font-size: 14px; font-variant-numeric: tabular-nums;
+}
+.nk-total-line span:first-child { color: var(--nk-plum-soft); }
+.nk-total-grand {
+  font-family: var(--nk-serif); font-size: 30px; padding-top: 14px; margin-top: 8px;
+  border-top: 1px solid rgba(166, 58, 83, 0.2);
+}
+.nk-total-grand span:first-child { font-family: var(--nk-sans); font-size: 13px; color: var(--nk-plum); font-weight: 600; }
+.nk-over { color: var(--nk-stop); font-weight: 600; }
+.nk-under { color: var(--nk-ok); font-weight: 600; }
 
-/* --- owned / refinements --------------------------------------------------------------------------- */
+/* --- owned / refinements ---------------------------------------------------------------------------- */
 
-.nk-owned { margin-top: 18px; padding: 14px 16px; background: var(--nk-lacquer-soft); border: 1px dashed var(--nk-rule-strong); }
-.nk-owned-item { display: flex; justify-content: space-between; font-family: var(--nk-mono); font-size: 12px; padding: 4px 0; }
-.nk-owned-item s { color: var(--nk-slate); }
+.nk-owned {
+  margin-top: 20px; padding: 16px 18px; border-radius: 12px;
+  background: var(--nk-gold-wash); border: 1px dashed rgba(176, 141, 63, 0.42);
+}
+.nk-owned-item { display: flex; justify-content: space-between; font-size: 13.5px; padding: 5px 0; }
+.nk-owned-item s { color: var(--nk-mauve); font-variant-numeric: tabular-nums; }
 
-.nk-refine { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 20px; padding-top: 16px; border-top: 1px dotted var(--nk-rule); }
+.nk-refine { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--nk-blush); }
 
-.nk-alts { margin-top: 8px; }
-.nk-alts summary { font-family: var(--nk-mono); font-size: 11px; letter-spacing: 0.06em; color: var(--nk-slate); cursor: pointer; }
-.nk-alts summary:hover { color: var(--nk-lacquer); }
-.nk-alt { display: flex; justify-content: space-between; gap: 10px; align-items: center; padding: 7px 0; border-bottom: 1px dotted var(--nk-rule); font-size: 13px; }
-.nk-alt-delta { font-family: var(--nk-mono); font-size: 11px; }
+.nk-alts { margin-top: 10px; }
+.nk-alts summary { font-size: 12.5px; color: var(--nk-rose-deep); cursor: pointer; font-weight: 600; }
+.nk-alts summary:hover { color: var(--nk-rose); }
+.nk-alt {
+  display: flex; justify-content: space-between; gap: 12px; align-items: center;
+  padding: 9px 0; border-bottom: 1px solid var(--nk-blush); font-size: 13.5px;
+}
+.nk-alt-delta { font-size: 12.5px; color: var(--nk-mauve); font-variant-numeric: tabular-nums; }
 
-/* --- salon brief: built to be screenshotted -------------------------------------------------------- */
+/* --- salon brief ------------------------------------------------------------------------------------ */
 
-.nk-brief-card { background: var(--nk-card); border: 1.5px solid var(--nk-ink); padding: 26px; }
-.nk-brief-quote { border-left: 3px solid var(--nk-leaf); padding: 14px 18px; background: var(--nk-paper); font-size: 16px; line-height: 1.6; margin: 4px 0 0; }
-.nk-placement { list-style: none; padding: 0; margin: 8px 0 0; columns: 2; column-gap: 26px; }
+.nk-brief-card {
+  background: var(--nk-porcelain); border-radius: var(--nk-r);
+  box-shadow: var(--nk-lift); padding: 30px;
+  border-top: 3px solid var(--nk-gold);
+}
+.nk-brief-quote {
+  border-radius: 12px; padding: 20px 22px; background: var(--nk-gold-wash);
+  font-family: var(--nk-serif); font-size: 17.5px; line-height: 1.65; margin: 6px 0 0; color: var(--nk-plum);
+}
+.nk-placement { list-style: none; padding: 0; margin: 10px 0 0; columns: 2; column-gap: 28px; }
 @media (max-width: 560px) { .nk-placement { columns: 1; } }
-.nk-placement li { font-family: var(--nk-mono); font-size: 12px; padding: 4px 0; break-inside: avoid; color: var(--nk-slate); }
-.nk-placement li.is-accent { color: var(--nk-ink); font-weight: 600; }
-.nk-placement li.is-accent::after { content: " ◆"; color: var(--nk-leaf); }
+.nk-placement li { font-size: 13.5px; padding: 5px 0; break-inside: avoid; color: var(--nk-plum-soft); }
+.nk-placement li.is-accent { color: var(--nk-plum); font-weight: 600; }
+.nk-placement li.is-accent::after { content: " ◆"; color: var(--nk-gold); }
 
-.nk-notes { margin: 8px 0 0; padding-left: 18px; }
-.nk-notes li { font-size: 13.5px; line-height: 1.55; padding: 3px 0; }
+.nk-notes { margin: 8px 0 0; padding-left: 20px; }
+.nk-notes li { font-size: 14px; line-height: 1.6; padding: 4px 0; color: var(--nk-plum-soft); }
 
-.nk-fineprint { font-size: 12px; line-height: 1.55; color: var(--nk-slate); margin-top: 16px; padding-top: 12px; border-top: 1px dotted var(--nk-rule); }
-
-.nk-section-label {
-  font-family: var(--nk-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--nk-slate); margin: 22px 0 6px;
+.nk-fineprint {
+  font-size: 12.5px; line-height: 1.6; color: var(--nk-mauve); margin-top: 18px;
+  padding-top: 14px; border-top: 1px solid var(--nk-blush);
 }
 
-.nk-assumptions { margin-top: 18px; }
-.nk-assumptions summary { font-family: var(--nk-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--nk-warn); cursor: pointer; padding: 6px 0; }
-.nk-assumptions li { font-size: 13px; line-height: 1.5; padding: 4px 0; }
+.nk-section-label { margin: 26px 0 8px; }
 
-.nk-error { border-left: 4px solid var(--nk-stop); background: var(--nk-stop-soft); padding: 12px 16px; margin: 16px 0; font-size: 14px; }
+.nk-assumptions { margin-top: 20px; }
+.nk-assumptions summary {
+  font-size: 12.5px; color: var(--nk-warn); cursor: pointer; padding: 8px 0; font-weight: 600;
+}
+.nk-assumptions li { font-size: 13.5px; line-height: 1.55; padding: 5px 0; color: var(--nk-plum-soft); }
+
+.nk-error {
+  border-radius: 12px; background: var(--nk-stop-wash); border: 1px solid rgba(166, 58, 83, 0.3);
+  padding: 14px 18px; margin: 18px 0; font-size: 14.5px; color: var(--nk-plum);
+}
 
 @media (prefers-reduced-motion: reduce) {
-  .nk-btn, .nk-chip, .nk-fork-btn { transition: none; }
+  .nk-btn, .nk-chip, .nk-fork-btn, .nk-select, .nk-input, .nk-ask-field { transition: none; }
+  .nk-fork-btn:hover:not(:disabled) { transform: none; }
 }
