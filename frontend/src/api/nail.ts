@@ -25,6 +25,18 @@ export interface SalonBrief {
   variabilityDisclaimer: string;
 }
 
+export interface Alternative {
+  externalId: string;
+  name: string;
+  shadeName: string | null;
+  retailer: string;
+  priceCents: number;
+  /** Negative = cheaper than the current pick. */
+  priceDeltaCents: number;
+  productUrl: string;
+  swatchImageUrl: string | null;
+}
+
 export interface KitItem {
   slot: string;
   slotLabelHr: string;
@@ -40,6 +52,8 @@ export interface KitItem {
   whyHr: string;
   noteHr: string | null;
   ownedAlready: boolean;
+  /** Same-slot swaps only, so choosing one can never break completeness. */
+  alternatives: Alternative[];
 }
 
 export interface ValidatedKit {
@@ -67,6 +81,16 @@ export interface NailGenerateResponse {
   salonBrief: SalonBrief | null;
   kit: ValidatedKit | null;
   blockedReasonHr: string | null;
+  /** Retailers that can fill every required slot alone. Empty = "one store" is not honestly offerable. */
+  singleStoreOptions: string[];
+}
+
+/** Refinements. Sent WITH the request so the kit is always re-derived and re-validated, never patched. */
+export interface RefineOptions {
+  pinnedBySlot?: Record<string, string>;
+  preferCheapest?: boolean;
+  singleRetailer?: string | null;
+  system?: 'regular-polish' | 'press-on';
 }
 
 async function post<T>(path: string, body: unknown): Promise<T> {
@@ -92,6 +116,17 @@ export function parseNailPrompt(prompt: string, budgetCents: number): Promise<Na
   return post<NailParseResponse>('/api/nail/parse', { prompt, budgetCents });
 }
 
-export function generateNailLook(brief: NailLookBrief, executionMode: 'SALON' | 'AT_HOME'): Promise<NailGenerateResponse> {
-  return post<NailGenerateResponse>('/api/nail/generate', { brief, executionMode });
+export function generateNailLook(
+  brief: NailLookBrief,
+  executionMode: 'SALON' | 'AT_HOME' | 'UNSPECIFIED',
+  refine: RefineOptions = {}
+): Promise<NailGenerateResponse> {
+  return post<NailGenerateResponse>('/api/nail/generate', {
+    brief,
+    executionMode,
+    pinnedBySlot: refine.pinnedBySlot ?? {},
+    preferCheapest: refine.preferCheapest ?? false,
+    singleRetailer: refine.singleRetailer ?? null,
+    system: refine.system ?? null,
+  });
 }

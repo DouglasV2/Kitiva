@@ -52,16 +52,34 @@ public class NailPilotCatalog {
         return pilot == null ? List.of() : pilot.products();
     }
 
-    /** Only rows that are actually buyable right now. Out-of-stock rows stay in the catalog on purpose. */
+    /**
+     * Rows that may actually be offered for a slot: in stock AND consumer-eligible. Out-of-stock and
+     * professional-only rows stay in the catalog on purpose, so the assembler has to reject them rather
+     * than be handed a pre-filtered world.
+     */
     public List<PilotProduct> availableForSlot(String slot) {
         return products().stream()
                 .filter(p -> p.kitSlot().equalsIgnoreCase(slot))
                 .filter(PilotProduct::inStock)
+                .filter(PilotProduct::consumerSafe)
+                .toList();
+    }
+
+    /** As {@link #availableForSlot} but restricted to one nail system ("both" rows always qualify). */
+    public List<PilotProduct> availableForSlot(String slot, String system) {
+        return availableForSlot(slot).stream()
+                .filter(p -> system == null || system.isBlank()
+                        || system.equalsIgnoreCase(p.nailSystem()) || "both".equalsIgnoreCase(p.nailSystem()))
                 .toList();
     }
 
     public List<PilotProduct> forSlot(String slot) {
         return products().stream().filter(p -> p.kitSlot().equalsIgnoreCase(slot)).toList();
+    }
+
+    /** Distinct retailers in the pilot, for provenance copy. */
+    public List<String> retailers() {
+        return products().stream().map(PilotProduct::retailer).filter(java.util.Objects::nonNull).distinct().toList();
     }
 
     public boolean isLoaded() {
@@ -73,19 +91,21 @@ public class NailPilotCatalog {
     }
 
     public String retailer() {
-        return pilot == null || pilot.source() == null ? "" : pilot.source().retailer();
+        return String.join(" + ", retailers());
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    record Pilot(String capturedAt, String market, String currency, String system, Source source,
-                 List<PilotProduct> products) {
+    record Pilot(String capturedAt, String market, String currency, List<String> systems,
+                 List<Source> sources, List<PilotProduct> products) {
         Pilot {
             products = products == null ? List.of() : List.copyOf(products);
+            sources = sources == null ? List.of() : List.copyOf(sources);
+            systems = systems == null ? List.of() : List.copyOf(systems);
         }
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    record Source(String retailer, String endpoint, String method) { }
+    record Source(String retailer, String endpoint, String platform, String method) { }
 
     /**
      * One pilot row.
@@ -101,28 +121,47 @@ public class NailPilotCatalog {
             String name,
             String brand,
             String shadeName,
+            String shadeCode,
             String retailer,
+            String retailerUrl,
             BigDecimal price,
+            String previousPrice,
             boolean inStock,
-            String availabilityStatus,
+            /** False when the retailer publishes no stock field at all - dm.hr does not. */
+            Boolean stockKnown,
             String productUrl,
             String imageUrl,
             String swatchImageUrl,
+            String gtin,
             String nailSystem,
             String applicationRole,
             String kitSlot,
             String colorFamily,
             Boolean shadeColorKnown,
             Boolean professionalOnly,
+            Boolean consumerEligible,
+            /** Published tip count / size range for a press-on set. Null when the retailer does not say. */
+            String sizeInfo,
             String hemaStatus,
             String tpoStatus,
-            String dataQuality,
-            String dataQualityNotes
+            Boolean inciPublished,
+            String verifiedAt,
+            String dataQuality
     ) {
         public PilotProduct {
             kitSlot = kitSlot == null ? "" : kitSlot.trim().toLowerCase();
             nailSystem = nailSystem == null ? "" : nailSystem.trim().toLowerCase();
             price = price == null ? BigDecimal.ZERO : price;
+        }
+
+        /** True when the retailer publishes no stock field, so the UI must tell the user to check. */
+        public boolean stockUnverified() {
+            return !Boolean.TRUE.equals(stockKnown);
+        }
+
+        /** True when this product may enter a consumer kit at all. Fails closed on a missing flag. */
+        public boolean consumerSafe() {
+            return Boolean.TRUE.equals(consumerEligible) && !Boolean.TRUE.equals(professionalOnly);
         }
 
         /** Price in integer cents — the unit every total in the beauty engine uses. */

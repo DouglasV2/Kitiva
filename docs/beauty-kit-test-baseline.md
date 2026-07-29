@@ -68,6 +68,18 @@ Pinned as known-red rather than repaired (owner decision, 2026-07-28). Repairing
 surface anyway. **This is a live defect in the upstream BudgetSpace `main`** (which is in sync with `origin/main`)
 and should be fixed there, independently of this pivot.
 
+## Browser: Playwright, 22 passing
+
+`cd frontend && npx playwright test` — 11 scenarios × 2 viewports (Desktop Chrome 1280×900, Pixel 7).
+
+Nothing is stubbed: the suite drives the real Vite app against the real backend, real Postgres and the real
+pilot catalog. A mocked network would let these pass while the product was broken. Screenshots land in
+`frontend/test-results/screens/`; the ones attached to the phase report are copied into `docs/screens/`.
+
+Scenarios: editable brief + live diagram · salon brief (10 placements, no prices) · at-home regular polish ·
+at-home press-on · owned items leave the total · over budget · safety blocked (forbidden system) · safety
+blocked (health concern) · replace this · make it cheaper · totals stable across regenerate and reload.
+
 ## Frontend: green
 
 `npm run build` ✅ · `npm test` 39/39 across 6 files ✅ · `check-i18n` ✅ (rescoped, 648 keys complete for hr/en)

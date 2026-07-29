@@ -44,13 +44,12 @@ function AppShell() {
       <Header />
       {/* Sprint 10.188: one-time "your browser is English — switch?" prompt (self-gates; no-op for most). */}
       <LanguageSuggestion />
-      {/* Sprint 10.182: header hero band (owner mockup) — three-beat headline + subtitle + new-plan / my-plans
-          actions + a drop-in visual. Replaces the slim PlannerSubnav strip; beta state is read inside. */}
-      <PlannerHero />
       {/* Beauty pivot vertical slice: the Nail Look experience runs alongside the furniture planner while
-          the pivot lands phase by phase. Both stay mounted so switching never loses work. */}
+          the pivot lands phase by phase. Both stay mounted so switching never loses work. The furniture
+          hero and how-it-works belong to the furniture product and are hidden while Nail Look is showing —
+          two competing headlines on one page is the fastest way to make a user test measure confusion
+          instead of the product. */}
       <ExperienceSwitch />
-      <HowItWorks />
       <Footer />
       {showGate && <AuthGate />}
       {/* Sprint 10.185: analytics-consent banner. Non-modal; only appears when a GA id is configured and no
@@ -90,7 +89,11 @@ function ExperienceSwitch() {
         </button>
       </div>
       <div hidden={experience !== 'nails'}><NailLook /></div>
-      <div hidden={experience !== 'furniture'}><Planner /></div>
+      <div hidden={experience !== 'furniture'}>
+        <PlannerHero />
+        <Planner />
+        <HowItWorks />
+      </div>
     </>
   );
 }

@@ -76,6 +76,12 @@ export interface NailDesignSpec {
   effects: NailEffect[];
   /** Named fingers, because 'prstenjak' is what she says and what the technician hears. */
   accentFingers: NailFinger[];
+  /**
+   * The accent's own colour, separate from the base. "dva diskretna zlatna detalja" is two colours in one
+   * sentence, so the diagram has to draw both and the kit has to buy both.
+   */
+  accentColorKey: string;
+  accentColorHex?: string | null;
   accentDescription: string;
   symmetry: NailSymmetry;
   styleWords: string[];

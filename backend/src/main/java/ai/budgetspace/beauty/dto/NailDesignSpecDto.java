@@ -41,6 +41,11 @@ public record NailDesignSpecDto(
         // Accents: named fingers rather than indices, because "prstenjak" is what she says and what the
         // technician hears. Empty = a uniform design with no accent nail.
         List<Finger> accentFingers,
+        // The accent's own colour, separate from the base. "dva diskretna zlatna detalja" is two colours in
+        // one sentence, and the kit has to buy both - so the diagram has to draw both and the brief has to
+        // say both. Null hex = no distinct accent colour was stated.
+        String accentColorKey,
+        String accentColorHex,
         String accentDescription,
         Symmetry symmetry,
         List<String> styleWords,
@@ -125,6 +130,8 @@ public record NailDesignSpecDto(
         baseColorKey = baseColorKey == null ? "" : baseColorKey.trim().toLowerCase();
         baseColorHex = baseColorHex == null || baseColorHex.isBlank() ? null : baseColorHex.trim();
         baseColorRawText = baseColorRawText == null ? "" : baseColorRawText.trim();
+        accentColorKey = accentColorKey == null ? "" : accentColorKey.trim().toLowerCase();
+        accentColorHex = accentColorHex == null || accentColorHex.isBlank() ? null : accentColorHex.trim();
         accentDescription = accentDescription == null ? "" : accentDescription.trim();
         // Defaults chosen so a half-parsed prompt still yields a drawable, sayable, buyable spec rather
         // than a null-riddled object every consumer has to defend against.
@@ -142,6 +149,16 @@ public record NailDesignSpecDto(
     /** True when an accent was requested at all. */
     public boolean hasAccent() {
         return !accentFingers.isEmpty();
+    }
+
+    /** True when the accent has its own colour, so the kit must buy a second product for it. */
+    public boolean hasDistinctAccentColor() {
+        return hasAccent() && accentColorHex != null && !accentColorHex.isBlank();
+    }
+
+    /** Accent colour for drawing, falling back to gold leaf when an accent was asked for without a colour. */
+    public String accentColorForDiagram() {
+        return accentColorHex == null || accentColorHex.isBlank() ? "#B08D3F" : accentColorHex;
     }
 
     /** Effects with a real visual consequence ({@link Effect#NONE} filtered out). */

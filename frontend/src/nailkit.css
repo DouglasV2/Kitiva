@@ -1,0 +1,318 @@
+/* ===================================================================================================
+   Nail Look / Nail Kit — "the salon worksheet"
+   ---------------------------------------------------------------------------------------------------
+   Design direction. Two jobs live on this page: something to SHOW a nail technician, and a shopping list
+   with a total you can trust. Both are documents, not feeds — so the page is built as a worksheet: ruled
+   fields with dotted leaders, small-caps labels, and every number set in monospace so columns line up and
+   a price reads as a fact rather than as marketing.
+
+   The tension the design leans on is precision about a glossy thing. Structure is clinical; the only
+   saturated colour on the page belongs to the product — the lacquer the user asked for, drawn in the
+   diagram. The UI stays out of its way, which is also why the accent is a muted lacquer rose rather than
+   a bright interface blue: it belongs to this subject and never competes with a swatch.
+
+   Signature: the ten-nail diagram, large, updating live as the brief is edited. It is the actual product,
+   not decoration, so it gets the hero slot instead of a headline.
+
+   Everything is scoped under .nk- so it cannot collide with the 7,000-line furniture stylesheet.
+   =================================================================================================== */
+
+.nk {
+  --nk-ink: #1a1614;
+  --nk-paper: #fdfbf8;
+  --nk-card: #ffffff;
+  --nk-rule: #ded5cc;
+  --nk-rule-strong: #c3b6aa;
+  --nk-slate: #6b625c;
+  --nk-lacquer: #8e2740;
+  --nk-lacquer-soft: #f6e8ec;
+  --nk-leaf: #b08d3f;
+  --nk-ok: #2f6b46;
+  --nk-ok-soft: #e9f2ec;
+  --nk-warn: #8a5a12;
+  --nk-warn-soft: #fbf1e0;
+  --nk-stop: #8f2f24;
+  --nk-stop-soft: #fbeae8;
+
+  --nk-mono: ui-monospace, "SF Mono", "Cascadia Mono", "Roboto Mono", Consolas, monospace;
+  --nk-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  background: var(--nk-paper);
+  color: var(--nk-ink);
+  font-family: var(--nk-sans);
+  padding: 32px 20px 64px;
+}
+
+.nk * { box-sizing: border-box; }
+
+.nk-shell { max-width: 1120px; margin: 0 auto; }
+
+/* --- masthead ------------------------------------------------------------------------------------ */
+
+.nk-masthead { border-bottom: 2px solid var(--nk-ink); padding-bottom: 14px; margin-bottom: 28px; }
+
+.nk-eyebrow {
+  font-family: var(--nk-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--nk-slate);
+  margin: 0 0 6px;
+}
+
+.nk-title {
+  font-size: clamp(30px, 5.5vw, 52px);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  font-weight: 760;
+  margin: 0;
+}
+
+.nk-title em { font-style: normal; color: var(--nk-lacquer); }
+
+.nk-standfirst {
+  margin: 12px 0 0;
+  max-width: 56ch;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--nk-slate);
+}
+
+/* --- the prompt: one wide line, like filling in a form --------------------------------------------- */
+
+.nk-ask { margin-bottom: 32px; }
+
+.nk-ask-label {
+  display: block;
+  font-family: var(--nk-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--nk-slate);
+  margin-bottom: 8px;
+}
+
+.nk-ask-field {
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid var(--nk-ink);
+  background: transparent;
+  font-family: var(--nk-sans);
+  font-size: clamp(17px, 2.4vw, 22px);
+  line-height: 1.45;
+  color: var(--nk-ink);
+  padding: 8px 2px 12px;
+  resize: vertical;
+  /* Sized to the sentence it holds. A taller box reads as "write an essay" and leaves a dead gap above
+     the rule, which made the underline look detached from the text sitting on it. */
+  min-height: 2.9em;
+  height: 2.9em;
+  display: block;
+  overflow: hidden;
+}
+
+.nk-ask-field:focus { outline: 2px solid var(--nk-lacquer); outline-offset: 3px; }
+.nk-ask-field::placeholder { color: #b6aca4; }
+
+.nk-ask-row { display: flex; gap: 20px; align-items: flex-end; flex-wrap: wrap; margin-top: 16px; }
+
+/* --- buttons ------------------------------------------------------------------------------------- */
+
+.nk-btn {
+  font-family: var(--nk-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 12px 20px;
+  border: 1.5px solid var(--nk-ink);
+  background: var(--nk-ink);
+  color: var(--nk-paper);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.08s ease;
+}
+
+.nk-btn:hover:not(:disabled) { background: var(--nk-lacquer); border-color: var(--nk-lacquer); }
+.nk-btn:active:not(:disabled) { transform: translateY(1px); }
+.nk-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.nk-btn:focus-visible { outline: 2px solid var(--nk-lacquer); outline-offset: 3px; }
+
+.nk-btn-ghost { background: transparent; color: var(--nk-ink); }
+.nk-btn-ghost:hover:not(:disabled) { background: var(--nk-ink); color: var(--nk-paper); border-color: var(--nk-ink); }
+
+.nk-btn-sm { padding: 7px 12px; font-size: 11px; letter-spacing: 0.08em; }
+
+/* --- the two-column worksheet -------------------------------------------------------------------- */
+
+.nk-work { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 36px; align-items: start; }
+
+@media (max-width: 900px) { .nk-work { grid-template-columns: 1fr; gap: 28px; } }
+
+.nk-panel { background: var(--nk-card); border: 1px solid var(--nk-rule); padding: 22px; }
+
+.nk-panel-head {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+  border-bottom: 1.5px solid var(--nk-ink); padding-bottom: 10px; margin-bottom: 4px;
+}
+
+.nk-panel-title {
+  font-family: var(--nk-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+  margin: 0; font-weight: 600;
+}
+
+.nk-panel-meta { font-family: var(--nk-mono); font-size: 11px; color: var(--nk-slate); }
+
+/* --- ruled fields with dotted leaders: the worksheet device ---------------------------------------- */
+
+.nk-field { display: flex; align-items: baseline; gap: 8px; padding: 11px 0; border-bottom: 1px dotted var(--nk-rule); }
+.nk-field:last-child { border-bottom: 0; }
+
+.nk-field-label {
+  font-family: var(--nk-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--nk-slate); white-space: nowrap;
+}
+
+.nk-field-leader { flex: 1; border-bottom: 1px dotted var(--nk-rule-strong); transform: translateY(-3px); min-width: 12px; }
+
+.nk-field-value { display: flex; align-items: center; gap: 8px; }
+
+.nk-select, .nk-input {
+  font-family: var(--nk-sans); font-size: 14px; color: var(--nk-ink);
+  background: transparent; border: 1px solid var(--nk-rule); padding: 6px 8px; max-width: 100%;
+}
+
+.nk-select:focus, .nk-input:focus { outline: 2px solid var(--nk-lacquer); outline-offset: 1px; }
+.nk-input-num { width: 92px; font-family: var(--nk-mono); }
+
+.nk-swatch { width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--nk-rule-strong); flex: none; }
+
+/* --- chips for multi-select (effects, accent fingers, owned) --------------------------------------- */
+
+.nk-chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 0 2px; }
+
+.nk-chip {
+  font-family: var(--nk-mono); font-size: 11px; letter-spacing: 0.04em;
+  padding: 6px 11px; border: 1px solid var(--nk-rule-strong); background: transparent;
+  color: var(--nk-slate); cursor: pointer; border-radius: 999px; transition: all 0.12s ease;
+}
+
+.nk-chip:hover { border-color: var(--nk-ink); color: var(--nk-ink); }
+.nk-chip[aria-pressed="true"] { background: var(--nk-ink); border-color: var(--nk-ink); color: var(--nk-paper); }
+.nk-chip:focus-visible { outline: 2px solid var(--nk-lacquer); outline-offset: 2px; }
+
+/* --- the diagram: the signature element ------------------------------------------------------------ */
+
+.nk-diagram { background: var(--nk-card); border: 1px solid var(--nk-rule); padding: 8px; }
+.nk-diagram svg { width: 100%; height: auto; display: block; }
+
+.nk-diagram-caption {
+  font-family: var(--nk-mono); font-size: 11px; color: var(--nk-slate);
+  padding: 8px 10px 4px; border-top: 1px dotted var(--nk-rule); margin-top: 4px;
+}
+
+/* --- the fork: salon vs at home ------------------------------------------------------------------- */
+
+.nk-fork { margin-top: 32px; border-top: 2px solid var(--nk-ink); padding-top: 22px; }
+
+.nk-fork-options { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+@media (max-width: 640px) { .nk-fork-options { grid-template-columns: 1fr; } }
+
+.nk-fork-btn {
+  text-align: left; padding: 18px 20px; border: 1.5px solid var(--nk-ink);
+  background: var(--nk-card); cursor: pointer; transition: background 0.15s ease, color 0.15s ease;
+}
+
+.nk-fork-btn:hover:not(:disabled) { background: var(--nk-ink); color: var(--nk-paper); }
+.nk-fork-btn:hover:not(:disabled) .nk-fork-sub { color: rgba(253, 251, 248, 0.72); }
+.nk-fork-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.nk-fork-btn:focus-visible { outline: 2px solid var(--nk-lacquer); outline-offset: 3px; }
+
+.nk-fork-name {
+  display: block; font-size: 19px; font-weight: 700; letter-spacing: -0.015em; margin-bottom: 4px;
+}
+
+.nk-fork-sub { display: block; font-size: 13px; line-height: 1.45; color: var(--nk-slate); }
+
+/* --- status banner --------------------------------------------------------------------------------- */
+
+.nk-status { border-left: 4px solid; padding: 14px 16px; margin-bottom: 20px; }
+.nk-status-name { font-family: var(--nk-mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; }
+.nk-status-why { margin: 6px 0 0; font-size: 14px; line-height: 1.5; }
+
+.nk-status-ok { border-color: var(--nk-ok); background: var(--nk-ok-soft); }
+.nk-status-ok .nk-status-name { color: var(--nk-ok); }
+.nk-status-warn { border-color: var(--nk-warn); background: var(--nk-warn-soft); }
+.nk-status-warn .nk-status-name { color: var(--nk-warn); }
+.nk-status-stop { border-color: var(--nk-stop); background: var(--nk-stop-soft); }
+.nk-status-stop .nk-status-name { color: var(--nk-stop); }
+
+/* --- the kit table --------------------------------------------------------------------------------- */
+
+.nk-kit-row { border-bottom: 1px solid var(--nk-rule); padding: 14px 0; display: grid; grid-template-columns: 92px 1fr auto; gap: 14px; align-items: start; }
+@media (max-width: 640px) { .nk-kit-row { grid-template-columns: 1fr auto; } .nk-kit-slot { grid-column: 1 / -1; } }
+
+.nk-kit-slot { font-family: var(--nk-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--nk-slate); padding-top: 2px; }
+.nk-kit-name { font-size: 15px; font-weight: 600; line-height: 1.35; }
+.nk-kit-name a { color: var(--nk-ink); text-decoration: underline; text-decoration-color: var(--nk-rule-strong); text-underline-offset: 3px; }
+.nk-kit-name a:hover { text-decoration-color: var(--nk-lacquer); color: var(--nk-lacquer); }
+.nk-kit-sub { font-family: var(--nk-mono); font-size: 11px; color: var(--nk-slate); margin-top: 3px; }
+.nk-kit-note { font-size: 12px; line-height: 1.45; color: var(--nk-warn); margin-top: 5px; max-width: 52ch; }
+.nk-kit-why { font-size: 12px; line-height: 1.45; color: var(--nk-slate); margin-top: 4px; max-width: 52ch; }
+.nk-kit-price { font-family: var(--nk-mono); font-size: 15px; text-align: right; white-space: nowrap; }
+
+.nk-tag { font-family: var(--nk-mono); font-size: 10px; letter-spacing: 0.07em; text-transform: uppercase; padding: 2px 7px; border: 1px solid currentColor; }
+.nk-tag-essential { color: var(--nk-ink); }
+.nk-tag-optional { color: var(--nk-slate); }
+
+/* --- totals: the number she came for --------------------------------------------------------------- */
+
+.nk-totals { margin-top: 20px; border-top: 2px solid var(--nk-ink); padding-top: 16px; }
+.nk-total-line { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; font-family: var(--nk-mono); font-size: 13px; }
+.nk-total-line span:first-child { color: var(--nk-slate); }
+.nk-total-grand { font-size: 26px; font-weight: 700; padding-top: 10px; border-top: 1px dotted var(--nk-rule-strong); margin-top: 6px; }
+.nk-total-grand span:first-child { color: var(--nk-ink); font-size: 13px; }
+.nk-over { color: var(--nk-stop); }
+.nk-under { color: var(--nk-ok); }
+
+/* --- owned / refinements --------------------------------------------------------------------------- */
+
+.nk-owned { margin-top: 18px; padding: 14px 16px; background: var(--nk-lacquer-soft); border: 1px dashed var(--nk-rule-strong); }
+.nk-owned-item { display: flex; justify-content: space-between; font-family: var(--nk-mono); font-size: 12px; padding: 4px 0; }
+.nk-owned-item s { color: var(--nk-slate); }
+
+.nk-refine { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 20px; padding-top: 16px; border-top: 1px dotted var(--nk-rule); }
+
+.nk-alts { margin-top: 8px; }
+.nk-alts summary { font-family: var(--nk-mono); font-size: 11px; letter-spacing: 0.06em; color: var(--nk-slate); cursor: pointer; }
+.nk-alts summary:hover { color: var(--nk-lacquer); }
+.nk-alt { display: flex; justify-content: space-between; gap: 10px; align-items: center; padding: 7px 0; border-bottom: 1px dotted var(--nk-rule); font-size: 13px; }
+.nk-alt-delta { font-family: var(--nk-mono); font-size: 11px; }
+
+/* --- salon brief: built to be screenshotted -------------------------------------------------------- */
+
+.nk-brief-card { background: var(--nk-card); border: 1.5px solid var(--nk-ink); padding: 26px; }
+.nk-brief-quote { border-left: 3px solid var(--nk-leaf); padding: 14px 18px; background: var(--nk-paper); font-size: 16px; line-height: 1.6; margin: 4px 0 0; }
+.nk-placement { list-style: none; padding: 0; margin: 8px 0 0; columns: 2; column-gap: 26px; }
+@media (max-width: 560px) { .nk-placement { columns: 1; } }
+.nk-placement li { font-family: var(--nk-mono); font-size: 12px; padding: 4px 0; break-inside: avoid; color: var(--nk-slate); }
+.nk-placement li.is-accent { color: var(--nk-ink); font-weight: 600; }
+.nk-placement li.is-accent::after { content: " ◆"; color: var(--nk-leaf); }
+
+.nk-notes { margin: 8px 0 0; padding-left: 18px; }
+.nk-notes li { font-size: 13.5px; line-height: 1.55; padding: 3px 0; }
+
+.nk-fineprint { font-size: 12px; line-height: 1.55; color: var(--nk-slate); margin-top: 16px; padding-top: 12px; border-top: 1px dotted var(--nk-rule); }
+
+.nk-section-label {
+  font-family: var(--nk-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--nk-slate); margin: 22px 0 6px;
+}
+
+.nk-assumptions { margin-top: 18px; }
+.nk-assumptions summary { font-family: var(--nk-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--nk-warn); cursor: pointer; padding: 6px 0; }
+.nk-assumptions li { font-size: 13px; line-height: 1.5; padding: 4px 0; }
+
+.nk-error { border-left: 4px solid var(--nk-stop); background: var(--nk-stop-soft); padding: 12px 16px; margin: 16px 0; font-size: 14px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .nk-btn, .nk-chip, .nk-fork-btn { transition: none; }
+}

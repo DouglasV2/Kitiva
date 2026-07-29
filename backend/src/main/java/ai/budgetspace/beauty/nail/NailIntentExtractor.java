@@ -118,6 +118,12 @@ public class NailIntentExtractor {
     private static final Pattern SALON = Pattern.compile("u\\s*salon\\w*|kod\\s*majstoric\\w*|nail\\s*tech");
     private static final Pattern AT_HOME = Pattern.compile("kod\\s*kuc\\w*|\\bdoma\\b|samostalno|sama\\s*sebi");
     private static final Pattern ASYMMETRIC = Pattern.compile("razlicit\\w*\\s*(?:na\\s*)?ruk\\w*|asimetric\\w*");
+    /** Words that mark a colour as belonging to the ACCENT rather than the base. */
+    private static final Pattern ACCENT_CONTEXT =
+            Pattern.compile("detalj\\w*|akcent\\w*|naglas\\w*|linij\\w*|polumjesec\\w*|vrh\\w*|prstenj\\w*");
+    /** Croatian number words for accent counts, so "dva detalja" resolves to two nails. */
+    private static final Map<String, Integer> COUNT_WORDS = Map.of(
+            "jedan", 1, "jedno", 1, "jednim", 1, "dva", 2, "dvije", 2, "dvama", 2, "tri", 3, "cetiri", 4);
 
     private static final Pattern FORBIDDEN_SYSTEM = Pattern.compile(
             "builder\\s*gel|polygel|poly\\s*gel|acrygel|akrilgel|akril\\w*|nadogradn\\w*|hard\\s*gel|dip\\s*powder");
@@ -150,16 +156,41 @@ public class NailIntentExtractor {
             if (matchesOutsideNegation(pattern, text, scope)) effects.add(effect);
         });
 
+        // Colours, in the order they appear. "burgundy nokti s dva zlatna detalja" names TWO colours in one
+        // sentence: the first is the base, a later one attached to an accent word is the accent. Taking only
+        // the first match would silently drop the gold the kit has to buy.
+        record Hit(String key, String hex, String raw, int at) { }
+        List<Hit> hits = new ArrayList<>();
+        for (Map.Entry<String, String[]> e : COLORS.entrySet()) {
+            Matcher m = Pattern.compile(e.getValue()[1]).matcher(text);
+            while (m.find()) {
+                if (!scope.isNegated(m.start())) hits.add(new Hit(e.getKey(), e.getValue()[0], m.group(), m.start()));
+            }
+        }
+        hits.sort((a, b) -> Integer.compare(a.at(), b.at()));
+
         String colorKey = "";
         String colorHex = null;
         String colorRaw = "";
-        for (Map.Entry<String, String[]> e : COLORS.entrySet()) {
-            Matcher m = Pattern.compile(e.getValue()[1]).matcher(text);
-            if (m.find() && !scope.isNegated(m.start())) {
-                colorKey = e.getKey();
-                colorHex = e.getValue()[0];
-                colorRaw = m.group();
-                break;
+        String accentColorKey = "";
+        String accentColorHex = null;
+        if (!hits.isEmpty()) {
+            Hit base = hits.get(0);
+            colorKey = base.key();
+            colorHex = base.hex();
+            colorRaw = base.raw();
+            // A later, different colour sitting near an accent word ("detalj", "akcent", "naglasak") is the
+            // accent colour. Without that proximity check, "crveni ili roza" would invent an accent.
+            for (int i = 1; i < hits.size(); i++) {
+                Hit h = hits.get(i);
+                if (h.key().equals(colorKey)) continue;
+                int from = Math.max(0, h.at() - 30);
+                int to = Math.min(text.length(), h.at() + 40);
+                if (ACCENT_CONTEXT.matcher(text.substring(from, to)).find()) {
+                    accentColorKey = h.key();
+                    accentColorHex = h.hex();
+                    break;
+                }
             }
         }
 
@@ -167,6 +198,24 @@ public class NailIntentExtractor {
         FINGERS.forEach((finger, pattern) -> {
             if (matchesOutsideNegation(pattern, text, scope)) accents.add(finger);
         });
+
+        // "dva diskretna zlatna detalja" names a COUNT but no finger. That is how people actually ask, so
+        // resolve it rather than dropping the accent: with mirrored hands, the ring finger gives exactly two
+        // accent nails, which is what she asked for. Recorded as an assumption so she can move it.
+        Integer statedCount = null;
+        if (accents.isEmpty() && ACCENT_CONTEXT.matcher(text).find()) {
+            for (Map.Entry<String, Integer> e : COUNT_WORDS.entrySet()) {
+                Matcher m = Pattern.compile("\\b" + e.getKey() + "\\b").matcher(text);
+                if (m.find() && !scope.isNegated(m.start())) {
+                    statedCount = e.getValue();
+                    break;
+                }
+            }
+            if (statedCount != null) {
+                accents.add(statedCount >= 4 ? NailDesignSpecDto.Finger.INDEX : NailDesignSpecDto.Finger.RING);
+                if (statedCount >= 4) accents.add(NailDesignSpecDto.Finger.RING);
+            }
+        }
 
         NailDesignSpecDto.Symmetry symmetry = ASYMMETRIC.matcher(text).find()
                 ? NailDesignSpecDto.Symmetry.ASYMMETRIC_STATED
@@ -182,9 +231,16 @@ public class NailIntentExtractor {
             assumptions.add(Assumption.of("symmetry", "mirrored",
                     "Nije receno da se ruke razlikuju, pa je dizajn zrcalan na obje ruke."));
         }
+        if (statedCount != null) {
+            assumptions.add(Assumption.of("accentFingers",
+                    accents.stream().map(NailDesignSpecDto.Finger::croatianLabel).reduce((a, b) -> a + " + " + b).orElse(""),
+                    "Trazen je broj detalja (" + statedCount + "), ali ne i koji nokat. Stavljeni su na "
+                    + "prstenjak, sto uz zrcalni dizajn daje tocno toliko naglasenih noktiju."));
+        }
 
         NailDesignSpecDto design = new NailDesignSpecDto(
                 shape, length, colorKey, colorHex, colorRaw, finish, effects, accents,
+                accentColorKey, accentColorHex,
                 accents.isEmpty() ? "" : "diskretan detalj", symmetry, List.of(), List.of());
 
         NailLookBriefDto.ExecutionMode mode = requestedMode;

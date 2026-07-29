@@ -59,7 +59,7 @@ class NailDesignSpecDtoTest {
                 "nude", "#E4C9B6", "nude roza", NailDesignSpecDto.Finish.MATTE,
                 List.of(NailDesignSpecDto.Effect.FRENCH),
                 List.of(NailDesignSpecDto.Finger.RING, NailDesignSpecDto.Finger.THUMB),
-                "zlatni detalj", NailDesignSpecDto.Symmetry.MIRRORED,
+                "gold", "#B08D3F", "zlatni detalj", NailDesignSpecDto.Symmetry.MIRRORED,
                 List.of("minimalistički"), List.of());
 
         NailDesignSpecDto reparsed = mapper.readValue(mapper.writeValueAsString(design), NailDesignSpecDto.class);

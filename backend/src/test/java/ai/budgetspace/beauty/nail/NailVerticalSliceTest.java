@@ -223,7 +223,132 @@ class NailVerticalSliceTest {
             assertThat(i.name()).isNotBlank();
         });
         assertThat(kit.catalogProvenanceHr()).contains("Golden Rose");
-        assertThat(kit.retailerCount()).isEqualTo(1);
+        // Two retailers: colour and base live at Golden Rose, removal and the file at dm. That split is
+        // exactly why "use one store" has to report a real trade-off instead of pretending it is free.
+        assertThat(kit.retailerCount()).isEqualTo(2);
+    }
+
+    // ------------------------------------------------------------------------------------ press-ons
+
+    @Test
+    void aPressOnKitFillsItsOwnGraph() {
+        var kit = assembler.assemble(brief("kratki almond nokti kod kuce", NailLookBriefDto.ExecutionMode.AT_HOME, 0),
+                new NailKitAssembler.Preferences(java.util.Map.of(), false, null, "press-on"));
+
+        assertThat(kit.status().isComplete()).isTrue();
+        assertThat(kit.items()).extracting(NailKitAssembler.KitItem::slot)
+                .contains("press-on-set", "adhesive", "file", "removal");
+        // Adhesive and removal are REQUIRED for press-ons: that is where a bad at-home job damages a nail.
+        assertThat(kit.items()).filteredOn(i -> "adhesive".equals(i.slot()) || "removal".equals(i.slot()))
+                .allSatisfy(i -> assertThat(i.essential()).isTrue());
+    }
+
+    @Test
+    void aLengthTheNaturalNailCannotCarryRoutesToPressOnsNotAnExtensionSystem() {
+        var kit = assembler.assemble(brief("jako duge nokte kod kuce", NailLookBriefDto.ExecutionMode.AT_HOME, 0));
+
+        assertThat(kit.items()).extracting(NailKitAssembler.KitItem::slot).contains("press-on-set");
+        assertThat(kit.assumptions()).extracting(a -> a.field()).contains("system");
+    }
+
+    @Test
+    void aPressOnSetWithNoPublishedSizingRaisesAFitAssumption() {
+        var kit = assembler.assemble(brief("kratki nokti kod kuce", NailLookBriefDto.ExecutionMode.AT_HOME, 0),
+                new NailKitAssembler.Preferences(java.util.Map.of(), false, null, "press-on"));
+
+        assertThat(kit.assumptions()).extracting(a -> a.field()).contains("fit");
+    }
+
+    // ---------------------------------------------------------------------------------- refinements
+
+    @Test
+    void replaceThisPinsTheChosenProductAndKeepsTheKitComplete() {
+        var before = assembler.assemble(brief("kratki nokti kod kuce", NailLookBriefDto.ExecutionMode.AT_HOME, 0));
+        var colorItem = before.items().stream().filter(i -> "color".equals(i.slot())).findFirst().orElseThrow();
+        assertThat(colorItem.alternatives()).as("a swap needs somewhere to go").isNotEmpty();
+
+        String swapTo = colorItem.alternatives().get(0).externalId();
+        var after = assembler.assemble(brief("kratki nokti kod kuce", NailLookBriefDto.ExecutionMode.AT_HOME, 0),
+                new NailKitAssembler.Preferences(java.util.Map.of("color", swapTo), false, null, null));
+
+        assertThat(after.items()).filteredOn(i -> "color".equals(i.slot()))
+                .singleElement().satisfies(i -> assertThat(i.externalId()).isEqualTo(swapTo));
+        assertThat(after.status().isComplete()).as("a swap must never break completeness").isTrue();
+        assertThat(after.missingRequiredSlots()).isEmpty();
+    }
+
+    @Test
+    void alternativesAreAlwaysFromTheSameSlotSoASwapCannotBreakTheKit() {
+        var kit = assembler.assemble(brief("kratki nokti kod kuce", NailLookBriefDto.ExecutionMode.AT_HOME, 0));
+        for (var item : kit.items()) {
+            for (var alt : item.alternatives()) {
+                assertThat(catalog.forSlot(item.slot())).extracting(p -> p.externalId())
+                        .as("alternative for %s must belong to that slot", item.slot())
+                        .contains(alt.externalId());
+            }
+        }
+    }
+
+    @Test
+    void makeItCheaperNeverDropsARequiredSlot() {
+        var normal = assembler.assemble(brief("kratki nokti boje visnje kod kuce",
+                NailLookBriefDto.ExecutionMode.AT_HOME, 0));
+        var cheaper = assembler.assemble(brief("kratki nokti boje visnje kod kuce",
+                NailLookBriefDto.ExecutionMode.AT_HOME, 0),
+                new NailKitAssembler.Preferences(java.util.Map.of(), true, null, null));
+
+        assertThat(cheaper.totalCents()).isLessThanOrEqualTo(normal.totalCents());
+        assertThat(cheaper.missingRequiredSlots()).isEmpty();
+        assertThat(cheaper.items()).extracting(NailKitAssembler.KitItem::slot)
+                .contains("base", "color", "top", "removal");
+    }
+
+    @Test
+    void useOneStoreIsOnlyOfferedWhenAStoreCanActuallyCompleteTheKit() {
+        // In this pilot no single retailer stocks every required slot, so the honest answer is "none".
+        // Offering a store that cannot finish the kit would trade completeness for convenience.
+        List<String> options = assembler.singleStoreOptions("regular-polish");
+        for (String retailer : options) {
+            var kit = assembler.assemble(brief("kratki nokti kod kuce", NailLookBriefDto.ExecutionMode.AT_HOME, 0),
+                    new NailKitAssembler.Preferences(java.util.Map.of(), false, retailer, null));
+            assertThat(kit.missingRequiredSlots())
+                    .as("%s was offered as a one-store option, so it must complete the kit", retailer).isEmpty();
+        }
+    }
+
+    // ------------------------------------------------------------- incomplete: a genuine catalog gap
+
+    @Test
+    void aRequiredSlotWithNoEligibleProductYieldsIncompleteAndNamesTheGap() {
+        // The real pilot happens to cover every slot, so this state is unreachable with it. The fixture has
+        // base/colour/top but its only remover is PROFESSIONAL-ONLY and its only file is OUT OF STOCK -
+        // two different reasons a shelf can be empty, both of which must produce an honest Incomplete
+        // rather than a kit the user cannot actually take off again.
+        var gapCatalog = new NailPilotCatalog("/catalog/nail-pilot-gap-fixture.json");
+        var gapAssembler = new NailKitAssembler(gapCatalog);
+
+        var kit = gapAssembler.assemble(brief("kratki nokti kod kuce", NailLookBriefDto.ExecutionMode.AT_HOME, 0));
+
+        assertThat(kit.status()).isEqualTo(KitStatus.INCOMPLETE_REQUIRED_ITEM_UNAVAILABLE);
+        assertThat(kit.status().isPurchasable()).as("an incomplete kit is never presented as buyable").isFalse();
+        assertThat(kit.missingRequiredSlots()).contains("Turpija", "Skidanje laka");
+        assertThat(kit.statusExplanationHr()).contains("Turpija").contains("Skidanje laka");
+        // The slots it COULD fill are still shown, so the user can see how far the catalog got.
+        assertThat(kit.items()).extracting(NailKitAssembler.KitItem::slot).contains("base", "color", "top");
+    }
+
+    @Test
+    void aProfessionalOnlyProductIsNeverOfferedToAConsumer() {
+        var gapCatalog = new NailPilotCatalog("/catalog/nail-pilot-gap-fixture.json");
+        var kit = new NailKitAssembler(gapCatalog)
+                .assemble(brief("kratki nokti kod kuce", NailLookBriefDto.ExecutionMode.AT_HOME, 0));
+
+        assertThat(kit.items()).extracting(NailKitAssembler.KitItem::externalId)
+                .doesNotContain("fixture-pro-removal");
+        assertThat(kit.items()).flatExtracting(NailKitAssembler.KitItem::alternatives)
+                .extracting(NailKitAssembler.Alternative::externalId)
+                .as("a professional-only product must not appear even as a swap")
+                .doesNotContain("fixture-pro-removal");
     }
 
     // ------------------------------------------------------------------------------------ refusals

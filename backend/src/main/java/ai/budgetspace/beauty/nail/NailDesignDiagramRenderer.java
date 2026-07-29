@@ -37,9 +37,9 @@ public class NailDesignDiagramRenderer {
                 ? NEUTRAL_NAIL : design.baseColorHex();
 
         StringBuilder svg = new StringBuilder();
-        svg.append("<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 640 300\" width=\"640\" height=\"300\" ")
+        svg.append("<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 640 340\" width=\"640\" height=\"340\" ")
            .append("role=\"img\" aria-label=\"").append(esc(ariaLabel(design))).append("\">");
-        svg.append("<rect width=\"640\" height=\"300\" fill=\"#FBF7F4\"/>");
+        svg.append("<rect width=\"640\" height=\"340\" fill=\"#FDFBF8\"/>");
 
         // Two hands, five nails each, in the resolver's fixed order — that order is what makes this
         // deterministic and therefore testable byte-for-byte.
@@ -47,32 +47,46 @@ public class NailDesignDiagramRenderer {
             NailDesignResolver.NailPlacement nail = nails.get(i);
             int handIndex = i / 5;
             int fingerIndex = i % 5;
-            int x = 60 + handIndex * 320 + fingerIndex * 52;
-            int baseY = 190;
+            // Fingertips sit on an arc, not a straight line - the middle finger is highest. That single
+            // detail is what makes the row read as a hand instead of a row of tiles.
+            int[] lift = { 26, 8, 0, 8, 22 };
+            int x = 54 + handIndex * 322 + fingerIndex * 58;
+            int baseY = 232 - lift[fingerIndex] / 2;
             int height = nailHeight(design.length(), fingerIndex);
-            int width = 34;
-            int y = baseY - height;
+            int width = 42;
+            int y = baseY - height - lift[fingerIndex];
 
             svg.append(nailShape(x, y, width, height, design.shape(), fill));
             appendEffects(svg, design, x, y, width, height);
             if (nail.accent()) {
-                // A thin gold crescent — the one accent form this MVP draws, matching what the kit can buy.
+                // A thin crescent in the accent's OWN colour, so a two-colour request reads as two colours.
+                // Falls back to gold leaf when an accent was asked for without naming a colour.
                 svg.append("<path d=\"M").append(x + 4).append(' ').append(y + 10)
                    .append(" Q").append(x + width / 2).append(' ').append(y - 4)
                    .append(' ').append(x + width - 4).append(' ').append(y + 10)
-                   .append("\" fill=\"none\" stroke=\"#C9A227\" stroke-width=\"2.4\" stroke-linecap=\"round\"/>");
+                   .append("\" fill=\"none\" stroke=\"").append(design.accentColorForDiagram())
+                   .append("\" stroke-width=\"2.6\" stroke-linecap=\"round\"/>");
             }
-            svg.append("<text x=\"").append(x + width / 2).append("\" y=\"").append(baseY + 18)
-               .append("\" font-family=\"system-ui,sans-serif\" font-size=\"9\" fill=\"").append(TEXT)
+            // Finger name under each nail, so the brief and the picture name the same nail.
+            svg.append("<text x=\"").append(x + width / 2).append("\" y=\"").append(baseY + 16)
+               .append("\" font-family=\"ui-monospace,monospace\" font-size=\"9.5\" fill=\"")
+               .append(nail.accent() ? TEXT : "#9A8C82")
                .append("\" text-anchor=\"middle\">").append(esc(shortFinger(nail.finger()))).append("</text>");
         }
 
-        svg.append("<text x=\"120\" y=\"246\" font-family=\"system-ui,sans-serif\" font-size=\"13\" fill=\"")
-           .append(TEXT).append("\" text-anchor=\"middle\">").append(esc("lijeva ruka")).append("</text>");
-        svg.append("<text x=\"440\" y=\"246\" font-family=\"system-ui,sans-serif\" font-size=\"13\" fill=\"")
-           .append(TEXT).append("\" text-anchor=\"middle\">").append(esc("desna ruka")).append("</text>");
-        svg.append("<text x=\"320\" y=\"278\" font-family=\"system-ui,sans-serif\" font-size=\"11\" fill=\"#7A6E66\" ")
+        svg.append("<line x1=\"320\" y1=\"46\" x2=\"320\" y2=\"250\" stroke=\"#E5DBD2\" stroke-width=\"1\"/>");
+        for (int hand = 0; hand < 2; hand++) {
+            svg.append("<text x=\"").append(hand == 0 ? 172 : 494).append("\" y=\"38\" ")
+               .append("font-family=\"ui-monospace,monospace\" font-size=\"10\" letter-spacing=\"1.6\" fill=\"#9A8C82\" ")
+               .append("text-anchor=\"middle\">").append(esc(hand == 0 ? "LIJEVA RUKA" : "DESNA RUKA")).append("</text>");
+        }
+        svg.append("<text x=\"320\" y=\"296\" font-family=\"ui-monospace,monospace\" font-size=\"10.5\" fill=\"#6B625C\" ")
            .append("text-anchor=\"middle\">").append(esc(caption(design))).append("</text>");
+        if (design.hasAccent()) {
+            svg.append("<text x=\"320\" y=\"316\" font-family=\"ui-monospace,monospace\" font-size=\"10\" fill=\"")
+               .append(design.accentColorForDiagram()).append("\" text-anchor=\"middle\">")
+               .append(esc("◆ " + accentLegend(design))).append("</text>");
+        }
         svg.append("</svg>");
         return svg.toString();
     }
@@ -131,18 +145,27 @@ public class NailDesignDiagramRenderer {
         }
     }
 
+    /** Which nails carry the accent, named — so the legend matches the brief word for word. */
+    private String accentLegend(NailDesignSpecDto design) {
+        String fingers = String.join(" i ", design.accentFingers().stream()
+                .map(NailDesignSpecDto.Finger::croatianLabel).toList());
+        return design.symmetry() == NailDesignSpecDto.Symmetry.MIRRORED
+                ? "detalj na " + fingers + ", obje ruke"
+                : "detalj na " + fingers + ", desna ruka";
+    }
+
     private int nailHeight(NailDesignSpecDto.Length length, int fingerIndex) {
         int base = switch (length) {
-            case SHORT -> 42;
-            case MEDIUM -> 56;
-            case LONG -> 72;
-            case EXTRA_LONG -> 88;
+            case SHORT -> 54;
+            case MEDIUM -> 70;
+            case LONG -> 90;
+            case EXTRA_LONG -> 110;
         };
         // Thumb slightly wider/shorter, pinky shorter — so the diagram reads as a hand, not a row of tiles.
         return switch (fingerIndex) {
-            case 0 -> base - 6;
-            case 4 -> base - 10;
-            case 2 -> base + 4;
+            case 0 -> base - 10; // thumb: shorter and wider
+            case 4 -> base - 14; // pinky: shortest
+            case 2 -> base + 5;  // middle: longest
             default -> base;
         };
     }
