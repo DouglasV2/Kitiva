@@ -564,6 +564,42 @@ test.describe('Nail Look slice', () => {
     expect((await (await stored2).json()).stored).toBe(true);
   });
 
+  /**
+   * The hand illustration's contract with the rest of the app: five nails, each individually addressable,
+   * each carrying the design it was given. This is what makes per-finger effects possible at all, so it is
+   * asserted rather than assumed — a refactor that collapsed the five groups into one path would still
+   * look correct on screen for a single-colour look and quietly break every accent.
+   */
+  test('18b. every nail is its own element, and an accent lands only on the named finger',
+    async ({ page }) => {
+      await openApp(page);
+      await parsePrompt(page); // burgundy cat-eye with two gold details on the ring fingers
+
+      const stage = page.getByTestId('nail-diagram');
+      await expect(stage.locator('svg')).toHaveCount(1);
+
+      const nails = await stage.evaluate((el) =>
+        [...el.querySelectorAll('.nk-nail')].map((g) => ({
+          id: g.id,
+          nail: g.getAttribute('data-nail'),
+          fill: g.querySelector('path')?.getAttribute('fill') ?? null,
+          accents: [...g.querySelectorAll('ellipse')].map((e) => e.getAttribute('fill')),
+        })));
+
+      expect(nails.map((n) => n.nail)).toEqual(
+        ['spec-thumb', 'spec-index', 'spec-middle', 'spec-ring', 'spec-pinky']);
+      // Every nail wears the requested colour...
+      expect(nails.every((n) => n.fill === '#5C0A22')).toBe(true);
+      // ...and the gold detail is on the ring finger and nowhere else.
+      const gold = nails.filter((n) => n.accents.includes('#C9A227')).map((n) => n.nail);
+      expect(gold).toEqual(['spec-ring']);
+
+      // Editing the spec must move the picture, or the preview is decoration rather than a preview.
+      await page.getByTestId('f-color').selectOption('black');
+      await expect.poll(async () => stage.evaluate((el) =>
+        el.querySelector('.nk-nail path')?.getAttribute('fill'))).toBe('#1A1A1A');
+    });
+
   // ------------------------------------------------------------------------------- the MVP demo case
 
   test('19. demo case: salon result is a specification, not a shopping list', async ({ page }, testInfo) => {
