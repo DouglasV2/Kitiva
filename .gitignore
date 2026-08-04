@@ -12,3 +12,6 @@ target/
 # Playwright
 frontend/test-results/
 frontend/playwright-report/
+
+# Throwaway typecheck sandboxes. One of these was committed by accident once.
+frontend/.prunecheck/
