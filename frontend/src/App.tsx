@@ -9,7 +9,9 @@ import { PlannerHero } from './components/PlannerHero';
 import { Planner } from './components/Planner';
 import { useState } from 'react';
 import './nailkit.css';
-import { NailLook } from './components/NailLook';
+import './makeupkit.css';
+import { NailLook, NailTrustBar } from './components/NailLook';
+import { MakeupLook } from './components/MakeupLook';
 import { AuthProvider, useAuth } from './AuthContext';
 import { ConsentProvider } from './ConsentContext';
 import { LocaleProvider } from './LocaleContext';
@@ -47,8 +49,7 @@ function AppShell() {
           furniture product and would otherwise frame the nail page in another brand's colours — which is
           the single loudest way to make a beauty product look like a furniture tool. Both panes stay
           mounted so switching never discards a parsed brief or a generated kit. */}
-      <ExperienceSwitch />
-      {showGate && <AuthGate />}
+      <ExperienceSwitch showGate={showGate} />
       {/* Sprint 10.185: analytics-consent banner. Non-modal; only appears when a GA id is configured and no
           valid decision exists (or the user reopened it from the footer). Never blocks the app. */}
       <ConsentBanner />
@@ -56,37 +57,53 @@ function AppShell() {
   );
 }
 
-function ExperienceSwitch() {
-  const [experience, setExperience] = useState<'nails' | 'furniture'>('nails');
-  const nails = experience === 'nails';
+type Experience = 'nails' | 'makeup' | 'furniture';
+
+function ExperienceSwitch({ showGate }: { showGate: boolean }) {
+  const [experience, setExperience] = useState<Experience>('nails');
+  // The two beauty verticals share one identity and one chrome; the furniture planner has its own. So the
+  // top bar switches shape once, at the beauty/furniture boundary, rather than once per tab.
+  const beauty = experience === 'nails' || experience === 'makeup';
+  const tab = (key: Experience, label: string, testid: string) => (
+    <button
+      type="button"
+      className={beauty
+        ? `nk-tab${experience === key ? ' is-on' : ''}`
+        : `scope-option${experience === key ? ' active' : ''}`}
+      aria-pressed={experience === key}
+      onClick={() => setExperience(key)}
+      data-testid={testid}
+    >
+      <span className="scope-text">{label}</span>
+    </button>
+  );
+
   return (
     <>
-      <div className={nails ? 'nk-topbar' : 'scope-toggle navtrack scope-switch shell'} role="group" aria-label="Odaberi iskustvo">
-        {nails && <span className="nk-wordmark">nokti<span>.</span></span>}
-        <button
-          type="button"
-          className={nails ? 'nk-tab is-on' : 'scope-option'}
-          aria-pressed={nails}
-          onClick={() => setExperience('nails')}
-          data-testid="tab-nails"
-        >
-          <span className="scope-text">Nail Look / Nail Kit</span>
-        </button>
-        <button
-          type="button"
-          className={nails ? 'nk-tab' : (experience === 'furniture' ? 'scope-option active' : 'scope-option')}
-          aria-pressed={experience === 'furniture'}
-          onClick={() => setExperience('furniture')}
-          data-testid="tab-furniture"
-        >
-          <span className="scope-text">Prostor (postojeće)</span>
-        </button>
+      <div className={beauty ? 'nk-topbar' : 'scope-toggle navtrack scope-switch shell'} role="group" aria-label="Odaberi iskustvo">
+        {beauty && <span className="nk-wordmark">{experience === 'makeup' ? 'šminka' : 'nokti'}<span>.</span></span>}
+        {tab('nails', 'Nail Look / Nail Kit', 'tab-nails')}
+        {tab('makeup', 'Makeup Look / Makeup Kit', 'tab-makeup')}
+        {tab('furniture', 'Prostor (postojeće)', 'tab-furniture')}
+        {/* Which catalog answers, and in which currency. Both beauty pilots are Croatian retail only. */}
+        {beauty && <span className="nk-locale">Hrvatska · EUR</span>}
       </div>
-      <div hidden={!nails}>
+      {/* Every pane stays mounted so switching never discards a parsed brief, a generated kit or a set of
+          catalog filters someone spent a minute assembling. */}
+      <div className="nk-pane" hidden={experience !== 'nails'}>
         <NailLook />
         <NailFooter />
       </div>
-      <div hidden={nails}>
+      <div className="nk-pane" hidden={experience !== 'makeup'}>
+        <MakeupLook />
+        <NailFooter />
+      </div>
+      <div hidden={beauty}>
+        {/* The sign-in gate belongs to the furniture planner, which saves plans to an account. The beauty
+            pilots have no accounts and no saved state, so gating them would put another product's brand and
+            another product's sign-in wall in front of a stranger opening a pilot link. Auth itself is
+            untouched: same session, same guest flag, same gate the moment you switch to Prostor. */}
+        {showGate && <AuthGate />}
         <Header />
         <LanguageSuggestion />
         <PlannerHero />
@@ -98,16 +115,23 @@ function ExperienceSwitch() {
   );
 }
 
-/** Quiet footer for the nail experience. Carries the legal links; nothing else. */
+/**
+ * Footer for the nail experience: the four things this product can stand behind, then the legal line. The
+ * trust row states only what is true — the catalog is real retailer rows, the prices come from a feed and
+ * are not hand-checked, and the assumptions are always on screen.
+ */
 function NailFooter() {
   return (
-    <footer className="nk-footer">
-      <div className="nk-footer-inner">
-        <span>Cijene i dostupnost provjeri kod trgovca prije kupnje. Nismo povezani ni s jednim trgovcem.</span>
-        <nav aria-label="Pravno">
-          <a href="#privacy" onClick={(e) => e.preventDefault()}>Privatnost</a>
-          <a href="#terms" onClick={(e) => e.preventDefault()}>Uvjeti</a>
-        </nav>
+    <footer>
+      <NailTrustBar />
+      <div className="nk-legal">
+        <div className="nk-legal-inner">
+          <span>Cijene i dostupnost provjeri kod trgovca prije kupnje. Nismo povezani ni s jednim trgovcem.</span>
+          <nav aria-label="Pravno">
+            <a href="#privacy" onClick={(e) => e.preventDefault()}>Privatnost</a>
+            <a href="#terms" onClick={(e) => e.preventDefault()}>Uvjeti</a>
+          </nav>
+        </div>
       </div>
     </footer>
   );
