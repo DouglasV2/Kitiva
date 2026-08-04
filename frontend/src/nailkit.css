@@ -1,456 +1,1105 @@
 /* ===================================================================================================
    Nail Look / Nail Kit — visual identity
    ---------------------------------------------------------------------------------------------------
-   Brief: this must not look like the furniture planner, and it must look like it was made for women
-   choosing nail colour. The first attempt failed both — neutral ink on paper, hairline boxes and
-   monospace numbers read as a spec sheet, which is exactly BudgetSpace's register.
+   Built to the owner's approved mockup: a modern beauty commerce tool. White ground, wine as the single
+   action colour, pale rose only as a tint on surfaces that need to recede, gold reserved for the accent
+   detail the design itself calls for.
 
-   Direction: LACQUER. The palette comes from the object itself — a blush ground the colour of the inside
-   of a manicure box, deep plum instead of black so nothing on the page is cold, lipstick rose for anything
-   the user acts on, and gold leaf reserved for the accent detail the design itself calls for. Cards are
-   soft-cornered and lifted rather than ruled, because a beauty product is tactile, not filed.
+   Type: a serif carries the wordmark, the page headline and card titles — it is the brand voice. A clean
+   sans carries every label, control, price and paragraph, because those are read, not admired. Numbers
+   are tabular so totals align in a column.
 
-   Type: a warm serif carries every heading, a plain sans carries reading text, and NOTHING is monospace.
-   Numbers use tabular-nums instead, so totals still align in a column without borrowing a developer's
-   typeface — the alignment was the useful part, the technical connotation was not.
+   Structure: three numbered steps in a rail across the top, because this really is a sequence — there is
+   nothing to check before a parse and nothing to execute before a specification. Below it, two columns:
+   the work (specification beside a live preview) and the decision (salon or at home).
 
-   Restraint: gold appears only where the nail design has gold. Rose is only ever an action or a live state.
-   The saturated colour on the page belongs to the lacquer in the diagram; the interface stays quieter than
-   the product it is describing.
+   Colour discipline: wine = an action you take. Ink = text. Rose tint = a surface that must not compete.
+   Gold = the accent detail, and nothing else. The saturated colour on the page belongs to the lacquer.
 
    Scoped under .nk- so it cannot touch the 7,000-line furniture stylesheet.
    =================================================================================================== */
 
-/* --- own chrome: top bar + footer, so no other brand frames the page ------------------------------- */
+.nk,
+.nk-topbar,
+.nk-trust,
+.nk-legal {
+  --nk-paper: #fdfafb;
+  --nk-surface: #ffffff;
+  --nk-tint: #fdf1f4;
+  --nk-tint-2: #fae7ec;
+  --nk-ink: #2a1620;
+  --nk-ink-2: #6b5560;
+  --nk-ink-3: #9a8189;
+  --nk-line: #f1e5e9;
+  --nk-line-2: #e3d2d8;
+  --nk-wine: #8e1b3a;
+  --nk-wine-deep: #74132e;
+  --nk-gold: #b8912a;
+  --nk-gold-tint: #fbf3e0;
+  --nk-ok: #1f6b4a;
+  --nk-warn: #8a5a12;
+  --nk-stop: #a81232;
+
+  --nk-serif: Georgia, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", "Times New Roman", serif;
+  --nk-sans: "Segoe UI Variable Text", "Segoe UI", -apple-system, BlinkMacSystemFont, Inter, Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+
+  --nk-r: 8px;
+  --nk-r-lg: 12px;
+  --nk-lift: 0 1px 2px rgba(42, 22, 32, 0.04);
+  --nk-lift-2: 0 2px 6px rgba(42, 22, 32, 0.05), 0 12px 28px rgba(42, 22, 32, 0.05);
+}
+
+/* --- own chrome: top bar, so no other brand frames the page --------------------------------------- */
 
 .nk-topbar {
-  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-  padding: 16px 28px; background: #3d1a2b;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding: 0 26px;
+  min-height: 66px;
+  background: var(--nk-surface);
+  border-bottom: 1px solid var(--nk-line);
+  font-family: var(--nk-sans);
 }
 
 .nk-wordmark {
-  font-family: Georgia, "Iowan Old Style", serif;
-  font-size: 21px; color: #fbeff1; letter-spacing: 0.01em; margin-right: 14px;
+  font-family: var(--nk-serif);
+  font-size: 25px;
+  line-height: 1;
+  color: var(--nk-ink);
+  letter-spacing: -0.015em;
+  margin-right: 26px;
 }
-.nk-wordmark span { color: #c4536b; }
+.nk-wordmark span { color: var(--nk-wine); }
 
 .nk-tab {
-  border: 0; background: transparent; cursor: pointer; border-radius: 999px;
-  padding: 8px 16px; font-size: 13.5px; font-weight: 500; color: rgba(251, 239, 241, 0.62);
-  transition: background 0.16s ease, color 0.16s ease;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 999px;
+  padding: 9px 18px;
+  font-family: var(--nk-sans);
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--nk-ink-3);
+  transition: background 0.14s ease, color 0.14s ease;
 }
-.nk-tab:hover { color: #fbeff1; background: rgba(251, 239, 241, 0.09); }
-.nk-tab.is-on { background: #c4536b; color: #fff; font-weight: 600; }
-.nk-tab:focus-visible { outline: 2px solid #fbeff1; outline-offset: 2px; }
+.nk-tab:hover { color: var(--nk-ink); background: var(--nk-tint); }
+.nk-tab.is-on { color: var(--nk-wine); background: var(--nk-tint-2); font-weight: 600; }
+.nk-tab:focus-visible { outline: 2px solid var(--nk-wine); outline-offset: 2px; }
 
-.nk-footer {
-  background: #3d1a2b; color: rgba(251, 239, 241, 0.66);
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 12.5px;
+/* Which catalog answers, and in which currency. The nail pilot is Croatian retail only. */
+.nk-locale {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--nk-ink-3);
 }
-.nk-footer-inner {
-  max-width: 1140px; margin: 0 auto; padding: 26px 20px;
-  display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; align-items: center;
-}
-.nk-footer a { color: rgba(251, 239, 241, 0.66); text-decoration: none; margin-left: 20px; }
-.nk-footer a:hover { color: #fbeff1; text-decoration: underline; }
 
 .nk {
-  --nk-blush: #fbeff1;
-  --nk-blush-deep: #f4dfe4;
-  --nk-porcelain: #fffcfd;
-  --nk-plum: #3d1a2b;
-  --nk-plum-soft: #6d4557;
-  --nk-mauve: #9a7385;
-  --nk-rose: #c4536b;
-  --nk-rose-deep: #a63a53;
-  --nk-rose-wash: #fde8ec;
-  --nk-gold: #b08d3f;
-  --nk-gold-wash: #f7efdd;
-  --nk-ok: #4a7c59;
-  --nk-ok-wash: #e8f2ea;
-  --nk-warn: #a8722c;
-  --nk-warn-wash: #fbf0e2;
-  --nk-stop: #a63a53;
-  --nk-stop-wash: #fbe6ea;
-
-  --nk-serif: Georgia, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
-  --nk-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --nk-num: var(--nk-sans);
-
-  --nk-r: 14px;
-  --nk-lift: 0 2px 10px rgba(61, 26, 43, 0.06), 0 12px 34px rgba(61, 26, 43, 0.05);
-
-  background:
-    radial-gradient(1100px 460px at 12% -8%, #fdf5f6 0%, rgba(253, 245, 246, 0) 62%),
-    radial-gradient(900px 420px at 96% 4%, var(--nk-gold-wash) 0%, rgba(247, 239, 221, 0) 58%),
-    var(--nk-blush);
-  color: var(--nk-plum);
+  background: var(--nk-paper);
+  color: var(--nk-ink);
   font-family: var(--nk-sans);
-  padding: 40px 20px 72px;
+  font-size: 14.5px;
+  line-height: 1.55;
+  padding: 0 26px 52px;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
 }
 
 .nk * { box-sizing: border-box; }
-.nk-shell { max-width: 1140px; margin: 0 auto; }
+.nk-shell { max-width: 1200px; margin: 0 auto; }
 
-/* --- masthead ------------------------------------------------------------------------------------ */
+/* The first screen is deliberately short, so the ivory has to stretch to the footer rather than stopping
+   where the content does and letting the page background show through as a band under the trust bar.
+   `[hidden]` must keep winning here — this class also wraps the pane while the furniture tab is showing. */
+.nk-pane { display: flex; flex-direction: column; min-height: 100vh; }
+.nk-pane[hidden] { display: none; }
+.nk-pane > .nk { flex: 1 0 auto; }
 
-.nk-masthead { margin-bottom: 34px; }
+/* The prompt and the headline stay at a readable measure instead of stretching to the full grid. */
+.nk-lede { max-width: 952px; }
 
-.nk-eyebrow {
-  font-size: 11.5px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--nk-mauve);
-  margin: 0 0 12px;
+/* --- the honesty line ----------------------------------------------------------------------------- */
+
+.nk-prototype {
+  display: flex;
+  gap: 9px;
+  margin: 0 -26px 26px;
+  padding: 10px 26px;
+  background: var(--nk-gold-tint);
+  border-bottom: 1px solid rgba(184, 145, 42, 0.24);
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: #6f5518;
+}
+
+/* --- the step rail -------------------------------------------------------------------------------- */
+
+.nk-steps {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  list-style: none;
+  margin: 0 0 30px;
+  padding: 0;
+  font-family: var(--nk-sans);
+}
+.nk-steps li { display: flex; align-items: center; gap: 12px; flex: 0 0 auto; }
+/* The rule between steps carries the sequence; it grows to fill whatever room is left. */
+.nk-steps li:not(:last-child)::after {
+  content: "";
+  flex: 1 1 auto;
+  min-width: 24px;
+  height: 1px;
+  background: var(--nk-line-2);
+}
+.nk-steps li:not(:last-child) { flex: 1 1 auto; }
+
+.nk-step-dot {
+  width: 30px;
+  height: 30px;
+  flex: none;
+  border-radius: 999px;
+  border: 1.5px solid var(--nk-line-2);
+  color: var(--nk-ink-3);
+  background: var(--nk-surface);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
   font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.nk-step-name {
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--nk-ink-3);
+  white-space: nowrap;
+}
+.nk-steps .is-now .nk-step-dot { background: var(--nk-wine); border-color: var(--nk-wine); color: #fff; }
+.nk-steps .is-now .nk-step-name { color: var(--nk-wine); }
+.nk-steps .is-done .nk-step-dot { border-color: var(--nk-wine); color: var(--nk-wine); }
+.nk-steps .is-done .nk-step-name { color: var(--nk-ink-2); }
+
+/* --- hero ----------------------------------------------------------------------------------------- */
+
+.nk-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 26px;
+  margin-bottom: 22px;
 }
 
 .nk-title {
   font-family: var(--nk-serif);
-  font-size: clamp(34px, 6vw, 60px);
-  line-height: 1.04;
+  font-size: clamp(30px, 3.4vw, 42px);
+  line-height: 1.1;
   letter-spacing: -0.02em;
   font-weight: 400;
   margin: 0;
 }
 
-.nk-title em {
-  font-style: italic;
-  color: var(--nk-rose);
+.nk-deck {
+  margin: 10px 0 0;
+  max-width: 52ch;
+  font-size: 15.5px;
+  line-height: 1.55;
+  color: var(--nk-ink-2);
 }
 
-.nk-standfirst {
-  margin: 16px 0 0;
-  max-width: 54ch;
-  font-size: 16.5px;
-  line-height: 1.6;
-  color: var(--nk-plum-soft);
-}
-
-/* --- the prompt --------------------------------------------------------------------------------- */
-
-.nk-ask {
-  margin-bottom: 34px;
-  background: var(--nk-porcelain);
+/* A claim we can actually stand behind: every catalog row is a real product from a real retailer feed. */
+.nk-badge {
+  display: flex;
+  gap: 11px;
+  align-items: flex-start;
+  flex: none;
+  padding: 12px 16px;
   border-radius: var(--nk-r);
-  box-shadow: var(--nk-lift);
-  padding: 22px 24px 24px;
+  background: var(--nk-tint);
+  max-width: 240px;
+}
+.nk-badge strong { display: block; font-size: 13px; font-weight: 600; color: var(--nk-ink); }
+.nk-badge span { display: block; font-size: 12.5px; color: var(--nk-ink-2); }
+
+/* --- the prompt ----------------------------------------------------------------------------------- */
+
+/* Narrower than the headline above it on purpose: an input the width of the page reads as a form field, and
+   a 940px-wide textarea for one sentence is more room than anyone needs. ~600px still holds roughly 75
+   characters per line, so a long prompt stays comfortable to write and to re-read. */
+.nk-ask {
+  background: var(--nk-surface);
+  border: 1px solid var(--nk-line);
+  border-radius: var(--nk-r-lg);
+  box-shadow: var(--nk-lift-2);
+  padding: 18px 20px 18px;
+  margin-bottom: 30px;
+  max-width: 620px;
 }
 
 .nk-ask-label,
-.nk-field-label,
+.nk-card-label,
+.nk-control-label,
 .nk-section-label,
-.nk-panel-title {
+.nk-panel-title,
+.nk-kit-slot,
+.nk-setup .nk-control > span {
+  font-family: var(--nk-sans);
   font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--nk-mauve);
   font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--nk-ink-3);
 }
 
-.nk-ask-label { display: block; margin-bottom: 10px; }
+.nk-ask-label { display: flex; align-items: center; gap: 8px; margin-bottom: 11px; }
+
+.nk-ask-field-wrap { position: relative; min-width: 0; }
+.nk-ask-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 12px; }
+
+/* Once a specification exists the prompt is a correction surface, not the headline act. Still a full-size
+   editable field — just no elevation, no wine button and no example line competing for attention. */
+.nk-ask.is-quiet {
+  box-shadow: none;
+  background: transparent;
+  border-color: var(--nk-line);
+  padding: 14px 16px;
+  margin-bottom: 24px;
+}
+.nk-ask.is-quiet .nk-ask-field { min-height: 62px; font-size: 14.5px; background: var(--nk-surface); }
+.nk-ask.is-quiet .nk-btn-ask { background: var(--nk-surface); border-color: var(--nk-line-2); color: var(--nk-ink); }
+.nk-ask.is-quiet .nk-btn-ask:hover:not(:disabled) {
+  background: var(--nk-tint);
+  border-color: var(--nk-wine);
+  color: var(--nk-wine);
+}
 
 .nk-ask-field {
   width: 100%;
-  border: 0;
-  border-bottom: 1.5px solid var(--nk-blush-deep);
-  background: transparent;
-  font-family: var(--nk-serif);
-  font-size: clamp(18px, 2.4vw, 24px);
-  line-height: 1.5;
-  color: var(--nk-plum);
-  padding: 6px 2px 14px;
-  resize: vertical;
-  min-height: 2.8em;
-  height: 2.8em;
   display: block;
-  overflow: hidden;
-  transition: border-color 0.18s ease;
+  border: 1px solid var(--nk-line-2);
+  border-radius: var(--nk-r);
+  background: var(--nk-surface);
+  font-family: var(--nk-sans);
+  font-size: 15.5px;
+  line-height: 1.5;
+  color: var(--nk-ink);
+  padding: 12px 14px 26px;
+  resize: vertical;
+  min-height: 86px;
+  transition: border-color 0.14s ease, box-shadow 0.14s ease;
+}
+.nk-ask-field:focus {
+  outline: none;
+  border-color: var(--nk-wine);
+  box-shadow: 0 0 0 3px rgba(142, 27, 58, 0.1);
+}
+.nk-ask-field::placeholder { color: var(--nk-ink-3); }
+
+.nk-ask-count {
+  position: absolute;
+  right: 12px;
+  bottom: 9px;
+  font-size: 11.5px;
+  color: var(--nk-ink-3);
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
 }
 
-.nk-ask-field:focus { outline: none; border-bottom-color: var(--nk-rose); }
-.nk-ask-field::placeholder { color: #d3b6bf; font-style: italic; }
+.nk-ask-example {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  margin: 12px 0 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--nk-ink-3);
+}
 
-.nk-ask-row { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; margin-top: 18px; }
-
-/* --- buttons ------------------------------------------------------------------------------------- */
+/* --- buttons: wine means "this moves you forward" -------------------------------------------------- */
 
 .nk-btn {
   font-family: var(--nk-sans);
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 600;
-  letter-spacing: 0.02em;
-  padding: 13px 26px;
-  border: 1.5px solid var(--nk-rose);
-  border-radius: 999px;
-  background: var(--nk-rose);
+  letter-spacing: 0.005em;
+  padding: 12px 22px;
+  border: 1px solid var(--nk-wine);
+  border-radius: var(--nk-r);
+  background: var(--nk-wine);
   color: #fff;
   cursor: pointer;
-  transition: background 0.16s ease, border-color 0.16s ease, transform 0.08s ease, box-shadow 0.16s ease;
-  box-shadow: 0 4px 14px rgba(196, 83, 107, 0.24);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background 0.14s ease, border-color 0.14s ease;
 }
 
-.nk-btn:hover:not(:disabled) { background: var(--nk-rose-deep); border-color: var(--nk-rose-deep); }
-.nk-btn:active:not(:disabled) { transform: translateY(1px); }
-.nk-btn:disabled { opacity: 0.42; cursor: not-allowed; box-shadow: none; }
-.nk-btn:focus-visible { outline: 2px solid var(--nk-plum); outline-offset: 3px; }
+.nk-btn:hover:not(:disabled) { background: var(--nk-wine-deep); border-color: var(--nk-wine-deep); }
+/* A faded or tinted wine button is a pink button. An unavailable action goes neutral grey instead, so pink
+   never becomes the colour of "you cannot do this yet". */
+.nk-btn:disabled {
+  background: #f3f1f1;
+  border-color: #e2dedf;
+  color: #9a9295;
+  cursor: not-allowed;
+}
+.nk-btn:focus-visible { outline: 2px solid var(--nk-ink); outline-offset: 2px; }
+
+/* Sized to its label on one line instead of a fixed 186px block that wrapped and went chunky, then trimmed
+   again: it is one action on a quiet card, not the page's headline. */
+.nk-btn-ask { flex: 0 0 auto; padding: 9px 15px; font-size: 13.5px; gap: 8px; white-space: nowrap; }
+.nk-btn-block { width: 100%; }
 
 .nk-btn-ghost {
-  background: transparent; color: var(--nk-rose-deep);
-  border-color: rgba(196, 83, 107, 0.4); box-shadow: none;
+  background: var(--nk-surface);
+  color: var(--nk-ink);
+  border-color: var(--nk-line-2);
 }
-.nk-btn-ghost:hover:not(:disabled) { background: var(--nk-rose-wash); border-color: var(--nk-rose); color: var(--nk-rose-deep); }
+.nk-btn-ghost:hover:not(:disabled) {
+  background: var(--nk-tint);
+  border-color: var(--nk-wine);
+  color: var(--nk-wine);
+}
 
-.nk-btn-sm { padding: 8px 16px; font-size: 12.5px; }
+.nk-btn-sm { padding: 8px 14px; font-size: 12.5px; }
 
-/* --- panels -------------------------------------------------------------------------------------- */
+.nk-btn-pill {
+  border-radius: 999px;
+  background: var(--nk-tint);
+  border-color: transparent;
+  color: var(--nk-wine);
+  font-size: 12.5px;
+  padding: 9px 16px;
+}
+.nk-btn-pill:hover:not(:disabled) { background: var(--nk-tint-2); border-color: transparent; color: var(--nk-wine-deep); }
 
-.nk-work { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 34px; align-items: start; }
-@media (max-width: 900px) { .nk-work { grid-template-columns: 1fr; gap: 26px; } }
+/* --- the work: specification beside the preview, decision on the right ---------------------------- */
 
-.nk-panel {
-  background: var(--nk-porcelain);
-  border-radius: var(--nk-r);
+.nk-main { display: grid; grid-template-columns: minmax(0, 1fr) 384px; gap: 26px; align-items: start; }
+
+.nk-card {
+  background: var(--nk-surface);
+  border: 1px solid var(--nk-line);
+  border-radius: var(--nk-r-lg);
   box-shadow: var(--nk-lift);
-  padding: 26px 26px 28px;
+  overflow: hidden;
 }
 
-.nk-panel-head {
-  display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
-  padding-bottom: 14px; margin-bottom: 6px;
-  border-bottom: 1px solid var(--nk-blush-deep);
+.nk-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 20px;
+  border-bottom: 1px solid var(--nk-line);
+}
+.nk-card-label { display: flex; align-items: center; gap: 8px; }
+.nk-card-note { display: flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--nk-ink-3); }
+
+.nk-cols { display: grid; grid-template-columns: 368px minmax(0, 1fr); }
+.nk-cols > :last-child { border-left: 1px solid var(--nk-line); }
+
+/* --- the specification form ----------------------------------------------------------------------- */
+
+.nk-form { padding: 4px 18px 14px; }
+
+/* Label left, control right — the mockup's rhythm. One rule per row, not one per field plus a section
+   heading; a stack of leader-dotted rows with a divider under each is what read as an admin screen. */
+.nk-row {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  margin: 0;
+}
+.nk-row + .nk-row { border-top: 1px solid var(--nk-line); }
+.nk-control-label { display: block; line-height: 1.35; }
+
+/* Chip groups hold a list, so they get the full column instead of a 200px gutter. */
+.nk-row.is-stacked { grid-template-columns: 1fr; align-items: start; gap: 9px; }
+
+.nk-control { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+.nk-control-line { display: flex; align-items: center; gap: 9px; min-width: 0; }
+.nk-control-line .nk-select { min-width: 0; }
+
+.nk-select,
+.nk-input {
+  font-family: var(--nk-sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--nk-ink);
+  background-color: var(--nk-surface);
+  border: 1px solid var(--nk-line-2);
+  border-radius: var(--nk-r);
+  padding: 9px 12px;
+  width: 100%;
+  cursor: pointer;
+  transition: border-color 0.14s ease, box-shadow 0.14s ease;
 }
 
-.nk-panel-title { margin: 0; }
-.nk-panel-meta { font-size: 12px; color: var(--nk-mauve); font-style: italic; }
-
-/* --- fields -------------------------------------------------------------------------------------- */
-
-.nk-field { display: flex; align-items: center; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--nk-blush); }
-.nk-field:last-child { border-bottom: 0; }
-.nk-field-label { white-space: nowrap; }
-.nk-field-leader { flex: 1; min-width: 10px; }
-.nk-field-value { display: flex; align-items: center; gap: 9px; }
-
-.nk-select, .nk-input {
-  font-family: var(--nk-sans); font-size: 14.5px; color: var(--nk-plum);
-  background: var(--nk-blush); border: 1px solid transparent; border-radius: 9px;
-  padding: 8px 11px; max-width: 100%; cursor: pointer;
-  transition: border-color 0.16s ease, background 0.16s ease;
+.nk-select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 32px;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' fill='none' stroke='%236B5560' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
 }
 
-.nk-select:hover, .nk-input:hover { background: var(--nk-rose-wash); }
-.nk-select:focus, .nk-input:focus { outline: none; border-color: var(--nk-rose); background: var(--nk-porcelain); }
+.nk-select:hover,
+.nk-input:hover { border-color: var(--nk-ink-3); }
+.nk-select:focus,
+.nk-input:focus {
+  outline: none;
+  border-color: var(--nk-wine);
+  box-shadow: 0 0 0 3px rgba(142, 27, 58, 0.1);
+}
 .nk-input-num { width: 104px; font-variant-numeric: tabular-nums; cursor: text; }
 
 .nk-swatch {
-  width: 22px; height: 22px; border-radius: 50%; flex: none;
-  border: 2px solid var(--nk-porcelain);
-  box-shadow: 0 0 0 1px var(--nk-blush-deep), 0 1px 4px rgba(61, 26, 43, 0.14);
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  flex: none;
+  box-shadow: inset 0 0 0 1px rgba(42, 22, 32, 0.16);
 }
+.nk-glyph { flex: none; color: var(--nk-ink-3); display: inline-flex; }
 
-/* --- chips --------------------------------------------------------------------------------------- */
+/* --- chips: wine tint means selected -------------------------------------------------------------- */
 
-.nk-chips { display: flex; flex-wrap: wrap; gap: 7px; padding: 10px 0 4px; }
+.nk-chips { display: flex; flex-wrap: wrap; gap: 6px; }
 
 .nk-chip {
-  font-family: var(--nk-sans); font-size: 13px; font-weight: 500;
-  padding: 8px 15px; border: 1px solid var(--nk-blush-deep); background: var(--nk-blush);
-  color: var(--nk-plum-soft); cursor: pointer; border-radius: 999px;
-  transition: all 0.14s ease;
+  font-family: var(--nk-sans);
+  font-size: 12.5px;
+  font-weight: 500;
+  padding: 7px 13px;
+  border: 1px solid var(--nk-line-2);
+  background: var(--nk-surface);
+  color: var(--nk-ink-2);
+  cursor: pointer;
+  border-radius: 999px;
+  transition: border-color 0.14s ease, background 0.14s ease, color 0.14s ease;
 }
 
-.nk-chip:hover { border-color: var(--nk-rose); color: var(--nk-rose-deep); background: var(--nk-rose-wash); }
+.nk-chip:hover { border-color: var(--nk-wine); color: var(--nk-wine); }
 .nk-chip[aria-pressed="true"] {
-  background: var(--nk-rose); border-color: var(--nk-rose); color: #fff;
-  box-shadow: 0 3px 10px rgba(196, 83, 107, 0.26);
+  background: var(--nk-wine);
+  border-color: var(--nk-wine);
+  color: #fff;
+  font-weight: 600;
 }
-.nk-chip:focus-visible { outline: 2px solid var(--nk-plum); outline-offset: 2px; }
+.nk-chip:focus-visible { outline: 2px solid var(--nk-wine); outline-offset: 2px; }
 
-/* --- the diagram: the signature ------------------------------------------------------------------- */
+/* --- the preview: the visual reward --------------------------------------------------------------- */
 
-.nk-diagram {
-  background: var(--nk-porcelain); border-radius: var(--nk-r);
-  box-shadow: var(--nk-lift); padding: 10px 10px 4px; overflow: hidden;
+.nk-preview { padding: 14px 20px 18px; }
+.nk-preview-head { display: flex; align-items: center; gap: 7px; margin-bottom: 4px; }
+
+.nk-stage {
+  /* A neutral warm floor, so the hands sit in a space rather than on a blank sheet. */
+  background: radial-gradient(120% 78% at 50% 100%, #fbf4f6 0%, rgba(251, 244, 246, 0) 68%);
 }
-.nk-diagram svg { width: 100%; height: auto; display: block; border-radius: 10px; }
+.nk-stage svg { width: 100%; height: auto; display: block; }
 
-.nk-diagram-caption {
-  font-size: 12.5px; line-height: 1.5; color: var(--nk-mauve);
-  padding: 12px 6px 10px; font-style: italic;
+/* The legend the diagram used to carry as 5px type, set here at a size a person can read. */
+.nk-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  padding: 4px 0 0;
+}
+.nk-legend span { display: inline-flex; align-items: center; gap: 9px; font-size: 13px; color: var(--nk-ink); }
+.nk-legend i {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  flex: none;
+  box-shadow: inset 0 0 0 1px rgba(42, 22, 32, 0.16);
 }
 
-/* --- prototype notice ----------------------------------------------------------------------------- */
-
-.nk-prototype {
-  margin: 0 0 22px; padding: 11px 16px; border-radius: 10px;
-  background: var(--nk-gold-wash); border: 1px solid rgba(176, 141, 63, 0.4);
-  font-size: 13px; line-height: 1.5; color: #6d5320;
+.nk-readout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 24px;
+  margin: 14px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--nk-line);
 }
+.nk-readout > div { display: flex; flex-direction: column; gap: 2px; }
+.nk-readout dt {
+  margin: 0;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--nk-ink-3);
+}
+.nk-readout dd { margin: 0; font-size: 13.5px; font-weight: 600; color: var(--nk-ink); }
 
-/* --- assumptions, always visible -------------------------------------------------------------------- */
+/* --- assumptions, always visible ------------------------------------------------------------------ */
 
-.nk-assume-items { margin: 4px 0 0; padding-left: 20px; }
-.nk-assume-items li { font-size: 13.5px; line-height: 1.55; padding: 5px 0; color: var(--nk-plum-soft); }
-.nk-assume-items strong { color: var(--nk-plum); }
+.nk-assume-list {
+  margin-top: 16px;
+  background: var(--nk-tint);
+  border-radius: var(--nk-r);
+  padding: 13px 16px 14px;
+}
+.nk-assume-list .nk-section-label { display: block; margin: 0 0 6px; color: var(--nk-wine); }
+.nk-assume-items { margin: 0; padding-left: 17px; }
+.nk-assume-items li { font-size: 12.5px; line-height: 1.55; padding: 3px 0; color: var(--nk-ink-2); }
+.nk-assume-items strong { color: var(--nk-ink); font-weight: 600; }
 
-/* --- the fork ------------------------------------------------------------------------------------ */
+/* --- the decision --------------------------------------------------------------------------------- */
 
-.nk-fork { margin-top: 36px; padding-top: 28px; border-top: 1px solid var(--nk-blush-deep); }
-.nk-fork-options { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 18px; }
-@media (max-width: 640px) { .nk-fork-options { grid-template-columns: 1fr; } }
+.nk-decide { position: sticky; top: 20px; }
+.nk-decide-title {
+  font-family: var(--nk-serif);
+  font-size: 24px;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  font-weight: 400;
+  margin: 0;
+}
+.nk-decide-sub { margin: 8px 0 20px; font-size: 14px; color: var(--nk-ink-2); }
+
+.nk-setup {
+  display: flex;
+  gap: 14px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+.nk-setup .nk-control { flex: 1 1 128px; }
+
+.nk-fork-options { display: flex; flex-direction: column; gap: 14px; }
 
 .nk-fork-btn {
-  text-align: left; padding: 22px 24px; border: 1.5px solid transparent; border-radius: var(--nk-r);
-  background: var(--nk-porcelain); box-shadow: var(--nk-lift); cursor: pointer;
-  transition: border-color 0.16s ease, transform 0.12s ease, box-shadow 0.16s ease;
+  position: relative;
+  text-align: left;
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+  padding: 18px 18px 19px;
+  border: 1.5px solid var(--nk-line);
+  border-radius: var(--nk-r-lg);
+  background: var(--nk-surface);
+  box-shadow: var(--nk-lift);
+  cursor: pointer;
+  transition: border-color 0.14s ease, box-shadow 0.14s ease;
 }
+.nk-fork-btn:hover:not(:disabled) { border-color: var(--nk-line-2); box-shadow: var(--nk-lift-2); }
+.nk-fork-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+.nk-fork-btn:focus-visible { outline: 2px solid var(--nk-wine); outline-offset: 2px; }
+/* The chosen path is outlined in wine — the same colour as the button that acts on it. */
+.nk-fork-btn.is-chosen { border-color: var(--nk-wine); box-shadow: 0 0 0 3px rgba(142, 27, 58, 0.07); }
 
-.nk-fork-btn:hover:not(:disabled) {
-  border-color: var(--nk-rose); transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(196, 83, 107, 0.16), 0 18px 40px rgba(61, 26, 43, 0.07);
+.nk-fork-icon {
+  width: 54px;
+  height: 54px;
+  flex: none;
+  border-radius: 999px;
+  background: var(--nk-tint);
+  color: var(--nk-wine);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
-.nk-fork-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-.nk-fork-btn:focus-visible { outline: 2px solid var(--nk-plum); outline-offset: 3px; }
-
-/* Chosen state has to be unmistakable — this is the main decision in the flow. */
-.nk-fork-btn.is-chosen {
-  border-color: var(--nk-rose); background: var(--nk-rose-wash);
-  box-shadow: 0 0 0 3px rgba(196, 83, 107, 0.16), var(--nk-lift);
-}
-.nk-fork-btn.is-chosen .nk-fork-name::after {
-  content: " ✓"; color: var(--nk-rose); font-family: system-ui, sans-serif; font-size: 17px;
-}
-
-.nk-fork-go { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 20px; }
-.nk-fork-hint { font-size: 13px; color: var(--nk-mauve); font-style: italic; }
-
+.nk-fork-body { min-width: 0; flex: 1 1 auto; }
+.nk-fork-top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .nk-fork-name {
-  display: block; font-family: var(--nk-serif); font-size: 22px; font-weight: 400;
-  margin-bottom: 6px; color: var(--nk-plum);
+  font-family: var(--nk-serif);
+  font-size: 19px;
+  font-weight: 400;
+  letter-spacing: -0.012em;
+  color: var(--nk-ink);
 }
-.nk-fork-sub { display: block; font-size: 13.5px; line-height: 1.5; color: var(--nk-plum-soft); }
+.nk-fork-pill {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--nk-tint-2);
+  color: var(--nk-wine);
+  white-space: nowrap;
+}
+.nk-fork-list { list-style: none; margin: 11px 0 0; padding: 0; }
+.nk-fork-list li {
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  font-size: 13px;
+  line-height: 1.45;
+  padding: 3px 0;
+  color: var(--nk-ink-2);
+}
+.nk-fork-list svg { flex: none; margin-top: 3px; color: var(--nk-wine); }
 
-/* --- status -------------------------------------------------------------------------------------- */
+.nk-fork-go { margin-top: 20px; }
+.nk-fork-hint { display: block; margin-top: 10px; font-size: 12.5px; color: var(--nk-ink-3); }
 
-.nk-status { border-radius: 12px; padding: 16px 18px; margin-bottom: 22px; border: 1px solid transparent; }
-.nk-status-name { font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 700; }
-.nk-status-why { margin: 8px 0 0; font-size: 14.5px; line-height: 1.55; color: var(--nk-plum); }
+.nk-fineprint-lock {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  margin: 14px 0 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--nk-ink-3);
+}
 
-.nk-status-ok { background: var(--nk-ok-wash); border-color: rgba(74, 124, 89, 0.28); }
+/* --- status: a bar in the status colour, not a pastel wash ---------------------------------------- */
+
+.nk-status {
+  border: 1px solid var(--nk-line);
+  border-left: 3px solid var(--nk-line-2);
+  border-radius: var(--nk-r);
+  padding: 13px 16px;
+  background: var(--nk-surface);
+}
+.nk-status-name {
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.nk-status-why { margin: 7px 0 0; font-size: 14.5px; line-height: 1.55; color: var(--nk-ink); }
+
+.nk-status-ok { border-left-color: var(--nk-ok); }
 .nk-status-ok .nk-status-name { color: var(--nk-ok); }
-.nk-status-warn { background: var(--nk-warn-wash); border-color: rgba(168, 114, 44, 0.28); }
+.nk-status-warn { border-left-color: var(--nk-warn); }
 .nk-status-warn .nk-status-name { color: var(--nk-warn); }
-.nk-status-stop { background: var(--nk-stop-wash); border-color: rgba(166, 58, 83, 0.3); }
+.nk-status-stop { border-left-color: var(--nk-stop); }
 .nk-status-stop .nk-status-name { color: var(--nk-stop); }
 
-/* --- the kit --------------------------------------------------------------------------------------- */
+/* --- results -------------------------------------------------------------------------------------- */
+
+.nk-result { margin-top: 30px; }
+
+.nk-result-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.nk-result-title {
+  font-family: var(--nk-serif);
+  font-size: 26px;
+  line-height: 1.2;
+  letter-spacing: -0.018em;
+  font-weight: 400;
+  margin: 6px 0 0;
+}
+.nk-result-actions { display: flex; gap: 9px; flex-wrap: wrap; }
+.nk-result-foot { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--nk-line); }
+
+/* The screenshot surface: one card that is a complete brief on its own, with no page chrome inside it. */
+.nk-share-cols { display: grid; grid-template-columns: 342px minmax(0, 1fr); gap: 26px; align-items: start; }
+.nk-share-visual {
+  border: 1px solid var(--nk-line);
+  border-radius: var(--nk-r);
+  background: radial-gradient(120% 78% at 50% 100%, #fbf4f6 0%, rgba(251, 244, 246, 0) 68%);
+  padding: 6px 10px;
+}
+.nk-share-visual svg { width: 100%; height: auto; display: block; }
+.nk-share .nk-section-label:first-of-type { margin-top: 0; }
+
+/* Numbered steps for prep and removal: these are an order of operations, not a bullet list. */
+.nk-steps-list { margin: 8px 0 0; padding-left: 20px; }
+.nk-steps-list li { font-size: 14px; line-height: 1.6; padding: 4px 0; color: var(--nk-ink-2); }
+
+/* --- pilot feedback ------------------------------------------------------------------------------- */
+
+.nk-feedback {
+  margin-top: 18px;
+  padding: 16px 20px 18px;
+  background: var(--nk-surface);
+  border: 1px solid var(--nk-line);
+  border-radius: var(--nk-r-lg);
+}
+.nk-feedback-q { margin-top: 14px; }
+.nk-feedback-q p { margin: 0 0 9px; font-size: 14.5px; font-weight: 600; color: var(--nk-ink); }
+.nk-feedback-note { margin: 14px 0 0; font-size: 12.5px; color: var(--nk-ink-3); }
+
+.nk-panel {
+  background: var(--nk-surface);
+  border: 1px solid var(--nk-line);
+  border-radius: var(--nk-r-lg);
+  box-shadow: var(--nk-lift);
+  padding: 20px 22px 22px;
+}
+
+.nk-panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding-bottom: 14px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid var(--nk-line);
+}
+.nk-panel-title { margin: 0; }
+.nk-panel-meta { font-size: 12px; color: var(--nk-ink-3); }
 
 .nk-kit-row {
-  border-bottom: 1px solid var(--nk-blush); padding: 18px 0;
-  display: grid; grid-template-columns: 128px 1fr auto; gap: 18px; align-items: start;
+  border-bottom: 1px solid var(--nk-line);
+  padding: 16px 0;
+  display: grid;
+  grid-template-columns: 132px minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: start;
 }
-@media (max-width: 640px) { .nk-kit-row { grid-template-columns: 1fr auto; } .nk-kit-slot { grid-column: 1 / -1; } }
 
-.nk-kit-slot {
-  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--nk-mauve); font-weight: 700; padding-top: 4px;
+.nk-kit-slot { padding-top: 3px; }
+
+/* The retailer's own product photo beside the name. Contained, not cropped: these are studio shots on white
+   at wildly different aspect ratios, and cover would slice the bottle off half of them. */
+.nk-kit-main { display: flex; gap: 14px; align-items: flex-start; min-width: 0; }
+.nk-kit-body { min-width: 0; flex: 1 1 auto; }
+
+.nk-thumb {
+  flex: none;
+  border-radius: var(--nk-r);
+  border: 1px solid var(--nk-line);
+  background: var(--nk-surface);
+  object-fit: contain;
+  padding: 3px;
 }
-.nk-kit-name { font-family: var(--nk-serif); font-size: 17px; line-height: 1.35; }
-.nk-kit-name a { color: var(--nk-plum); text-decoration: none; border-bottom: 1px solid var(--nk-blush-deep); }
-.nk-kit-name a:hover { color: var(--nk-rose-deep); border-bottom-color: var(--nk-rose); }
-.nk-kit-sub { font-size: 12.5px; color: var(--nk-mauve); margin-top: 4px; }
-.nk-kit-note { font-size: 12.5px; line-height: 1.5; color: var(--nk-warn); margin-top: 7px; max-width: 52ch; }
-.nk-kit-why { font-size: 12.5px; line-height: 1.5; color: var(--nk-plum-soft); margin-top: 5px; max-width: 52ch; }
+.nk-thumb-md { width: 58px; height: 58px; }
+.nk-thumb-sm { width: 40px; height: 40px; }
+
+/* Visibly empty, never a stand-in photo: dashed, tinted, a struck-through image glyph and the words. At a
+   glance this cannot be read as "the product looks like this". */
+.nk-thumb.is-empty {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  background: var(--nk-tint);
+  border-style: dashed;
+  border-color: var(--nk-line-2);
+  color: var(--nk-ink-3);
+}
+.nk-thumb.is-empty em {
+  font-style: normal;
+  font-size: 8.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+.nk-thumb-sm.is-empty svg { width: 12px; height: 12px; }
+.nk-thumb-sm.is-empty em { font-size: 7.5px; }
+
+.nk-kit-name { font-size: 15.5px; font-weight: 600; line-height: 1.35; letter-spacing: -0.008em; }
+.nk-kit-name a { color: var(--nk-ink); text-decoration: none; border-bottom: 1px solid var(--nk-line-2); }
+.nk-kit-name a:hover { color: var(--nk-wine); border-bottom-color: var(--nk-wine); }
+.nk-kit-sub { font-size: 12.5px; color: var(--nk-ink-3); margin-top: 4px; }
+.nk-kit-note { font-size: 12.5px; line-height: 1.5; color: var(--nk-warn); margin-top: 7px; max-width: 54ch; }
+.nk-kit-why { font-size: 12.5px; line-height: 1.5; color: var(--nk-ink-2); margin-top: 5px; max-width: 54ch; }
 .nk-kit-price { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
-.nk-kit-price > div { font-family: var(--nk-serif); font-size: 18px; margin-bottom: 6px; }
+.nk-kit-price > div { font-size: 16px; font-weight: 650; margin-bottom: 7px; letter-spacing: -0.01em; }
 
 .nk-tag {
-  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700;
-  padding: 4px 9px; border-radius: 999px; display: inline-block;
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 4px 9px;
+  border-radius: 999px;
+  display: inline-block;
 }
-.nk-tag-essential { background: var(--nk-plum); color: var(--nk-blush); }
-.nk-tag-optional { background: var(--nk-blush-deep); color: var(--nk-plum-soft); }
+.nk-tag-essential { background: var(--nk-wine); color: #fff; }
+.nk-tag-optional { background: var(--nk-tint); color: var(--nk-wine); }
 
-/* --- totals ---------------------------------------------------------------------------------------- */
-
-.nk-totals {
-  margin-top: 24px; padding: 20px 22px; border-radius: 12px;
-  background: linear-gradient(180deg, var(--nk-rose-wash), var(--nk-blush));
-}
+.nk-totals { margin-top: 22px; padding-top: 4px; }
 .nk-total-line {
-  display: flex; justify-content: space-between; align-items: baseline; padding: 6px 0;
-  font-size: 14px; font-variant-numeric: tabular-nums;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 6px 0;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
 }
-.nk-total-line span:first-child { color: var(--nk-plum-soft); }
+.nk-total-line span:first-child { color: var(--nk-ink-2); }
 .nk-total-grand {
-  font-family: var(--nk-serif); font-size: 30px; padding-top: 14px; margin-top: 8px;
-  border-top: 1px solid rgba(166, 58, 83, 0.2);
+  font-family: var(--nk-serif);
+  font-size: 30px;
+  padding-top: 13px;
+  margin-top: 7px;
+  border-top: 1px solid var(--nk-line-2);
 }
-.nk-total-grand span:first-child { font-family: var(--nk-sans); font-size: 13px; color: var(--nk-plum); font-weight: 600; }
+.nk-total-grand span:first-child {
+  font-family: var(--nk-sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--nk-ink);
+}
 .nk-over { color: var(--nk-stop); font-weight: 600; }
 .nk-under { color: var(--nk-ok); font-weight: 600; }
 
-/* --- owned / refinements ---------------------------------------------------------------------------- */
-
 .nk-owned {
-  margin-top: 20px; padding: 16px 18px; border-radius: 12px;
-  background: var(--nk-gold-wash); border: 1px dashed rgba(176, 141, 63, 0.42);
+  margin-top: 20px;
+  padding: 14px 16px;
+  border-radius: var(--nk-r);
+  background: var(--nk-tint);
 }
-.nk-owned-item { display: flex; justify-content: space-between; font-size: 13.5px; padding: 5px 0; }
-.nk-owned-item s { color: var(--nk-mauve); font-variant-numeric: tabular-nums; }
+.nk-owned strong { font-size: 12.5px; font-weight: 700; }
+.nk-owned-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13.5px;
+  padding: 8px 0;
+}
+.nk-owned-name { flex: 1 1 auto; min-width: 0; }
+.nk-owned-item s { color: var(--nk-ink-3); font-variant-numeric: tabular-nums; flex: none; }
 
-.nk-refine { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--nk-blush); }
+.nk-missing { background: var(--nk-surface); border: 1px solid var(--nk-line); border-left: 3px solid var(--nk-stop); }
+
+.nk-refine {
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--nk-line);
+}
 
 .nk-alts { margin-top: 10px; }
-.nk-alts summary { font-size: 12.5px; color: var(--nk-rose-deep); cursor: pointer; font-weight: 600; }
-.nk-alts summary:hover { color: var(--nk-rose); }
+.nk-alts summary { font-size: 12.5px; color: var(--nk-wine); cursor: pointer; font-weight: 600; }
+.nk-alts summary:hover { color: var(--nk-wine-deep); }
 .nk-alt {
-  display: flex; justify-content: space-between; gap: 12px; align-items: center;
-  padding: 9px 0; border-bottom: 1px solid var(--nk-blush); font-size: 13.5px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--nk-line);
+  font-size: 13.5px;
 }
-.nk-alt-delta { font-size: 12.5px; color: var(--nk-mauve); font-variant-numeric: tabular-nums; }
+.nk-alt-name { flex: 1 1 auto; min-width: 0; }
+.nk-alt-delta { font-size: 12.5px; color: var(--nk-ink-3); font-variant-numeric: tabular-nums; flex: none; }
+.nk-alt .nk-btn { flex: none; }
 
-/* --- salon brief ------------------------------------------------------------------------------------ */
+/* --- salon brief ---------------------------------------------------------------------------------- */
 
 .nk-brief-card {
-  background: var(--nk-porcelain); border-radius: var(--nk-r);
-  box-shadow: var(--nk-lift); padding: 30px;
-  border-top: 3px solid var(--nk-gold);
+  background: var(--nk-surface);
+  border: 1px solid var(--nk-line);
+  border-top: 2px solid var(--nk-wine);
+  border-radius: var(--nk-r-lg);
+  box-shadow: var(--nk-lift);
+  padding: 22px 24px 24px;
 }
 .nk-brief-quote {
-  border-radius: 12px; padding: 20px 22px; background: var(--nk-gold-wash);
-  font-family: var(--nk-serif); font-size: 17.5px; line-height: 1.65; margin: 6px 0 0; color: var(--nk-plum);
+  border-radius: var(--nk-r);
+  padding: 16px 18px;
+  background: var(--nk-tint);
+  font-family: var(--nk-sans);
+  font-size: 15.5px;
+  line-height: 1.6;
+  margin: 8px 0 0;
+  color: var(--nk-ink);
 }
-.nk-placement { list-style: none; padding: 0; margin: 10px 0 0; columns: 2; column-gap: 28px; }
-@media (max-width: 560px) { .nk-placement { columns: 1; } }
-.nk-placement li { font-size: 13.5px; padding: 5px 0; break-inside: avoid; color: var(--nk-plum-soft); }
-.nk-placement li.is-accent { color: var(--nk-plum); font-weight: 600; }
-.nk-placement li.is-accent::after { content: " ◆"; color: var(--nk-gold); }
 
-.nk-notes { margin: 8px 0 0; padding-left: 20px; }
-.nk-notes li { font-size: 14px; line-height: 1.6; padding: 4px 0; color: var(--nk-plum-soft); }
+/* A label/value list with leaders is right HERE — this one really is a spec sheet a stranger reads. */
+.nk-field {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--nk-line);
+}
+.nk-field:last-of-type { border-bottom: 0; }
+.nk-field-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--nk-ink-3);
+  white-space: nowrap;
+}
+.nk-field-leader { flex: 1; min-width: 10px; border-bottom: 1px dotted var(--nk-line-2); }
+.nk-field-value { font-size: 14px; font-weight: 600; text-align: right; }
+
+.nk-placement { list-style: none; padding: 0; margin: 10px 0 0; columns: 2; column-gap: 28px; }
+.nk-placement li { font-size: 13.5px; padding: 4px 0; break-inside: avoid; color: var(--nk-ink-2); }
+.nk-placement li.is-accent { color: var(--nk-ink); font-weight: 600; }
+.nk-placement li.is-accent::after { content: " ◆"; color: var(--nk-gold); font-size: 10px; }
+
+.nk-notes { margin: 8px 0 0; padding-left: 18px; }
+.nk-notes li { font-size: 14px; line-height: 1.6; padding: 4px 0; color: var(--nk-ink-2); }
 
 .nk-fineprint {
-  font-size: 12.5px; line-height: 1.6; color: var(--nk-mauve); margin-top: 18px;
-  padding-top: 14px; border-top: 1px solid var(--nk-blush);
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--nk-ink-3);
+  margin-top: 16px;
+  padding-top: 13px;
+  border-top: 1px solid var(--nk-line);
 }
 
-.nk-section-label { margin: 26px 0 8px; }
+.nk-section-label { display: block; margin: 22px 0 8px; }
 
-.nk-assumptions { margin-top: 20px; }
+.nk-assumptions { margin-top: 18px; }
 .nk-assumptions summary {
-  font-size: 12.5px; color: var(--nk-warn); cursor: pointer; padding: 8px 0; font-weight: 600;
+  font-size: 12.5px;
+  color: var(--nk-warn);
+  cursor: pointer;
+  padding: 8px 0;
+  font-weight: 600;
 }
-.nk-assumptions li { font-size: 13.5px; line-height: 1.55; padding: 5px 0; color: var(--nk-plum-soft); }
+.nk-assumptions ul { margin: 4px 0 0; padding-left: 18px; }
+.nk-assumptions li { font-size: 13.5px; line-height: 1.55; padding: 4px 0; color: var(--nk-ink-2); }
 
 .nk-error {
-  border-radius: 12px; background: var(--nk-stop-wash); border: 1px solid rgba(166, 58, 83, 0.3);
-  padding: 14px 18px; margin: 18px 0; font-size: 14.5px; color: var(--nk-plum);
+  border-radius: var(--nk-r);
+  background: var(--nk-surface);
+  border: 1px solid var(--nk-line);
+  border-left: 3px solid var(--nk-stop);
+  padding: 13px 16px;
+  margin: 18px 0;
+  font-size: 14.5px;
+  color: var(--nk-ink);
+}
+
+/* --- trust bar + legal footer --------------------------------------------------------------------- */
+
+.nk-trust {
+  background: var(--nk-surface);
+  border-top: 1px solid var(--nk-line);
+  font-family: var(--nk-sans);
+}
+.nk-trust-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 22px 26px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+.nk-trust-item { display: flex; gap: 12px; align-items: flex-start; }
+.nk-trust-ico {
+  width: 34px;
+  height: 34px;
+  flex: none;
+  border-radius: var(--nk-r);
+  background: var(--nk-tint);
+  color: var(--nk-wine);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.nk-trust-item strong { display: block; font-size: 13px; font-weight: 600; color: var(--nk-ink); }
+.nk-trust-item span { display: block; font-size: 12.5px; line-height: 1.45; color: var(--nk-ink-2); }
+
+.nk-legal {
+  background: var(--nk-surface);
+  border-top: 1px solid var(--nk-line);
+  font-size: 12px;
+  color: var(--nk-ink-3);
+}
+.nk-legal-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 14px 26px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.nk-legal a { color: var(--nk-ink-3); text-decoration: none; margin-left: 20px; }
+.nk-legal a:hover { color: var(--nk-wine); text-decoration: underline; }
+
+/* --- responsive ----------------------------------------------------------------------------------- */
+
+@media (max-width: 1120px) {
+  .nk-main { grid-template-columns: 1fr; }
+  .nk-decide { position: static; }
+  .nk-fork-options { flex-direction: row; }
+  .nk-fork-btn { flex: 1 1 0; }
+}
+
+@media (max-width: 980px) {
+  .nk-cols { grid-template-columns: 1fr; }
+  .nk-share-cols { grid-template-columns: 1fr; gap: 18px; }
+  /* Preview before the form on a narrow screen: the picture is the answer, the form is the correction. */
+  .nk-cols > .nk-preview { order: 1; border-left: 0; border-bottom: 1px solid var(--nk-line); }
+  .nk-cols > .nk-form { order: 2; }
+  .nk-trust-inner { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 760px) {
+  .nk { padding: 0 16px 44px; }
+  .nk-row { grid-template-columns: 1fr; align-items: start; gap: 7px; }
+  .nk-prototype { margin: 0 -16px 22px; padding: 10px 16px; }
+  .nk-topbar { padding: 0 14px; gap: 0; min-height: 58px; }
+  .nk-wordmark { margin-right: 10px; font-size: 21px; }
+  .nk-tab { padding: 8px 12px; font-size: 12.5px; }
+  .nk-locale { display: none; }
+  .nk-title { font-size: 29px; }
+  .nk-hero { flex-direction: column; gap: 16px; }
+  .nk-badge { max-width: none; }
+  /* The desktop measure cap comes off: on a phone the card is already only as wide as the screen. */
+  .nk-ask { max-width: none; }
+  .nk-btn-ask { width: 100%; justify-content: center; font-size: 14px; padding: 11px 16px; }
+  .nk-result-title { font-size: 22px; }
+  .nk-result-actions .nk-btn { flex: 1 1 auto; justify-content: center; }
+  .nk-thumb-md { width: 48px; height: 48px; }
+  .nk-thumb-sm { width: 36px; height: 36px; }
+  /* Name, price and Uzmi all have to stay readable at 412px, so the row wraps rather than squeezing: the
+     product name takes the line beside its thumbnail, then the delta and the action share the next one. */
+  .nk-alt { flex-wrap: wrap; }
+  .nk-alt-name { flex: 1 1 100%; }
+  .nk-alt-delta { margin-left: 52px; }
+  .nk-alt .nk-btn { margin-left: auto; }
+  .nk-steps { gap: 10px; }
+  .nk-steps .nk-step-name { display: none; }
+  .nk-steps .is-now .nk-step-name { display: block; }
+  /* The visible step name is nowrap by design, and step 3 — "ODABERI SALON ILI KOD KUĆE" — is 194px of
+     it. Beside three dots and two connectors that overflows a 375px phone, and because the rail is a flex
+     row whose items cannot shrink, the overflow pushed the whole PAGE sideways rather than the rail. Only
+     visible on step 3 at iPhone widths, which is why Pixel 7 (412px) never showed it. Let the current
+     step wrap instead. */
+  .nk-steps li { min-width: 0; }
+  .nk-steps li:last-child { flex: 0 1 auto; }
+  .nk-steps .is-now .nk-step-name { white-space: normal; }
+  .nk-fork-options { flex-direction: column; }
+  .nk-form { padding: 6px 16px 16px; }
+  .nk-preview { padding: 14px 16px 16px; }
+  .nk-panel { padding: 16px 16px 18px; }
+  /* A shopping row on a phone is name-and-price; the slot name is a caption above it. */
+  .nk-kit-row { grid-template-columns: minmax(0, 1fr) auto; gap: 6px 14px; }
+  .nk-kit-slot { grid-column: 1 / -1; padding-top: 0; }
+  .nk-placement { columns: 1; }
+  .nk-total-grand { font-size: 26px; }
+  .nk-trust-inner { grid-template-columns: 1fr; padding: 18px 16px; gap: 14px; }
+  .nk-legal-inner { padding: 14px 16px; }
+  .nk-legal a { margin: 0 20px 0 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .nk-btn, .nk-chip, .nk-fork-btn, .nk-select, .nk-input, .nk-ask-field { transition: none; }
-  .nk-fork-btn:hover:not(:disabled) { transform: none; }
+  .nk-btn,
+  .nk-chip,
+  .nk-fork-btn,
+  .nk-select,
+  .nk-input,
+  .nk-ask-field,
+  .nk-tab { transition: none; }
 }

@@ -103,11 +103,24 @@ public record NailDesignSpecDto(
 
     /** Named fingers — the vocabulary the user and the technician both use. */
     public enum Finger {
-        THUMB("palac"), INDEX("kažiprst"), MIDDLE("srednjak"), RING("prstenjak"), PINKY("mali prst");
+        THUMB("palac", "palcu"), INDEX("kažiprst", "kažiprstu"), MIDDLE("srednjak", "srednjaku"),
+        RING("prstenjak", "prstenjaku"), PINKY("mali prst", "malom prstu");
 
         private final String hr;
-        Finger(String hr) { this.hr = hr; }
+        private final String hrLocative;
+
+        Finger(String hr, String hrLocative) {
+            this.hr = hr;
+            this.hrLocative = hrLocative;
+        }
+
         public String croatianLabel() { return hr; }
+
+        /**
+         * The form that follows "na" — "detalj na prstenjaku", not "detalj na prstenjak". Croatian declines
+         * after a preposition, and concatenating the nominative reads as machine output to a native speaker.
+         */
+        public String croatianLocative() { return hrLocative; }
     }
 
     /** Whether both hands match. No "unknown" member — see the class note. */

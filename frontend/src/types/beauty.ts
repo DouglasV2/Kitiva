@@ -27,7 +27,10 @@ export function isPurchasable(status: KitStatus): boolean {
 /** One inferred decision, so the user can see and correct it. Not a confidence score — see Assumption.java. */
 export interface Assumption {
   field: string;
+  /** Machine value. NEVER rendered — that is how "glossy" and "mirrored" ended up on screen. Use labelHr. */
   assumed: string;
+  /** Natural Croatian phrase for what was assumed, e.g. "sjajni završni sloj". The only one to display. */
+  labelHr: string;
   reasonHr: string;
 }
 

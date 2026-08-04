@@ -23,6 +23,8 @@ export interface SalonBrief {
   techniqueNotes: string[];
   simplerAlternative: string;
   variabilityDisclaimer: string;
+  /** The whole brief as plain text, built server-side so Copy and the screen can never disagree. */
+  copyTextHr: string;
 }
 
 export interface Alternative {
@@ -34,6 +36,7 @@ export interface Alternative {
   /** Negative = cheaper than the current pick. */
   priceDeltaCents: number;
   productUrl: string;
+  imageUrl: string | null;
   swatchImageUrl: string | null;
 }
 
@@ -71,7 +74,12 @@ export interface ValidatedKit {
   retailerCount: number;
   assumptions: Assumption[];
   safetyNotesHr: string[];
+  /** Ordered prep steps for the chosen system. Empty on a safety-blocked kit — nothing is being applied. */
+  prepStepsHr: string[];
+  removalStepsHr: string[];
   catalogProvenanceHr: string;
+  /** How current the captured prices are. Null when the kit has no products to price. */
+  catalogFreshnessHr: string | null;
 }
 
 export interface NailGenerateResponse {
@@ -129,4 +137,21 @@ export function generateNailLook(
     singleRetailer: refine.singleRetailer ?? null,
     system: refine.system ?? null,
   });
+}
+
+export type FeedbackMatch = 'DA' | 'DJELOMICNO' | 'NE';
+export type FeedbackIntent = 'KORISTILA' | 'PLATILA' | 'NE_BIH';
+
+/**
+ * The two pilot questions. Both optional and answered independently, so this is called once per answer and
+ * each call stores a row — a partial answer is worth more than a dropped one.
+ */
+export function sendNailFeedback(body: {
+  matchedExpectation?: FeedbackMatch | null;
+  wouldUse?: FeedbackIntent | null;
+  executionMode: string;
+  kitStatus?: string | null;
+  prompt: string;
+}): Promise<{ stored: boolean }> {
+  return post<{ stored: boolean }>('/api/nail/feedback', body);
 }

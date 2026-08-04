@@ -29,15 +29,18 @@ public class NailLookController {
     private final NailDesignDiagramRenderer diagramRenderer;
     private final NailSalonBriefBuilder salonBriefBuilder;
     private final NailKitAssembler kitAssembler;
+    private final NailFeedbackRepository feedbackRepository;
 
     public NailLookController(NailIntentExtractor extractor,
                               NailDesignDiagramRenderer diagramRenderer,
                               NailSalonBriefBuilder salonBriefBuilder,
-                              NailKitAssembler kitAssembler) {
+                              NailKitAssembler kitAssembler,
+                              NailFeedbackRepository feedbackRepository) {
         this.extractor = extractor;
         this.diagramRenderer = diagramRenderer;
         this.salonBriefBuilder = salonBriefBuilder;
         this.kitAssembler = kitAssembler;
+        this.feedbackRepository = feedbackRepository;
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -106,7 +109,10 @@ public class NailLookController {
         String svg = design == null ? "" : diagramRenderer.render(design);
 
         if (mode == NailLookBriefDto.ExecutionMode.SALON) {
-            return new GenerateResponse("SALON", brief, svg, salonBriefBuilder.build(design), null, null, List.of());
+            // The salon brief carries the assumptions so the copy text names what we guessed. She is about to
+            // hand this to a professional; the guesses are the part that most needs saying out loud.
+            var salon = salonBriefBuilder.build(design, brief == null ? List.of() : brief.assumptions());
+            return new GenerateResponse("SALON", brief, svg, salon, null, null, List.of());
         }
 
         if (mode == NailLookBriefDto.ExecutionMode.AT_HOME) {
@@ -145,7 +151,8 @@ public class NailLookController {
                     request.pinnedBySlot(), request.preferCheapest(), request.singleRetailer(),
                     requestedSystem.isBlank() ? null : requestedSystem);
             return new GenerateResponse("AT_HOME", brief, svg, null,
-                    kitAssembler.assemble(brief, prefs), null, kitAssembler.singleStoreOptions(prefs.system()));
+                    kitAssembler.assemble(brief, prefs), null,
+                    kitAssembler.singleStoreOptions(prefs.system(), brief.design()));
         }
 
         return new GenerateResponse("UNSPECIFIED", brief, svg, null, null,
@@ -153,12 +160,47 @@ public class NailLookController {
     }
 
     private GenerateResponse blocked(NailLookBriefDto brief, String svg, String reason) {
+        // A blocked kit carries no prep and no removal steps on purpose: those describe applying a product,
+        // and the whole point of the block is that we are not recommending one.
         NailKitAssembler.ValidatedKit blockedKit = new NailKitAssembler.ValidatedKit(
                 KitStatus.SAFETY_BLOCKED, KitStatus.SAFETY_BLOCKED.croatianLabel(), reason,
                 List.of(), List.of(), List.of(), 0, 0, 0, null, null, 0,
                 brief == null ? List.of() : brief.assumptions(),
-                List.of("Ovo nije medicinski savjet ni dijagnoza."), "");
+                List.of("Ovo nije medicinski savjet ni dijagnoza."), List.of(), List.of(), "",
+                // No products, so no prices, so nothing to say about how fresh they are.
+                null);
         return new GenerateResponse("AT_HOME", brief, svg, null, blockedKit, reason, List.of());
+    }
+
+    /**
+     * The two pilot questions. Both optional, so a request may carry one answer and not the other; a request
+     * with neither is accepted and stored as nothing, because a validation error on a feedback form is worse
+     * than a dropped row.
+     */
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public record FeedbackRequest(String matchedExpectation, String wouldUse, String executionMode,
+                                  String kitStatus, String prompt) { }
+
+    public record FeedbackResponse(boolean stored) { }
+
+    @PostMapping("/api/nail/feedback")
+    public FeedbackResponse feedback(@RequestBody FeedbackRequest request) {
+        NailFeedback.Match match = enumOrNull(NailFeedback.Match.class, request.matchedExpectation());
+        NailFeedback.Intent intent = enumOrNull(NailFeedback.Intent.class, request.wouldUse());
+        if (match == null && intent == null) return new FeedbackResponse(false);
+
+        feedbackRepository.save(NailFeedback.of(match, intent, request.executionMode(),
+                request.kitStatus(), request.prompt(), java.time.Instant.now()));
+        return new FeedbackResponse(true);
+    }
+
+    private <E extends Enum<E>> E enumOrNull(Class<E> type, String raw) {
+        if (raw == null || raw.isBlank()) return null;
+        try {
+            return Enum.valueOf(type, raw.trim().toUpperCase());
+        } catch (IllegalArgumentException ex) {
+            return null;
+        }
     }
 
     private NailLookBriefDto.ExecutionMode parseMode(String raw) {

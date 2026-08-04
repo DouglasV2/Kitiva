@@ -29,8 +29,9 @@ public class NailDesignResolver {
             String accentDescription,
             List<NailDesignSpecDto.Effect> effects
     ) {
+        /** "lijeva ruka, palac" — the adjective agrees with ruka, so the finger has to sit after a comma. */
         public String label() {
-            return hand.croatianLabel() + " " + finger.croatianLabel();
+            return hand.croatianLabel() + " ruka, " + finger.croatianLabel();
         }
     }
 
@@ -80,7 +81,7 @@ public class NailDesignResolver {
     public String accentSummaryHr(NailDesignSpecDto design) {
         if (!design.hasAccent()) return "Bez naglasnog nokta — isti dizajn na svih deset.";
         String fingers = String.join(" i ", design.accentFingers().stream()
-                .map(NailDesignSpecDto.Finger::croatianLabel).toList());
+                .map(NailDesignSpecDto.Finger::croatianLocative).toList());
         return design.symmetry() == NailDesignSpecDto.Symmetry.MIRRORED
                 ? "Naglasak na " + fingers + " — zrcalno na obje ruke."
                 : "Naglasak na " + fingers + " — samo na desnoj ruci (navedeno je da se ruke razlikuju).";

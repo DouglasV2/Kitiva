@@ -15,24 +15,39 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * stated is not an assumption, and a value left at a neutral default that does not change the kit is not
  * an assumption either — recording those would bury the two or three that actually matter.</p>
  *
+ * <p><strong>{@code labelHr} exists because the UI showed {@code assumed}.</strong> That put
+ * "glossy", "mirrored" and a bare "prstenjak" on screen as headings — our internal vocabulary leaking into a
+ * Croatian consumer product. {@code field} and {@code assumed} stay machine-readable for whoever needs to
+ * branch on them; {@code labelHr} is the only one anything renders.</p>
+ *
  * @param field    the brief field that was inferred, e.g. {@code "finish"}, {@code "accentFingers"}
- * @param assumed  the value that was chosen, in the same vocabulary the field uses
- * @param reasonHr short Croatian explanation shown to the user, e.g. "Nije navedeno, pretpostavljen
- *                 prirodan finiš jer je opisan svakodnevni izgled."
+ * @param assumed  the value that was chosen, in the same vocabulary the field uses — never displayed
+ * @param labelHr  natural Croatian noun phrase for what was assumed, e.g. "sjajni završni sloj"
+ * @param reasonHr short Croatian explanation shown to the user, e.g. "Završni sloj nije bio naveden u opisu."
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record Assumption(
         String field,
         String assumed,
+        String labelHr,
         String reasonHr
 ) {
     public Assumption {
         field = field == null ? "" : field.trim();
         assumed = assumed == null ? "" : assumed.trim();
+        labelHr = labelHr == null || labelHr.isBlank() ? "" : labelHr.trim();
         reasonHr = reasonHr == null ? "" : reasonHr.trim();
     }
 
-    public static Assumption of(String field, String assumed, String reasonHr) {
-        return new Assumption(field, assumed, reasonHr);
+    /** The full form: a machine value plus the Croatian phrase that is actually shown. */
+    public static Assumption of(String field, String assumed, String labelHr, String reasonHr) {
+        return new Assumption(field, assumed, labelHr, reasonHr);
+    }
+
+    /** What the UI should print. Falls back through assumed to field so nothing ever renders empty. */
+    public String displayHr() {
+        if (!labelHr.isBlank()) return labelHr;
+        if (!assumed.isBlank()) return assumed;
+        return field;
     }
 }

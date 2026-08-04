@@ -105,7 +105,13 @@ public class NailPilotCatalog {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    record Source(String retailer, String endpoint, String platform, String method) { }
+    public record Source(String retailer, String endpoint, String platform, String method,
+                         String verificationMethod, String status, String lastVerifiedAt, String note) { }
+
+    /** The sources this catalog was built from, with the reachability recorded by the capture run. */
+    public List<Source> sources() {
+        return pilot == null ? List.of() : pilot.sources();
+    }
 
     /**
      * One pilot row.
@@ -142,10 +148,32 @@ public class NailPilotCatalog {
             Boolean consumerEligible,
             /** Published tip count / size range for a press-on set. Null when the retailer does not say. */
             String sizeInfo,
+            /**
+             * The retailer's own published application instructions, verbatim. Null when the retailer
+             * publishes none — which is itself evidence, and is treated as "not proven" rather than
+             * "probably fine". {@link NailCapabilityEvidence} reads this to decide whether a brush-on
+             * product can claim a cat-eye: that effect is made by dragging a MAGNET through the wet
+             * coat, so a polish that never mentions a magnet cannot produce it however it is marketed.
+             */
+            String applicationEvidence,
             String hemaStatus,
             String tpoStatus,
             Boolean inciPublished,
             String verifiedAt,
+            /**
+             * How this row was verified: {@code automatic} (machine-read from the retailer's published
+             * feed) or {@code manual} (a human opened the page and checked it). Every row in the pilot is
+             * automatic, which is the same admission {@code dataQuality: "pilot-unreviewed"} makes.
+             */
+            String verificationMethod,
+            /**
+             * The instant this row was last actually READ from its source, as an ISO-8601 instant. A run
+             * that could not reach the source does not update it — carrying today's date on a row nobody
+             * could check would be the one lie that makes every other field untrustworthy.
+             */
+            String lastVerifiedAt,
+            /** {@code reachable} | {@code temporarily-blocked} | {@code unavailable}, as of the last run. */
+            String sourceStatus,
             String dataQuality
     ) {
         public PilotProduct {

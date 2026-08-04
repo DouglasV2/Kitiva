@@ -221,21 +221,24 @@ public class NailIntentExtractor {
                 ? NailDesignSpecDto.Symmetry.ASYMMETRIC_STATED
                 : NailDesignSpecDto.Symmetry.MIRRORED;
 
-        if (shape == null) assumptions.add(Assumption.of("shape", "almond",
-                "Oblik nije naveden, pa je pretpostavljen almond."));
-        if (length == null) assumptions.add(Assumption.of("length", "short",
-                "Duljina nije navedena, pa je pretpostavljena kratka."));
-        if (finish == null) assumptions.add(Assumption.of("finish", "glossy",
-                "Zavrsni sloj nije naveden, pa je pretpostavljen sjajni."));
+        // Every assumption reads as a Croatian sentence about the look, not as a field name and a value.
+        if (shape == null) assumptions.add(Assumption.of("shape", "ALMOND", "almond oblik",
+                "Oblik nije bio naveden u opisu, pa je pretpostavljen almond."));
+        if (length == null) assumptions.add(Assumption.of("length", "SHORT", "kratki nokti",
+                "Duljina nije bila navedena, pa su pretpostavljeni kratki nokti."));
+        if (finish == null) assumptions.add(Assumption.of("finish", "GLOSSY", "sjajni završni sloj",
+                "Završni sloj nije bio naveden, pa je pretpostavljen sjajni."));
         if (!accents.isEmpty() && symmetry == NailDesignSpecDto.Symmetry.MIRRORED) {
-            assumptions.add(Assumption.of("symmetry", "mirrored",
-                    "Nije receno da se ruke razlikuju, pa je dizajn zrcalan na obje ruke."));
+            assumptions.add(Assumption.of("symmetry", "MIRRORED", "isti dizajn na obje ruke",
+                    "Nije bilo rečeno da se ruke razlikuju, pa je dizajn zrcalan na obje ruke."));
         }
         if (statedCount != null) {
-            assumptions.add(Assumption.of("accentFingers",
-                    accents.stream().map(NailDesignSpecDto.Finger::croatianLabel).reduce((a, b) -> a + " + " + b).orElse(""),
-                    "Trazen je broj detalja (" + statedCount + "), ali ne i koji nokat. Stavljeni su na "
-                    + "prstenjak, sto uz zrcalni dizajn daje tocno toliko naglasenih noktiju."));
+            String fingers = accents.stream().map(NailDesignSpecDto.Finger::croatianLocative)
+                    .reduce((a, b) -> a + " i " + b).orElse("");
+            assumptions.add(Assumption.of("accentFingers", accents.toString(),
+                    "detalj na " + fingers,
+                    "Naveden je broj detalja (" + statedCount + "), ali ne i na kojem noktu. Stavljen je na "
+                    + fingers + " — uz isti dizajn na obje ruke to daje točno toliko naglašenih noktiju."));
         }
 
         NailDesignSpecDto design = new NailDesignSpecDto(

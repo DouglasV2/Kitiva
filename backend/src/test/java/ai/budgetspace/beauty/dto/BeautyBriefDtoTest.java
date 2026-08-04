@@ -95,7 +95,8 @@ class BeautyBriefDtoTest {
                         OwnedItemDto.missing("lip-liner", "nemam olovku za usne")),
                 List.of("foundation"), List.of("false-lashes"), List.of("Catrice"),
                 false, "some",
-                List.of(Assumption.of("finish", "dewy", "Nije navedeno; suha koža ide bolje uz dewy finiš.")));
+                List.of(Assumption.of("finish", "dewy", "dewy finiš",
+                        "Nije navedeno; suha koža ide bolje uz dewy finiš.")));
 
         BeautyBriefDto reparsed = mapper.readValue(mapper.writeValueAsString(original), BeautyBriefDto.class);
 

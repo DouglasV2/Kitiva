@@ -30,12 +30,23 @@ public class NailSalonBriefBuilder {
             String showToTechnician,
             List<String> techniqueNotes,
             String simplerAlternative,
-            String variabilityDisclaimer
+            String variabilityDisclaimer,
+            /**
+             * The whole brief as plain text, for the Copy action. Built here rather than reassembled in the
+             * browser so what she pastes into a chat with her technician cannot drift from what she read on
+             * screen.
+             */
+            String copyTextHr
     ) { }
 
     public record SpecLine(String labelHr, String valueHr) { }
 
     public SalonBrief build(NailDesignSpecDto design) {
+        return build(design, List.of());
+    }
+
+    /** As {@link #build(NailDesignSpecDto)}, with the assumptions folded into the copy text. */
+    public SalonBrief build(NailDesignSpecDto design, List<ai.budgetspace.beauty.dto.Assumption> assumptions) {
         List<SpecLine> spec = new ArrayList<>();
         spec.add(new SpecLine("Oblik", design.shape().croatianLabel()));
         spec.add(new SpecLine("Duljina", design.length().croatianLabel()));
@@ -52,10 +63,39 @@ public class NailSalonBriefBuilder {
                         ? colorLabel(design) + " + naglasak" : colorLabel(design)))
                 .toList();
 
-        return new SalonBrief(spec, placement, showToTechnician(design), techniqueNotes(design),
-                simplerAlternative(design),
-                "Ovo je shematski prikaz željenog dizajna, ne fotografija rezultata. Konačan izgled ovisi o "
-                + "obliku i stanju prirodnih noktiju, tehnici i proizvodima koje salon koristi.");
+        String showToTech = showToTechnician(design);
+        List<String> notes = techniqueNotes(design);
+        String disclaimer = "Ovo je shematski prikaz željenog dizajna, ne fotografija rezultata. Konačan "
+                + "izgled ovisi o obliku i stanju prirodnih noktiju, tehnici i proizvodima koje salon koristi.";
+
+        return new SalonBrief(spec, placement, showToTech, notes, simplerAlternative(design), disclaimer,
+                copyText(spec, placement, showToTech, notes, assumptions, disclaimer));
+    }
+
+    /**
+     * The brief as plain text. Deliberately the same content in the same order as the screen, so a paste into
+     * a chat with her technician and a screenshot of the page say the same thing.
+     */
+    private String copyText(List<SpecLine> spec, List<String> placement, String showToTech,
+                            List<String> notes, List<ai.budgetspace.beauty.dto.Assumption> assumptions,
+                            String disclaimer) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("NAIL LOOK — specifikacija za salon\n\n");
+        sb.append(showToTech).append("\n\n");
+        sb.append("SPECIFIKACIJA\n");
+        for (SpecLine line : spec) sb.append("• ").append(line.labelHr()).append(": ").append(line.valueHr()).append('\n');
+        sb.append("\nNOKAT PO NOKAT\n");
+        for (String nail : placement) sb.append("• ").append(nail).append('\n');
+        sb.append("\nNAPOMENE\n");
+        for (String note : notes) sb.append("• ").append(note).append('\n');
+        if (assumptions != null && !assumptions.isEmpty()) {
+            sb.append("\nPRETPOSTAVKE (nije bilo navedeno u opisu)\n");
+            for (var a : assumptions) {
+                sb.append("• ").append(a.displayHr()).append(" — ").append(a.reasonHr()).append('\n');
+            }
+        }
+        sb.append('\n').append(disclaimer).append('\n');
+        return sb.toString();
     }
 
     /** The paragraph she screenshots and shows. Written to be read aloud, not parsed. */

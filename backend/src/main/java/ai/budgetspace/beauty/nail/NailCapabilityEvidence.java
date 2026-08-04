@@ -56,11 +56,73 @@ public final class NailCapabilityEvidence {
         public String croatianLabel() { return hr; }
     }
 
+    /**
+     * Words that make a title about NAILS. A capability regex on its own is not enough: a sourcing probe of
+     * dm.hr returned <em>"Poklon-paket Magnetic Man"</em> — a men's gift set — for the magnet pattern, and
+     * on that evidence a kit would have reported itself able to do a cat-eye. A product only proves a nail
+     * capability if the retailer's own words say it is a nail product.
+     */
+    private static final Pattern NAIL_CONTEXT = Pattern.compile(
+            "nokt|nail|lak\\b|lakov|manikur|manicure|zanoktic|cuticle|press[- ]?on|turpij|rasp");
+
+    /**
+     * Capabilities that are only ever claimed by a nail product, so a bare match would be a false positive.
+     * Colour words are the obvious case in the other direction — "crvena" alone proves nothing anywhere —
+     * but those are already anchored by the slot the product is being considered for.
+     */
+    private static final java.util.Set<Capability> NEEDS_NAIL_CONTEXT = java.util.EnumSet.of(
+            Capability.MAGNET_TOOL, Capability.CHROME, Capability.FRENCH, Capability.GLITTER,
+            Capability.GOLD_DETAIL, Capability.CAT_EYE);
+
+    /**
+     * Tools, by the retailer's own noun. A 2026-08-03 sweep of cicinails.hr and beauty-shop.hr returned
+     * <em>"ZLATNA KLIJEŠTA ZA UMJETNE NOKTE"</em> and <em>"Kist za nail art Aquarelle Gold"</em> for the
+     * gold pattern: both are genuinely about nails and genuinely say gold, and neither puts a speck of
+     * gold on a nail. Gold-coloured pliers are the same failure as the men's gift box one category up.
+     *
+     * <p>A tool can still prove {@link Capability#MAGNET_TOOL} — that capability <em>is</em> a tool. What
+     * it cannot prove is a LOOK.</p>
+     */
+    private static final Pattern IS_TOOL = Pattern.compile(
+            "klijest|skaric|\\bkist\\b|kistov|brusilic|stalak|pincet|nastavak|rucki|sablon|posudic|frez"
+            + "|makaz|pogurivac|turpij|\\brasp\\w*\\b|\\blamp\\w*\\b|\\bpliers\\b|\\bbrush\\b|\\bfile\\b");
+
+    /** Capabilities that describe how the NAIL looks, so a tool can never prove one. */
+    private static final java.util.Set<Capability> DECORATIVE = java.util.EnumSet.of(
+            Capability.CAT_EYE, Capability.CHROME, Capability.FRENCH, Capability.GLITTER,
+            Capability.GOLD_DETAIL, Capability.COLOR_BURGUNDY, Capability.COLOR_RED, Capability.COLOR_NUDE,
+            Capability.COLOR_PINK, Capability.COLOR_BLACK, Capability.COLOR_WHITE, Capability.COLOR_BROWN);
+
+    /**
+     * A product that arrives with the design already on it — a press-on plate or a printed sticker. It
+     * needs no technique to reproduce an effect, because the effect is manufactured into it.
+     */
+    private static final Pattern PRE_MADE = Pattern.compile(
+            "umjetni\\s*nokt|press[- ]?on|samoljepljiv|naljepnic|\\bsticker|\\btips?\\b|umjetne\\s*nokt");
+
+    /**
+     * A published application step that actually names the magnet being moved over the coat. This is the
+     * ONLY thing that proves a brush-on product can make a cat-eye: the effect is iron particles dragged
+     * into a line by a magnet, so a polish whose instructions never mention one cannot make it.
+     */
+    private static final Pattern MAGNET_STEP = Pattern.compile(
+            "magnet\\w*\\s+(pribliz|priblez|drz|prov|povuc|postav|prislon|iznad|preko|uz\\s*nokt)"
+            + "|(pribliz|drz|povuc|postav|prislon|prijedi|prijedite)\\w*\\s+(jak\\w*\\s+)?magnet"
+            + "|(use|hold|move|drag|place)\\s+(the\\s+)?magnet"
+            + "|magnet\\w*\\s+(se\\s+)?(priblizava|drzi|povlaci)");
+
     /** Ordered so the most specific claim wins when a title mentions several things. */
     private static final Map<Capability, Pattern> CLAIMS = new LinkedHashMap<>();
     static {
         CLAIMS.put(Capability.CAT_EYE, Pattern.compile("cat\\s*-?\\s*eye|macje\\s*oko"));
-        CLAIMS.put(Capability.MAGNET_TOOL, Pattern.compile("magnet"));
+        // "magnetic" alone is a marketing word on everything from mascara to a gift box, and "magnetni"
+        // on a POLISH describes the paint, not a tool. So the noun has to stand on its own — `magnet\b`
+        // does not match "magnetni" or "magnetic" — and it has to be a magnet FOR something naily.
+        CLAIMS.put(Capability.MAGNET_TOOL, Pattern.compile(
+                "magnet\\b\\s*(za|for)\\s*(nokt|nail|cat\\s*-?\\s*eye|macje)"
+                + "|(nokt|nail)\\w*\\s+magnet\\b"
+                + "|cat\\s*-?\\s*eye\\s*magnet\\b"
+                + "|magnetic\\s*(stick|pen|tool|plate)"));
         CLAIMS.put(Capability.CHROME, Pattern.compile("\\bchrome\\b|\\bkrom\\b|aurora"));
         CLAIMS.put(Capability.FRENCH, Pattern.compile("\\bfrench\\b"));
         CLAIMS.put(Capability.GLITTER, Pattern.compile("glitter|sljokic"));
@@ -87,10 +149,30 @@ public final class NailCapabilityEvidence {
     public static List<Proof> proofsFor(NailPilotCatalog.PilotProduct product) {
         if (product == null) return List.of();
         String title = fold(product.name() + " " + (product.shadeName() == null ? "" : product.shadeName()));
+        String instructions = fold(product.applicationEvidence() == null ? "" : product.applicationEvidence());
+        boolean aboutNails = NAIL_CONTEXT.matcher(title).find();
+        boolean isTool = IS_TOOL.matcher(title).find();
+        boolean preMade = PRE_MADE.matcher(title).find();
+
         List<Proof> proofs = new ArrayList<>();
         for (Map.Entry<Capability, Pattern> e : CLAIMS.entrySet()) {
+            Capability capability = e.getKey();
+            if (NEEDS_NAIL_CONTEXT.contains(capability) && !aboutNails) continue;
+            // A gold-coloured tool is not a gold detail, and a "French" brush is not a french manicure.
+            if (isTool && DECORATIVE.contains(capability)) continue;
+
             Matcher m = e.getValue().matcher(title);
-            if (m.find()) proofs.add(new Proof(e.getKey(), m.group().trim()));
+            if (!m.find()) continue;
+
+            // The cat-eye gate. A pre-made plate or sticker carries the effect already, so its title is
+            // enough. Anything you BRUSH ON has to be dragged into that line with a magnet, so the
+            // retailer's own instructions must say a magnet is used — a name, a shade or a paragraph of
+            // "captivating, magnetic shine" proves nothing about what the bottle can do.
+            if (capability == Capability.CAT_EYE && !preMade && !MAGNET_STEP.matcher(instructions).find()) {
+                continue;
+            }
+
+            proofs.add(new Proof(capability, m.group().trim()));
         }
         return List.copyOf(proofs);
     }
@@ -140,6 +222,16 @@ public final class NailCapabilityEvidence {
             }
         }
         return List.copyOf(required);
+    }
+
+    /**
+     * The capability an ACCENT of this colour needs a product to prove. Gold is its own capability rather
+     * than a colour, because the thing that makes a nail gold is a decoration — a sticker, a foil, a
+     * pigment — and not a bottle of gold-coloured lacquer sitting in the base-colour slot.
+     */
+    public static Capability accentCapability(String accentColorKey) {
+        if (accentColorKey == null || accentColorKey.isBlank()) return null;
+        return "gold".equals(accentColorKey) ? Capability.GOLD_DETAIL : colourCapability(accentColorKey);
     }
 
     private static Capability colourCapability(String key) {
