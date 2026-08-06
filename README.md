@@ -1,180 +1,130 @@
-# Beauty Kit AI — pivot in progress (from BudgetSpace AI)
+# Kitiva
 
-> **What this repository is.** A clone of BudgetSpace AI on branch `beauty-kit-pivot`, being turned into an
-> **outcome-to-cart planner for makeup and nails** — launch market **Croatia only**. The user describes an
-> outcome ("kratki almond nokti boje višnje s cat-eye efektom, do 90 €"), states a budget and what she already
-> owns, and gets a **validated, complete, editable shopping kit of real catalog products** — or an honest
-> reason why one cannot be built.
->
-> - **Audit:** [`docs/superpowers/specs/2026-07-28-beauty-kit-audit.md`](docs/superpowers/specs/2026-07-28-beauty-kit-audit.md)
-> - **Phased plan:** [`docs/superpowers/plans/2026-07-28-beauty-kit-pivot.md`](docs/superpowers/plans/2026-07-28-beauty-kit-pivot.md)
->
-> **Remote safety.** The upstream remote is `budgetspace-upstream` (fetch-only; its push URL is deliberately
-> invalid). The original BudgetSpace repository must stay untouched — never re-point a remote at it.
->
-> **Status.** Phase A complete. The furniture planner below still works and is the baseline the pivot replaces
-> phase by phase. Everything under "furniture" below remains accurate until the phase that retires it.
->
-> **Not yet true, and must not be claimed:** there is no beauty or nail catalog, no safety gate, and no
-> one-time payment flow. Consumer at-home **gel polish is deliberately disabled** until every SKU carries
-> verified ingredient, professional-status, compatibility, prep and removal data. Builder gel, polygel,
-> acrygel and acrylic systems are **never** recommended to consumers.
+Croatian beauty kit planner. You describe the look you want; you get either a **complete, priced shopping
+list of real products from real Croatian shops** — or an honest explanation of exactly which part cannot be
+bought here.
+
+Two verticals, one shell:
+
+| | |
+|---|---|
+| **Nail Look / Nail Kit** | Free text → an editable specification → a salon brief (no shopping) or an at-home kit |
+| **Makeup Look / Makeup Kit** | Pick a look → budget and what you own → a kit across up to 16 categories |
+
+Market: **HR only**. Currency: **EUR**. No accounts, no payments, no saved state.
 
 ---
 
-## Furniture baseline (BudgetSpace AI — being replaced)
+## The rule the whole codebase is built around
 
-AI-powered furnishing planner for users who want to equip a room inside a budget using retailers such as IKEA, JYSK, Pevex, Emmezeta and Decathlon.
+**Nothing is invented.** Every product name, price, shade, description, image and link is exactly what a
+retailer publishes at a public endpoint. Where a retailer publishes nothing, the field is `null` and the app
+copes — it never gets filled with a plausible guess.
 
-The planner core is deterministic; an optional AI layer (Sprint 10.10) understands the user's
-free-text prompt before planning. AI is **off by default** — with it off the app is fully
-deterministic and makes no external calls. See "AI / LLM configuration" below.
+Three consequences you will notice immediately, and they are all deliberate:
 
-- React + Vite + TypeScript frontend
-- Spring Boot REST API
-- PostgreSQL product catalog
-- Seeded catalog with real IKEA/JYSK HR products
-- Prompt-first planner flow
-- Optional AI prompt understanding (OpenAI or Anthropic), rule-based fallback
-- Retailer filters
-- Must-have categories
-- Already-have categories
-- Replace product action
-- Share/copy plan action
+- **No product has a rating.** Neither source publishes a review score. An invented star rating would be the
+  most persuasive lie this app could tell, so the field exists and stays empty. A test fails if one appears.
+- **No product claims vegan or cruelty-free.** Those are regulated claims and no feed carries evidence for
+  one. A test fails if such a tag appears.
+- **A kit says Incomplete when it is.** "Burgundy cat-eye" stays unbuyable because every cat-eye product in
+  Croatia is a UV/LED gel, which this pilot will not recommend to a consumer. The app names the missing
+  capability rather than shipping ordinary lacquer under the same word.
 
-## AI / LLM configuration
+`budget` / `mid` / `premium` **is** honest — terciles of the real captured prices within a category — and
+every tag carries `provenance: "published" | "derived"` so the UI can say which is which.
 
-**AI keys are backend-only. Never commit API keys. Never expose them in React.** The frontend bundle
-is public — anything in a `VITE_*` variable ships to the browser, so LLM keys live only in backend
-environment variables (`OPENAI_API_KEY` / `ANTHROPIC_API_KEY`), are read in `LlmProperties`, and are
-never logged or returned in any response. Copy `backend/.env.example` and set real values in your
-secret store (real `.env` files are git-ignored).
+## Catalog
 
-The AI layer is a **parser/reasoning layer**: it turns a free-text prompt into a structured
-`PlannerIntentAnalysisDto`; the deterministic planner still selects the real catalog products (the
-LLM never invents products, prices or URLs). It is **off by default** and falls back to the
-rule-based parser when disabled, when no key is set, on any error, or when usage limits are hit.
+Machine-captured from published endpoints, throttled, with an honest user-agent, nothing bypassed. Retailers
+that block us are recorded and left alone.
 
-| Variable | Default | Purpose |
+| Source | Feed | Gives |
 |---|---|---|
-| `BUDGETSPACE_AI_ENABLED` | `false` | master switch for the AI layer |
-| `BUDGETSPACE_LLM_PROVIDER` | `off` | `off` \| `openai` \| `anthropic` |
-| `OPENAI_API_KEY` / `ANTHROPIC_API_KEY` | (none) | backend-only provider keys |
-| `BUDGETSPACE_LLM_MODEL` | cheap mini per provider | model override |
-| `BUDGETSPACE_LLM_TIMEOUT_SECONDS` | `15` | per-call timeout |
-| `BUDGETSPACE_LLM_MAX_OUTPUT_TOKENS` | `700` | output cap |
-| `BUDGETSPACE_AI_MONTHLY_BUDGET_USD` | `20` | monthly cost guardrail → fallback when exceeded |
-| `BUDGETSPACE_AI_MAX_REQUESTS_PER_DAY` | `100` | daily request guardrail |
-| `BUDGETSPACE_AI_MAX_REQUESTS_PER_SESSION` | `10` | per-session guardrail |
+| Golden Rose HR | Shopify `/products.json` | makeup backbone — a real Croatian description on every row, per-shade variants |
+| dm.hr | published search service | press-ons, polish, brand breadth |
+| beauty-shop.hr | WooCommerce Store API | the gold nail detail |
 
-## Project structure
-
-```text
-budgetspace-ai-fullstack-mvp/
-  frontend/      React/Vite app
-  backend/       Spring Boot API + JPA + PostgreSQL
-  scrapers/      Python scraper/connector skeleton
-  docs/          API, data model and Claude Code handoff
+```bash
+node scripts/build-nail-pilot-catalog.mjs
 ```
 
-## Run locally
+```bash
+node scripts/build-makeup-pilot-catalog.mjs
+```
 
-### 1. Start PostgreSQL
+Both write into `backend/src/main/resources/catalog/` and are safe to re-run. A source that refuses a run
+keeps its previously captured rows rather than silently deleting a capability — see `honesty.carriedForward`
+in the artefact.
+
+## Running it
+
+Needs JDK 21, Node 20+, Docker.
 
 ```bash
 docker compose up -d postgres
 ```
 
-Database defaults:
-
-```text
-DB: budgetspace
-User: budgetspace
-Password: budgetspace
-Port: 5432
+```bash
+cd backend && ./mvnw spring-boot:run
 ```
-
-### 2. Start backend
 
 ```bash
-cd backend
-mvn spring-boot:run
+cd frontend && npm install && npm run dev
 ```
 
-Backend runs at:
+Frontend on <http://localhost:5173>, backend on `:8080`, Postgres on `:5432`.
 
-```text
-http://localhost:8080
-```
-
-On startup it recreates the product table and loads `src/main/resources/data.sql`.
-
-### 3. Start frontend
+## Tests
 
 ```bash
-cd frontend
-npm install
-npm run dev
+cd backend && ./mvnw test
 ```
-
-Frontend runs at:
-
-```text
-http://localhost:5173
-```
-
-Create `frontend/.env` if you need a custom backend URL:
 
 ```bash
-cp frontend/.env.example frontend/.env
+cd frontend && npm test
 ```
 
-## Main endpoints
-
-```http
-GET /api/products
-POST /api/plans/generate
-POST /api/plans/replace
+```bash
+cd frontend && npx playwright test
 ```
 
-Example prompt:
+Backend **127**, Playwright **68** across desktop and Pixel 7, vitest **14**. Nothing is mocked: the tests
+drive the real catalog, so a retailer changing its feed fails the build rather than the product.
 
-```text
-Imam 1500 € za dnevni boravak od 20 m² u Zagrebu. Želim skandinavski stil, samo IKEA. Već imam TV, trebam kauč, tepih, lampu i TV komodu.
+Two documents are worth knowing about:
+
+- [`docs/nail-mvp-test-set.md`](docs/nail-mvp-test-set.md) — a frozen contract. 12 prompts that must produce
+  a buyable kit, 4 that must refuse, with the **exact Croatian** each refusal shows.
+- [`docs/nail-catalog-coverage.md`](docs/nail-catalog-coverage.md) — what the Croatian shelf can and cannot
+  do, with the retailer's own words quoted for every rejection.
+
+## Layout
+
+```
+backend/src/main/java/ai/budgetspace/
+  beauty/nail/      prompt parsing, design spec, kit assembly, capability evidence
+  beauty/makeup/    catalog, 7 looks, kit assembly
+  beauty/safety/    consumer safety gates
+  config/           CORS, rate limiting, security headers, error handling
+frontend/src/
+  components/NailLook.tsx      the nail vertical
+  components/MakeupLook.tsx    the makeup vertical
+  components/beauty/           HandPreview (the SVG hand) and the parts both verticals share
+scripts/            the catalog capture scripts
 ```
 
-## What is intentionally not included yet
+## Deploying
 
-- Real retailer scraping
-- LLM calls
-- User accounts
-- Saved plans persistence
-- Affiliate tracking
-- Production deployment
+[`docs/nail-pilot-staging.md`](docs/nail-pilot-staging.md) has the minimal deploy, verified end to end over
+HTTPS against the production images. Three variables have no default on purpose: `POSTGRES_PASSWORD`,
+`CORS_ALLOWED_ORIGINS`, `VITE_API_BASE_URL`.
 
-Those are the next phases after this foundation works locally.
+**The API must be HTTPS.** The frontend image ships `connect-src 'self' https:`; point it at a plain `http://`
+backend and every call is blocked before it leaves, and the UI looks like the backend is down.
 
-### Catalog sourcing policy
+## History
 
-Products come only from a local, verified catalog. Retailers that block automated access (HTTP 403:
-Decathlon, Pevex, Lesnina) are **never scraped or bypassed** — they are `OFFICIAL_FEED_REQUIRED` and
-populated only via an official/partner feed (the feed seam exists in `ai.budgetspace.feed`, unconfigured
-by default and skipped cleanly). IKEA/JYSK are verified public product pages; Emmezeta is link-out only.
-We never fabricate products, prices, reviews, images or URLs. Full rules: [docs/sourcing-policy.md](docs/sourcing-policy.md).
-
-
-## UX Sprint 2 update
-
-This zip includes the prompt-first UX revision:
-
-- no budget slider as the main control; budget is now a precise number input
-- room size uses human presets instead of a slider
-- starter templates for common use cases
-- "Razumjeli smo" summary before generated plans
-- quick result actions: cheaper, nicer, one store only, fewer stores
-- lock product / unlock product flow
-- retailer cost breakdown per plan
-- backend support for `lockedProductIds`
-
-See `docs/UX_SPRINT_2.md` for details.
-"# budgetplanner" 
+This repository began as BudgetSpace AI, a furniture planner, and Kitiva grew out of its shell. The furniture
+app has been removed. Its history is still in the log, which is why the Java package is `ai.budgetspace` and
+the earliest commits talk about sofas.

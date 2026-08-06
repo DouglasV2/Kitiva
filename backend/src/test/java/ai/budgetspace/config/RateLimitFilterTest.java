@@ -8,13 +8,13 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Sprint 10.85 — the per-IP rate-limit backstop on /api/plans/*: allows a burst up to the limit, 429s beyond it,
+ * Sprint 10.85 — the per-IP rate-limit backstop on /api/nail/* and /api/makeup/*: allows a burst up to the limit, 429s beyond it,
  * counts per IP, and never touches other paths/methods or the CORS preflight.
  */
 class RateLimitFilterTest {
 
     private static MockHttpServletRequest post(String ip) {
-        MockHttpServletRequest request = new MockHttpServletRequest("POST", "/api/plans/generate-fast");
+        MockHttpServletRequest request = new MockHttpServletRequest("POST", "/api/nail/generate");
         request.setRemoteAddr(ip);
         return request;
     }
@@ -61,14 +61,14 @@ class RateLimitFilterTest {
         RateLimitFilter filter = new RateLimitFilter(true, 1, 10, 1, "http://localhost:5180");
 
         // A GET to a plan path is not a write and is not limited.
-        MockHttpServletRequest get = new MockHttpServletRequest("GET", "/api/plans/generate-fast");
+        MockHttpServletRequest get = new MockHttpServletRequest("GET", "/api/nail/generate");
         get.setRemoteAddr("9.9.9.9");
         MockFilterChain getChain = new MockFilterChain();
         filter.doFilter(get, new MockHttpServletResponse(), getChain);
         assertThat(getChain.getRequest()).isNotNull();
 
         // A POST to a non-plan path is not limited.
-        MockHttpServletRequest other = new MockHttpServletRequest("POST", "/api/billing/checkout");
+        MockHttpServletRequest other = new MockHttpServletRequest("POST", "/api/health");
         other.setRemoteAddr("9.9.9.9");
         MockFilterChain otherChain = new MockFilterChain();
         filter.doFilter(other, new MockHttpServletResponse(), otherChain);
@@ -84,13 +84,13 @@ class RateLimitFilterTest {
         // rotate its way past the per-IP limit — the real client (the entry OUR proxy appended, rightmost) counts.
         RateLimitFilter filter = new RateLimitFilter(true, 1, 10, 1, "http://localhost:5180");
 
-        MockHttpServletRequest first = new MockHttpServletRequest("POST", "/api/plans/generate-fast");
+        MockHttpServletRequest first = new MockHttpServletRequest("POST", "/api/nail/generate");
         first.setRemoteAddr("10.0.0.9"); // the proxy socket address (not the client)
         first.addHeader("X-Forwarded-For", "9.9.9.9, 1.2.3.4"); // spoofed prefix, real client appended by the proxy
         filter.doFilter(first, new MockHttpServletResponse(), new MockFilterChain());
 
         // Same real client, but the attacker rotates the spoofed prefix → must still be throttled (keyed on 1.2.3.4).
-        MockHttpServletRequest second = new MockHttpServletRequest("POST", "/api/plans/generate-fast");
+        MockHttpServletRequest second = new MockHttpServletRequest("POST", "/api/nail/generate");
         second.setRemoteAddr("10.0.0.9");
         second.addHeader("X-Forwarded-For", "8.8.8.8, 1.2.3.4");
         MockHttpServletResponse response = new MockHttpServletResponse();

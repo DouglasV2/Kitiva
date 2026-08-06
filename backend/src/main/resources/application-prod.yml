@@ -1,5 +1,5 @@
 # Production profile — activate with SPRING_PROFILES_ACTIVE=prod.
-# Locks down the dev/admin surface and forces an explicit frontend origin for CORS.
+# Locks down the admin surface and forces an explicit frontend origin for CORS.
 # Database, port and DDL strategy are all driven by environment variables (no secrets in the repo).
 spring:
   datasource:
@@ -8,49 +8,39 @@ spring:
     password: ${DATABASE_PASSWORD}
   jpa:
     hibernate:
-      # Sprint 10.67/10.83: prod must NOT default to a schema-dropping strategy — `create` wipes ALL data on every
-      # restart. Flyway (below) owns the schema; `validate` only checks that the Flyway-built schema matches the
-      # entities and fails fast on drift. Do NOT override to create/update in prod — write a migration instead.
+      # Prod must NOT default to a schema-dropping strategy — `create` wipes ALL data on every restart.
+      # Flyway (below) owns the schema; `validate` only checks that the Flyway-built schema matches the
+      # entities and fails fast on drift. Do NOT override to create/update — write a migration instead.
       ddl-auto: ${HIBERNATE_DDL_AUTO:validate}
-    # Flyway owns schema creation, so JPA must NOT defer datasource init behind the EntityManagerFactory — that
-    # creates a flyway <-> entityManagerFactory circular depends-on at boot. (No data.sql runs anyway: sql.init=never.)
+    # Flyway owns schema creation, so JPA must NOT defer datasource init behind the EntityManagerFactory —
+    # that creates a flyway <-> entityManagerFactory circular depends-on at boot.
     defer-datasource-initialization: false
   sql:
     init:
-      # Don't run data.sql in prod — the catalog is seeded by RealCatalogSeeder, the schema by Flyway.
       mode: ${SPRING_SQL_INIT_MODE:never}
   flyway:
-    # Sprint 10.83: Flyway owns the prod schema. V1__baseline.sql creates it on a fresh DB; every later change is a
-    # new versioned migration. baseline-on-migrate adopts an EXISTING non-empty schema (e.g. one bootstrapped
-    # earlier with ddl-auto=update) as V1 instead of failing — so an already-deployed DB upgrades cleanly too.
+    # Flyway owns the prod schema. V1__baseline.sql creates it on a fresh DB; every later change is a new
+    # versioned migration. baseline-on-migrate adopts an EXISTING non-empty schema as V1 instead of failing.
+    #
+    # V1-V6 build the furniture schema this app no longer uses, and they stay. Two reasons, both proven
+    # against a live Postgres: V6 ALTERs public.products, which only exists because V1 created it; and
+    # Flyway's validate-on-migrate fails on an applied-but-missing migration, so renumbering breaks every
+    # already-deployed database. The only table this app reads or writes is nail_feedback (V7).
     enabled: true
     baseline-on-migrate: true
     baseline-version: 1
 
 server:
   port: ${SERVER_PORT:8080}
-  # Sprint 10.163: behind the TLS-terminating proxy the app sees plain HTTP, so honor X-Forwarded-Proto to
-  # recover the real scheme. This makes request.isSecure() true over HTTPS — which drives both the session
-  # cookie's Secure fail-safe (AuthController) and HSTS (SecurityHeadersFilter). 'framework' uses Spring's
-  # ForwardedHeaderFilter (the trusted-proxy strategy; the proxy must strip client-supplied X-Forwarded-* ).
+  # Behind a TLS-terminating proxy the app sees plain HTTP, so honor X-Forwarded-Proto to recover the real
+  # scheme. That drives HSTS in SecurityHeadersFilter. 'framework' uses Spring's ForwardedHeaderFilter (the
+  # trusted-proxy strategy; the proxy must strip client-supplied X-Forwarded-*).
   forward-headers-strategy: framework
 
 budgetspace:
-  auth:
-    session:
-      # Sprint 10.67: secure-by-default in prod — the session cookie carries the Secure flag (HTTPS only).
-      # Base default stays false (application.yml) so local HTTP dev on :5180 still receives the cookie.
-      cookie-secure: ${BUDGETSPACE_AUTH_COOKIE_SECURE:true}
   admin-endpoints:
-    # Dev collector / import / catalog-health endpoints are NOT public in production.
+    # Not public in production.
     enabled: ${BUDGETSPACE_ADMIN_ENDPOINTS_ENABLED:false}
-  real-catalog:
-    seed-enabled: ${BUDGETSPACE_REAL_CATALOG_SEED_ENABLED:true}
-  catalog:
-    # Sprint 10.166: production turns ON the rolling freshness re-check + weekly health audit (base default is OFF
-    # so dev/test/CI never fire outbound requests). Env still overrides — set the flag to false to pause either.
-    freshness-enabled: ${BUDGETSPACE_CATALOG_FRESHNESS_ENABLED:true}
-    audit-enabled: ${BUDGETSPACE_CATALOG_AUDIT_ENABLED:true}
 
 app:
   cors:

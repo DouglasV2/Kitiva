@@ -1,7 +1,5 @@
 package ai.budgetspace.config;
 
-import ai.budgetspace.saved.PlanLimitReachedException;
-import ai.budgetspace.saved.SavedPlanNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -21,7 +19,6 @@ import java.util.Map;
  * Sprint 10.9 — single place that logs failures and returns a clean, user-facing JSON error instead
  * of a raw stack trace. Cases:
  * <ul>
- *   <li>{@link SavedPlanNotFoundException} (a shared /plan/&lt;id&gt; link whose plan is gone, or a non-owner)
  *       → {@code 404}, logged quietly — an expected client situation, not a server fault.</li>
  *   <li>{@link NoResourceFoundException} (an unmapped path / missing static resource — mostly bots and scanners)
  *       → {@code 404}, logged at debug so scan traffic never becomes a 500 or an ERROR-level log event.</li>
@@ -34,20 +31,6 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
-
-    @ExceptionHandler(SavedPlanNotFoundException.class)
-    public ResponseEntity<Map<String, String>> handleNotFound(SavedPlanNotFoundException exception) {
-        // Expected (stale/shared link, or a non-owner) — log quietly, never a 500 stack trace.
-        log.debug("Saved plan not found: {}", exception.getMessage());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "Plan nije pronađen."));
-    }
-
-    @ExceptionHandler(PlanLimitReachedException.class)
-    public ResponseEntity<Map<String, String>> handlePlanLimit(PlanLimitReachedException exception) {
-        // Sprint 10.68: a Free-tier owner hit the saved-plan cap → 402 so the frontend shows the Plus upsell.
-        return ResponseEntity.status(HttpStatus.PAYMENT_REQUIRED)
-                .body(Map.of("error", "Dosegnut je limit besplatnih spremljenih planova.", "code", "PLAN_LIMIT"));
-    }
 
     @ExceptionHandler(NoResourceFoundException.class)
     public ResponseEntity<Map<String, String>> handleNoResource(NoResourceFoundException exception) {

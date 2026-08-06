@@ -35,7 +35,19 @@ import java.util.stream.Collectors;
 @Order(Ordered.HIGHEST_PRECEDENCE + 20)
 public class RateLimitFilter extends OncePerRequestFilter {
     private static final Logger log = LoggerFactory.getLogger(RateLimitFilter.class);
-    private static final String GUARDED_PREFIX = "/api/plans/";
+    /**
+     * The endpoints worth guarding: the ones that do real work per request. Nail generation runs the
+     * parser, the resolver, the diagram and the kit assembler; the makeup ones walk the catalog. Reads of
+     * the look list are cheap and stay unguarded.
+     */
+    private static final String[] GUARDED_PREFIXES = { "/api/nail/", "/api/makeup/" };
+
+    private static boolean isGuarded(String uri) {
+        for (String prefix : GUARDED_PREFIXES) {
+            if (uri.startsWith(prefix)) return true;
+        }
+        return false;
+    }
     private static final int HARD_MAP_CAP = 200_000;
 
     private final boolean enabled;
@@ -69,7 +81,7 @@ public class RateLimitFilter extends OncePerRequestFilter {
         return !enabled
                 || !"POST".equalsIgnoreCase(request.getMethod())
                 || uri == null
-                || !uri.startsWith(GUARDED_PREFIX);
+                || !isGuarded(uri);
     }
 
     @Override

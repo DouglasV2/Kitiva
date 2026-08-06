@@ -6,16 +6,17 @@ spring:
     username: ${DATABASE_USERNAME:budgetspace}
     password: ${DATABASE_PASSWORD:budgetspace}
     hikari:
-      # Sprint 10.85: size the pool for load and fail fast under saturation instead of piling requests up. A managed
-      # Postgres allows far more than the default 10 connections; tune via env. connection-timeout caps how long a
-      # request waits for a free connection before erroring (10s), so a spike degrades gracefully rather than hangs.
+      # Size the pool for load and fail fast under saturation instead of piling requests up.
+      # connection-timeout caps how long a request waits for a free connection before erroring, so a spike
+      # degrades gracefully rather than hangs.
       maximum-pool-size: ${DB_POOL_MAX_SIZE:15}
       minimum-idle: ${DB_POOL_MIN_IDLE:2}
       connection-timeout: ${DB_POOL_CONNECTION_TIMEOUT_MS:10000}
   jpa:
     hibernate:
-      # Overridable via env (HIBERNATE_DDL_AUTO). Default 'create' keeps the dev/pilot flow where
-      # the schema is rebuilt and RealCatalogSeeder repopulates it on each start.
+      # Dev rebuilds the schema on each start. The only mapped entity is nail_feedback, and the product
+      # catalogs are JSON resources compiled into the jar rather than database rows — so there is nothing
+      # in dev worth preserving across a restart. Prod overrides this to `validate`; do not change that.
       ddl-auto: ${HIBERNATE_DDL_AUTO:create}
     defer-datasource-initialization: true
     open-in-view: false
@@ -24,41 +25,38 @@ spring:
         format_sql: true
   sql:
     init:
-      # Sprint 10.77: never run data.sql — the catalog is seeded only by RealCatalogSeeder (verified
-      # /catalog/real-*.json). data.sql used to add 143 unverified sample rows (never plan-eligible); removed.
-      # (application-prod.yml already used 'never'.)
+      # There is no data.sql and there must not be: every product this app shows comes from a captured
+      # retailer feed, never from a seed file someone typed.
       mode: ${SPRING_SQL_INIT_MODE:never}
   jackson:
     property-naming-strategy: LOWER_CAMEL_CASE
   flyway:
-    # Dev/base keeps the fast ddl-auto=create + RealCatalogSeeder flow, so Flyway is OFF here. Production turns it
-    # ON (application-prod.yml) with ddl-auto=validate — Flyway owns the schema in prod, ddl-auto rebuilds it in dev.
+    # Dev keeps the fast ddl-auto=create flow, so Flyway is OFF here. Production turns it ON
+    # (application-prod.yml) with ddl-auto=validate, where Flyway owns the schema.
     enabled: false
 
 server:
   port: ${SERVER_PORT:8080}
-  # Sprint 10.135 (cybersec re-probe): never expose internals on an error body. Spring Boot's own default is
-  # already 'never', but DevTools (on the dev classpath) flips include-stacktrace/message to ALWAYS — which leaked
-  # a full filter-chain stack trace (ai.budgetspace.config.* + file:line) on a malformed CORS Origin, i.e. a
-  # 500 thrown inside a servlet filter that bypasses both the Tomcat ErrorReportValve and the @RestControllerAdvice.
-  # Setting these explicitly here overrides the DevTools default and pins it closed in every profile.
+  # Never expose internals on an error body. Spring Boot's own default is already 'never', but DevTools (on
+  # the dev classpath) flips include-stacktrace/message to ALWAYS — which leaked a full filter-chain stack
+  # trace on a malformed CORS Origin, i.e. a 500 thrown inside a servlet filter that bypasses both the
+  # Tomcat ErrorReportValve and the @RestControllerAdvice. Pinned closed here for every profile.
   error:
     include-stacktrace: never
     include-message: never
     include-binding-errors: never
     include-exception: false
-  # Sprint 10.140 (perf): gzip the API responses. Plan JSON is the heavy payload (a full plan + 3 tiers can be
-  # tens of KB); compressing it cuts transfer ~70-80% over slow/mobile links. Tomcat only compresses responses
-  # at/above min-response-size, so tiny JSON (auth/me, errors) is left uncompressed. The frontend's static bundle
-  # is already gzipped by nginx (frontend/nginx.conf) — this covers the dynamic API side.
+  # gzip the API responses. The catalog browse response is the heavy payload — 48 products with
+  # descriptions and shade lists — so compressing it cuts transfer substantially over mobile links. Tomcat
+  # only compresses at/above min-response-size, so small JSON is left alone. The frontend's static bundle
+  # is already gzipped by nginx (frontend/nginx.conf); this covers the dynamic API side.
   compression:
     enabled: true
     mime-types: application/json,application/javascript,text/css,text/html,text/plain,image/svg+xml
     min-response-size: 1024
 
 management:
-  # Sprint 10.85: expose ONLY health (liveness + readiness) for host/load-balancer probes — nothing else
-  # (no env/beans/metrics/etc. on the public surface). Details are hidden from anonymous callers.
+  # ONLY health (liveness + readiness) for host/load-balancer probes — nothing else on the public surface.
   endpoints:
     web:
       exposure:
@@ -74,119 +72,8 @@ app:
     allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173,http://127.0.0.1:5173}
 
 budgetspace:
-  auth:
-    # Sprint 10.63: Google Sign-In + server sessions. The Google OAuth Web client id is PUBLIC (safe to expose
-    # in the frontend — the backend even serves it via /api/auth/me); blank → Google sign-in is dormant
-    # (guest-only, no fake auth). No client secret is needed: we verify the Google ID token locally, we don't
-    # run the authorization-code flow.
-    google:
-      client-id: ${BUDGETSPACE_GOOGLE_CLIENTID:}
-      # Sprint 10.149: sign-in is the SERVER-SIDE OAuth authorization-code (redirect) flow — immune to the GIS
-      # One-Tap/FedCM per-browser cooldown that silently blocked re-sign-in. It needs the OAuth client SECRET (to
-      # exchange the code; NEVER sent to the browser) + the registered redirect URI (the backend callback). All
-      # three (client-id + client-secret + redirect-uri) must be set for Google sign-in to be offered.
-      client-secret: ${BUDGETSPACE_GOOGLE_CLIENTSECRET:}
-      redirect-uri: ${BUDGETSPACE_GOOGLE_REDIRECT_URI:}
-    # Where the OAuth callback redirects the browser after login (the frontend app URL). Dev: http://localhost:5180.
-    post-login-redirect: ${BUDGETSPACE_AUTH_POST_LOGIN_REDIRECT:/}
-    session:
-      ttl-days: ${BUDGETSPACE_AUTH_SESSION_TTL_DAYS:30}      # absolute session lifetime
-      idle-days: ${BUDGETSPACE_AUTH_SESSION_IDLE_DAYS:7}     # auto-logout after this many days of inactivity
-      cookie-secure: ${BUDGETSPACE_AUTH_COOKIE_SECURE:false} # set true in prod (HTTPS) so the session cookie is Secure
-      # SameSite: Lax (default) works when frontend + backend share a registrable domain (e.g. yourdomain + api.yourdomain).
-      # A split-host deploy (frontend and backend on UNRELATED domains) needs None — which forces Secure on automatically.
-      cookie-samesite: ${BUDGETSPACE_AUTH_COOKIE_SAMESITE:Lax} # Lax | Strict | None (None ⇒ Secure, HTTPS only)
-      cleanup-cron: ${BUDGETSPACE_AUTH_SESSION_CLEANUP_CRON:0 30 3 * * *} # daily prune of expired/idle sessions
-  # Sprint 10.105: free-beta switch for the one-time "Design Session" model (replaces Plus/Pro subscriptions).
-  # true (default) → all premium features unlocked for free + a beta notice, no prices/checkout (surfaced as
-  # betaMode on /api/auth/me). Flip BUDGETSPACE_BETA_MODE=false once one-time payments are wired to gate premium.
-  beta-mode: ${BUDGETSPACE_BETA_MODE:true}
-  plus:
-    # Sprint 10.68: Free tier may save this many plans before the cap (kept as a generic limit). In the free beta
-    # set this high (compose: 1000) so a user is never blocked from saving (the 402 path can't fire).
-    free-saved-limit: ${BUDGETSPACE_PLUS_FREE_SAVED_LIMIT:3}
-  stripe:
-    # Sprint 10.69: Stripe billing for Plus (TEST). Secret key + price id are required to enable checkout; blank
-    # → billing dormant (the UI keeps the waitlist). Webhook secret optional (dev uses confirm-on-redirect).
-    secret-key: ${STRIPE_SECRET_KEY:}
-    publishable-key: ${STRIPE_PUBLISHABLE_KEY:}
-    plus-price-id: ${STRIPE_PLUS_PRICE_ID:}
-    webhook-secret: ${STRIPE_WEBHOOK_SECRET:}
-    # Sprint 10.98: reconciliation backstop for dropped/missed webhooks — re-reads each subscription's live status
-    # from Stripe and repairs plan drift. No-op unless Stripe is configured (no surprise calls in dev). Default 6h.
-    reconcile-cron: ${BUDGETSPACE_STRIPE_RECONCILE_CRON:0 0 */6 * * *}
-  real-catalog:
-    # Seed the real IKEA/JYSK living-room catalog on startup (env BUDGETSPACE_REAL_CATALOG_SEED_ENABLED).
-    seed-enabled: ${BUDGETSPACE_REAL_CATALOG_SEED_ENABLED:true}
-  catalog:
-    # Sprint 10.156: rolling FRESHNESS re-check. In the background (off the request path) it re-verifies the
-    # stalest products' live prices with the deterministic probe, so stored prices stay honest over time. OFF
-    # by default (no surprise outbound requests before launch, like price-watch); flip on in prod when wanted.
-    freshness-enabled: ${BUDGETSPACE_CATALOG_FRESHNESS_ENABLED:false}
-    # Every 6h re-verify the N oldest-checked products (Spring 6-field cron). 60 x 4/day = 240/day => ~3000
-    # products under ~12 days, inside the 14-day UI freshness threshold. Tune batch to catalogSize/maxAgeDays.
-    freshness-cron: ${BUDGETSPACE_CATALOG_FRESHNESS_CRON:0 20 */6 * * *}
-    freshness-batch-size: ${BUDGETSPACE_CATALOG_FRESHNESS_BATCH_SIZE:60}
-    # Sprint 10.166: weekly catalog HEALTH AUDIT. Reads DB state only (no outbound fetch), logs a summary, and
-    # escalates to WARN when the stale share crosses the threshold — the "N products outdated" alert.
-    # OFF by default; the prod profile turns it on (application-prod.yml).
-    audit-enabled: ${BUDGETSPACE_CATALOG_AUDIT_ENABLED:false}
-    audit-cron: ${BUDGETSPACE_CATALOG_AUDIT_CRON:0 0 4 * * 1}                   # weekly, Monday 04:00
-    audit-stale-threshold: ${BUDGETSPACE_CATALOG_AUDIT_STALE_THRESHOLD:0.2}     # warn when >20% of the catalog is stale
-  feeds:
-    # Sprint 10.14: official/partner feed slots for the feed-required retailers (Decathlon, Pevex,
-    # Lesnina) whose sites return HTTP 403 and which we therefore never scrape. Blank = not configured
-    # → the feed import is skipped cleanly on startup. NEVER commit a real URL/token here; supply it as
-    # an environment variable in your deployment. The secret (if any) is read by the real feed client,
-    # not from this file.
-    decathlon:
-      url: ${BUDGETSPACE_FEED_DECATHLON_URL:}
-    pevex:
-      url: ${BUDGETSPACE_FEED_PEVEX_URL:}
-    lesnina:
-      url: ${BUDGETSPACE_FEED_LESNINA_URL:}
   admin-endpoints:
-    # Dev/collector/import/admin endpoints (they POST-mutate the catalog; /collect/* also fetches remote URLs).
-    # Sprint 10.135 (cybersec re-probe): FAIL-SAFE — the base default is now FALSE, so a deploy that somehow misses
-    # the prod profile/env still keeps these off the public surface (was: a single missing flag = unauthenticated
-    # catalog import + SSRF on the internet). Dev opts IN via docker-compose.override.yml. The 'prod' profile also
-    # sets this false explicitly (application-prod.yml), so prod is now double-gated.
+    # Off by default; prod pins it off explicitly too.
     enabled: ${BUDGETSPACE_ADMIN_ENDPOINTS_ENABLED:false}
-  design-assistant:
-    # Sprint 10.8: when true AND an API key is set, the design summary is generated by Claude;
-    # otherwise a deterministic rule-based summary is used (no external call). Default off.
-    llm-enabled: ${BUDGETSPACE_DESIGN_ASSISTANT_LLM_ENABLED:false}
-    model: ${BUDGETSPACE_DESIGN_ASSISTANT_MODEL:claude-opus-4-8}
-    # Resolves from BUDGETSPACE_DESIGN_ASSISTANT_API_KEY, then ANTHROPIC_API_KEY.
-    api-key: ${BUDGETSPACE_DESIGN_ASSISTANT_API_KEY:${ANTHROPIC_API_KEY:}}
-  ai:
-    # Sprint 10.10: AI prompt-understanding layer. Off by default → deterministic rule-based parsing.
-    # API keys are backend-only and never exposed to the frontend.
-    enabled: ${BUDGETSPACE_AI_ENABLED:false}
-    provider: ${BUDGETSPACE_LLM_PROVIDER:off}            # off | openai | anthropic | gemini
-    openai-api-key: ${OPENAI_API_KEY:}
-    anthropic-api-key: ${ANTHROPIC_API_KEY:}
-    # Sprint 10.66: Gemini (cheapest + free tier) — the default AI provider for the early stage.
-    gemini-api-key: ${GEMINI_API_KEY:}
-    model: ${BUDGETSPACE_LLM_MODEL:}                     # blank → cheap default model per provider (gemini-2.5-flash)
-    timeout-seconds: ${BUDGETSPACE_LLM_TIMEOUT_SECONDS:15}
-    max-output-tokens: ${BUDGETSPACE_LLM_MAX_OUTPUT_TOKENS:700}
-    # Cost / rate guardrails — on breach the app falls back to rule-based (never errors).
-    # The monthly USD budget is the wallet's hard stop; max-requests-per-day is a coarse global backstop.
-    monthly-budget-usd: ${BUDGETSPACE_AI_MONTHLY_BUDGET_USD:20}
-    max-requests-per-day: ${BUDGETSPACE_AI_MAX_REQUESTS_PER_DAY:2000}
-    # Sprint 10.70: per-user, per-tier daily AI allowance — the product control (one place for the numbers).
-    # Guest = a small taste (resettable, so kept low); Free = generous taste; Plus ≈ unlimited for a human;
-    # Pro = the most. All bounded above by the global caps, so these can be generous without budget risk.
-    daily-per-user:
-      guest: ${BUDGETSPACE_AI_DAILY_GUEST:3}
-      free: ${BUDGETSPACE_AI_DAILY_FREE:10}
-      plus: ${BUDGETSPACE_AI_DAILY_PLUS:100}
-      pro: ${BUDGETSPACE_AI_DAILY_PRO:500}
-  retention:
-    # Sprint 10.163: GDPR Art. 5(1)(e) storage limitation. Daily sweep that prunes the pseudonymous analytics
-    # (product_clicks, plan_feedback) and the Plus waitlist (plus_interest — carries an optional email) older than
-    # the window below. ON by default (bounded storage is the safe default); disable via env to keep everything.
-    cleanup-enabled: ${BUDGETSPACE_RETENTION_CLEANUP_ENABLED:true}
-    months: ${BUDGETSPACE_RETENTION_MONTHS:18}                        # delete analytics/waitlist rows older than this
-    cleanup-cron: ${BUDGETSPACE_RETENTION_CLEANUP_CRON:0 45 3 * * *}  # daily, staggered after the session sweep
+  # Rate limiting and the trusted-proxy count are read straight from @Value defaults in
+  # config/RateLimitFilter, so they only need to appear here to override them.

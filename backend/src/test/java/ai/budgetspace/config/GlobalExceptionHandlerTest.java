@@ -1,6 +1,5 @@
 package ai.budgetspace.config;
 
-import ai.budgetspace.saved.SavedPlanNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -47,14 +46,6 @@ class GlobalExceptionHandlerTest {
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(response.getBody().get("error")).isEqualTo("Budžet nije ispravan");
-    }
-
-    @Test
-    void missingOrUnauthorizedPlanReturns404() {
-        ResponseEntity<Map<String, String>> response =
-                handler.handleNotFound(new SavedPlanNotFoundException("gone"));
-
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
 
     // Sprint 10.106: a bad client request (malformed/wrong-typed/missing param) must be a 400 — not a 500 that

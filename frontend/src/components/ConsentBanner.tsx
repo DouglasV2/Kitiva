@@ -3,14 +3,24 @@
 // reopened it from "Postavke privatnosti"). Odbij and Prihvati are given equal visual weight; silence/scrolling
 // is never treated as consent. "Saznaj više" opens the Privacy Policy.
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
-import { useLocale } from '../LocaleContext';
 import { useConsent } from '../ConsentContext';
+
+// Croatian, fixed — see LegalModal. Lifted verbatim from the i18n table's `hr` entries, minus the
+// product name, which is now Kitiva rather than BudgetSpace.
+const COPY = {
+  title: 'Za bolju Kitivu',
+  body: 'Google Analytics se koristi samo uz pristanak. Pomaže u razumijevanju kako se aplikacija koristi '
+    + 'i što treba popraviti.',
+  learnMore: 'Više informacija',
+  reject: 'Odbij',
+  accept: 'Prihvati',
+  close: 'Zatvori',
+};
 
 const LegalModal = lazy(() => import('./LegalModal').then((m) => ({ default: m.LegalModal })));
 
 export function ConsentBanner() {
   const { bannerOpen, status, accept, reject, closeSettings } = useConsent();
-  const { t } = useLocale();
   const [showPrivacy, setShowPrivacy] = useState(false);
   const regionRef = useRef<HTMLDivElement>(null);
   const restoreRef = useRef<HTMLElement | null>(null);
@@ -69,25 +79,25 @@ export function ConsentBanner() {
       >
         <div className="consent-banner-inner">
           <div className="consent-copy">
-            <strong id="consent-title" className="consent-title">{t('consent.title')}</strong>
+            <strong id="consent-title" className="consent-title">{COPY.title}</strong>
             <p id="consent-desc" className="consent-desc">
-              {t('consent.body')}{' '}
+              {COPY.body}{' '}
               <button type="button" className="consent-learn-more" onClick={() => setShowPrivacy(true)}>
-                {t('consent.learnMore')}
+                {COPY.learnMore}
               </button>
             </p>
           </div>
           <div className="consent-actions">
             {/* Equal weight, equal size — Odbij is never hidden or de-emphasised. */}
             <button type="button" className="consent-btn consent-reject" onClick={reject}>
-              {t('consent.reject')}
+              {COPY.reject}
             </button>
             <button type="button" className="consent-btn consent-accept" onClick={accept}>
-              {t('consent.accept')}
+              {COPY.accept}
             </button>
           </div>
           {reopened && (
-            <button type="button" className="consent-close" aria-label={t('legal.close')} onClick={closeSettings}>
+            <button type="button" className="consent-close" aria-label={COPY.close} onClick={closeSettings}>
               ×
             </button>
           )}

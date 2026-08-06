@@ -23,11 +23,6 @@ const DEMO_PROMPT = 'Kratki bordo almond nokti sa sjajnim završetkom i zlatnim 
 const SUPPORTED_PROMPT = 'Želim kratke almond nokte, sjajne.';
 
 async function openApp(page: Page) {
-  // The furniture app's auth gate is a modal that intercepts pointer events. Clicking through it is flaky
-  // because it re-renders; setting the same sessionStorage flag its own "continue as guest" button sets is
-  // the stable equivalent, and it keeps these tests about the nail slice rather than about a modal the
-  // pivot will replace anyway.
-  await page.addInitScript(() => window.sessionStorage.setItem('bs-guest-continue', '1'));
   await page.goto('/');
   await expect(page.getByTestId('parse')).toBeVisible();
 }

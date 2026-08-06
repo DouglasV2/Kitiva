@@ -14,7 +14,6 @@ const SHOTS = 'test-results/screens';
 mkdirSync(SHOTS, { recursive: true });
 
 async function openMakeup(page: Page) {
-  await page.addInitScript(() => window.sessionStorage.setItem('bs-guest-continue', '1'));
   await page.goto('/');
   await page.getByTestId('tab-makeup').click();
   await expect(page.getByTestId('look-picker')).toBeVisible();

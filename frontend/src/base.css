@@ -1,0 +1,289 @@
+/* ===================================================================================================
+   Kitiva — the base sheet.
+
+   Everything the app needs that is not one of the two beauty stylesheets: a minimal reset, the consent
+   banner and the legal modal. It exists because those two components are legally load-bearing and used
+   to live inside the 7,687-line furniture stylesheet, which this app no longer ships.
+
+   The rules below are lifted verbatim from that sheet, with one change: the furniture design tokens they
+   referenced (--primary, --ink, --border, ...) are re-declared here in the beauty palette, so the consent
+   banner belongs to this product rather than looking like a visitor from the old one.
+   =================================================================================================== */
+
+:root {
+  /* Only the tokens the consent banner and legal modal actually use, mapped onto the beauty palette
+     (see nailkit.css for the full set — these deliberately mirror it rather than inventing new colours). */
+  --ink: #2a1620;
+  --ink-soft: #6b5560;
+  --muted: #9a8189;
+  --line: #f1e5e9;
+  --border: #e3d2d8;
+  --primary: #8e1b3a;
+  --primary-hover: #74132e;
+  --accent-strong: #b8912a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  /* The paper the beauty identity is built on. The furniture sheet put a warm beige gradient here, which
+     fought every lacquer colour the preview is supposed to help someone judge. */
+  background: #fdfafb;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* --- legal modal ---------------------------------------------------------------------------------- */
+.legal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 20, 30, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1000;
+}
+
+.legal-modal {
+  background: #fff;
+  border-radius: 18px;
+  max-width: 640px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 24px 26px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  text-align: left;
+}
+
+.legal-modal-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.legal-modal h2 {
+  margin: 0;
+  font-size: 1.35rem;
+}
+
+.legal-close {
+  border: none;
+  background: none;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  color: #5b6472;
+  padding: 0 4px;
+}
+
+.legal-updated {
+  color: #8a93a3;
+  font-size: 0.82rem;
+  margin: 4px 0 0;
+}
+
+.legal-disclaimer {
+  background: #fff6e6;
+  border: 1px solid #f0d9a8;
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  color: #7a5a13;
+  margin: 12px 0;
+}
+
+.legal-body section {
+  margin-top: 16px;
+}
+
+.legal-body h3 {
+  margin: 0 0 6px;
+  font-size: 1rem;
+}
+
+.legal-body p {
+  margin: 0 0 8px;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: #2b3240;
+}
+
+.confirm-modal {
+  max-width: 420px;
+  text-align: center;
+}
+
+
+/* --- consent banner ------------------------------------------------------------------------------- */
+.consent-banner {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 60;
+  padding: 12px;
+  display: flex;
+  justify-content: center;
+  /* let taps pass through the outer padding to the app; the card itself captures them */
+  pointer-events: none;
+}
+
+.consent-banner-inner {
+  pointer-events: auto;
+  position: relative;
+  width: min(1180px, calc(100% - 8px));
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 22px;
+  padding: 16px 20px;
+  background: var(--surface, #faf8f4);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: 0 18px 46px rgba(29, 26, 22, 0.22);
+}
+
+.consent-copy {
+  flex: 1 1 320px;
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.consent-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.consent-desc {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.consent-learn-more {
+  border: 0;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--accent-strong);
+  font-weight: 640;
+  font-size: 0.9rem;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.consent-learn-more:hover {
+  color: var(--primary);
+}
+
+.consent-actions {
+  flex: 0 0 auto;
+  display: flex;
+  gap: 10px;
+  align-items: stretch;
+}
+
+/* Both buttons share identical geometry — equal prominence by construction. */
+.consent-btn {
+  min-width: 116px;
+  padding: 11px 20px;
+  border-radius: 12px;
+  font-weight: 640;
+  font-size: 0.92rem;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.consent-reject {
+  background: var(--surface, #fff);
+  border-color: var(--line);
+  color: var(--ink);
+}
+
+.consent-reject:hover {
+  background: rgba(29, 26, 22, 0.05);
+  border-color: var(--ink-soft);
+}
+
+.consent-accept {
+  background: var(--primary);
+  color: #fff;
+}
+
+.consent-accept:hover {
+  background: var(--primary-hover);
+}
+
+.consent-close {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  border: 0;
+  background: none;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 8px;
+}
+
+.consent-close:hover {
+  color: var(--ink);
+  background: rgba(29, 26, 22, 0.06);
+}
+
+.consent-banner :focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+@media (max-width: 640px) {
+  .consent-banner-inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 15px 16px 16px;
+  }
+  /* In the column layout the desktop `flex: 1 1 320px` basis would apply to HEIGHT (forcing a ~320px-tall
+     copy block whose grid rows stretch); reset it so the copy is content-height. */
+  .consent-copy {
+    flex: 0 0 auto;
+  }
+  .consent-actions {
+    /* keep the two buttons side by side and equal, filling the width */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .consent-btn {
+    min-width: 0;
+    width: 100%;
+  }
+  .consent-close {
+    top: 8px;
+    right: 8px;
+  }
+}
