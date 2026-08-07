@@ -92,7 +92,15 @@ cd frontend && npx playwright test
 Backend **127**, Playwright **68** across desktop and Pixel 7, vitest **14**. Nothing is mocked: the tests
 drive the real catalog, so a retailer changing its feed fails the build rather than the product.
 
-Two documents are worth knowing about:
+## Working documents
+
+Three files at the repo root are kept current and are the first thing to read before changing anything:
+
+- [`architecture.md`](architecture.md) — what the system is made of and why each boundary sits where it does
+- [`tasks.md`](tasks.md) — the live backlog, with the evidence behind each item
+- [`memory.md`](memory.md) — decisions with their reasons, and the things that cost real time to discover
+
+Two more are worth knowing about:
 
 - [`docs/nail-mvp-test-set.md`](docs/nail-mvp-test-set.md) — a frozen contract. 12 prompts that must produce
   a buyable kit, 4 that must refuse, with the **exact Croatian** each refusal shows.
