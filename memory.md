@@ -124,6 +124,7 @@ a malformed CORS `Origin`. Hence the `server.error.include-*: never` block plus 
 | Maven flags that work | `-s C:\Users\bpusic\.m2\settings-central.xml -o` |
 | Ports | backend 8080 · frontend dev 5173 · Postgres 5432 (docker `bk-demo-db`) |
 | Shell | the Bash tool is **Git Bash**, not PowerShell. PowerShell here-strings (`@'…'@`) leak literally into commit messages — use a heredoc or a Python patch script |
+| Not installed | `gh` (so CI runs cannot be read from the shell — use the Actions page in a browser) |
 
 **Playwright has no `webServer` block.** Start the dev server yourself, confirm `curl localhost:5173`
 returns 200, *then* run — otherwise every test fails confusingly.

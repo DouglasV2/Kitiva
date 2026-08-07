@@ -54,6 +54,11 @@ fired it.
 Done when: you have looked at an actual run and can say whether `backend` and `frontend` both passed, and
 specifically whether `ProdSchemaBootIT` **ran** rather than skipped.
 
+**Blocked on tooling from this machine** *(2026-08-07)*: the `gh` CLI is not installed, so the run list cannot
+be read from here. Either install it, or open
+<https://github.com/DouglasV2/Kitiva/actions> in a browser. Note also that nothing on `kitiva-standalone` has
+reached CI yet — the branch is ahead of `origin/main` and the workflow only triggers on `main`.
+
 ### 3. The compose files still configure deleted code — `TODO` *(scope widened 2026-08-07)*
 
 Bigger than first recorded, and it is **both** `docker-compose.prod.yml` and `docker-compose.override.yml`:
