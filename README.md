@@ -110,7 +110,7 @@ Two more are worth knowing about:
 ## Layout
 
 ```
-backend/src/main/java/ai/budgetspace/
+backend/src/main/java/hr/kitiva/
   beauty/nail/      prompt parsing, design spec, kit assembly, capability evidence
   beauty/makeup/    catalog, 7 looks, kit assembly
   beauty/safety/    consumer safety gates
@@ -134,5 +134,9 @@ backend and every call is blocked before it leaves, and the UI looks like the ba
 ## History
 
 This repository began as BudgetSpace AI, a furniture planner, and Kitiva grew out of its shell. The furniture
-app has been removed. Its history is still in the log, which is why the Java package is `ai.budgetspace` and
+app has been removed and the Java package is now `hr.kitiva`, but the history is still in the log, which is why
 the earliest commits talk about sofas.
+
+Some of the old product is still physically here and is tracked in [`tasks.md`](tasks.md): the three furniture
+SEO pages under `frontend/public/hr/`, a `robots.txt` and `sitemap.xml` naming budgetspaceai.com, and a set of
+dead Stripe/OAuth variables in the compose files.

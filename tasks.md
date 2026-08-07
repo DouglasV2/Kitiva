@@ -4,7 +4,7 @@ The live backlog. One line per item: what, why it matters, how you'll know it's 
 the same commit that changes the state — a stale board is worse than no board.
 
 Status key: `TODO` · `IN PROGRESS` · `BLOCKED` · `DONE` · `WON'T DO`
-Last reviewed: **2026-08-06**
+Last reviewed: **2026-08-07**
 
 Companions: [`architecture.md`](architecture.md) · [`memory.md`](memory.md) · [`docs/handoff.md`](docs/handoff.md)
 
@@ -12,22 +12,38 @@ Companions: [`architecture.md`](architecture.md) · [`memory.md`](memory.md) · 
 
 ## P1 — Finish the separation from BudgetSpace
 
-### 1. Rename the Java package `ai.budgetspace` → `hr.kitiva` — `TODO`
+### 1. Rename the Java package `ai.budgetspace` → `hr.kitiva` — `DONE` *(2026-08-07)*
 
-Approved, interrupted, **nothing started**. Mechanical but wide.
+Done and verified. `hr.kitiva`, app class `KitivaApplication`, Maven `hr.kitiva:kitiva-backend`,
+`spring.application.name: kitiva-backend`, jar `kitiva-backend-0.1.0.jar` (the `backend/Dockerfile` glob was
+moved with it), npm package `kitiva-frontend`, plus the app shell — see #4b.
 
-Touches: every `.java` file and import · `backend/pom.xml` `groupId` / `artifactId` / `<name>` ·
-`spring.application.name` in `application.yml` · the `budgetspace-backend-*.jar` glob in `backend/Dockerfile`
-line 27 · image and container names in `docker-compose.prod.yml` · `README.md` §Layout · this file and
-`architecture.md`.
+Evidence, because compiling is not evidence:
 
-**Do not rename these while you're in there** (they are load-bearing under their current names):
-`BUDGETSPACE_BOOTTEST_DB_URL` / `_DB_USER` / `_DB_PASSWORD` (see #5), `BUDGETSPACE_ADMIN_ENDPOINTS_ENABLED`,
-the `budgetspace:` config prefix in `application.yml`. Rename them in a **separate** commit, test-first, or
-not at all.
+| Check | Result |
+|---|---|
+| `mvn clean test` | **127/127**, BUILD SUCCESS, exit 0 |
+| `mvn package` | produces `kitiva-backend-0.1.0.jar`, matching the Dockerfile glob |
+| Real boot | `Started KitivaApplication`, `/actuator/health` → `{"status":"UP"}` |
+| `POST /api/nail/parse` | 200, 13 433-char SVG, editable brief |
+| `POST /api/nail/generate` | 200, `COMPLETE_WITH_ASSUMPTIONS`, 6 real priced products |
+| `GET /api/makeup/looks` · `/catalog` | 200, all 7 looks, catalog serving |
+| `npm test` · `npm run build` | 14/14 · type-check + build green |
+| `npx playwright test` | **68/68** desktop + Pixel 7 |
 
-Done when: `mvn clean test` green, `mvn verify` green, the app actually boots, Playwright 68/68. A missed
-reference compiles fine and fails at component-scan time, so compiling is not evidence.
+**Left under their old names on purpose** — renaming them is a separate, test-first commit or nothing:
+`BUDGETSPACE_BOOTTEST_DB_URL` / `_DB_USER` / `_DB_PASSWORD` (#5), `BUDGETSPACE_ADMIN_ENDPOINTS_ENABLED`, the
+`budgetspace:` config prefix in `application.yml`, the Postgres database/user/volume names, and the
+`budgetspace-*` container names in the compose files. The database ones are not cosmetic: changing them
+orphans every existing volume, including CI's.
+
+Found while doing it: the stale `spring-boot:run` on port 8080 was still serving
+`ai.budgetspace.BudgetspaceApplication` — a class that no longer exists in the tree. It was stopped, and the
+suites above ran against the renamed jar. **If you are verifying anything on 8080, check what is actually
+listening first**; it is very easy to test deleted code and call it a pass.
+
+Also fixed in passing: `KitivaApplication`'s comment claimed `@EnableScheduling` drove retention, catalog-audit
+and billing crons. Those went with the furniture. One `@Scheduled` remains — `RateLimitFilter`'s bucket cleanup.
 
 ### 2. Confirm CI has ever run green — `TODO`
 
@@ -38,18 +54,22 @@ fired it.
 Done when: you have looked at an actual run and can say whether `backend` and `frontend` both passed, and
 specifically whether `ProdSchemaBootIT` **ran** rather than skipped.
 
-### 3. `docker-compose.prod.yml` still configures deleted code — `TODO` *(found 2026-08-06)*
+### 3. The compose files still configure deleted code — `TODO` *(scope widened 2026-08-07)*
 
-It sets `STRIPE_SECRET_KEY`, `BUDGETSPACE_GOOGLE_CLIENTID` / `_CLIENTSECRET` / `_REDIRECT_URI`,
-`BUDGETSPACE_AUTH_POST_LOGIN_REDIRECT`, `BUDGETSPACE_AUTH_COOKIE_SECURE`. No auth, OAuth or billing code
-exists in the backend any more (`backend/src/main/java` is `beauty/*` + `config/*` only). Container and
-volume names are still `budgetspace-*`.
+Bigger than first recorded, and it is **both** `docker-compose.prod.yml` and `docker-compose.override.yml`:
 
-Why it matters: it reads as if the app takes payments and signs people in. It doesn't. Also a deploy
-checklist item nobody can satisfy.
+- billing — `STRIPE_SECRET_KEY`, `BUDGETSPACE_BETA_MODE`, `BUDGETSPACE_PLUS_FREE_SAVED_LIMIT`
+- sign-in — `BUDGETSPACE_GOOGLE_CLIENTID` / `_CLIENTSECRET` / `_REDIRECT_URI`,
+  `BUDGETSPACE_AUTH_POST_LOGIN_REDIRECT`, `BUDGETSPACE_AUTH_COOKIE_SECURE` / `_SAMESITE`
+- an LLM budget — `BUDGETSPACE_AI_ENABLED`, `_LLM_PROVIDER`, `_AI_MONTHLY_BUDGET_USD`,
+  `_AI_MAX_REQUESTS_PER_DAY` / `_PER_SESSION`, `_AI_DAILY_GUEST` / `_DAILY_FREE`
+- an eBay integration — `BUDGETSPACE_MARKETPLACEFEEDS_EBAY_CLIENTID` / `_CLIENTSECRET`
 
-Done when: the dead env is gone, `docker compose -f docker-compose.prod.yml config` still resolves, and a
-prod-image boot still works. Coordinate with #1 so the names change once.
+None of it has any code behind it: `backend/src/main/java` is `beauty/*` + `config/*` only. It reads as if the
+app takes payments, signs people in and calls an LLM. It does none of those.
+
+Done when: the dead env is gone from both files, `docker compose -f docker-compose.prod.yml config` still
+resolves, and a prod-image boot still works. Leave the Postgres database/user/volume names alone (see #1).
 
 ### 4. Frontend carries furniture-era dead weight — `TODO` *(found 2026-08-06)*
 
@@ -68,6 +88,42 @@ Three separate things, one cleanup:
   "banner" hits in `App.tsx` / `base.css` / `ConsentBanner.tsx` are all the consent banner.) Remove it.
 
 Done when: `npm run check` either passes or is gone, `npm run build` green, vitest 14/14, Playwright 68/68.
+
+### 4b. `frontend/public/` still serves the furniture product — `TODO` *(found 2026-08-07)*
+
+**The most visible thing on this list, and the one that does damage on the day Kitiva gets a URL.** It is
+public, static and shipped by the nginx image; nothing in the app code has to reference it for a visitor or a
+crawler to reach it.
+
+- **Three furniture landing pages** under `frontend/public/hr/` — `opremanje-prvog-stana`,
+  `dnevni-boravak-do-1000-eura`, `popis-stvari-za-useljenje`. Croatian furniture content, titled
+  *BudgetSpaceAI*, each with `robots: index,follow` and a canonical pointing at `budgetspaceai.com`.
+- **`public/sitemap.xml`** lists those three plus `/`, all on `https://budgetspaceai.com/`. Served from
+  Kitiva's host it hands a crawler four URLs on a domain this deploy does not serve.
+- **`public/robots.txt`** points `Sitemap:` at `https://budgetspaceai.com/sitemap.xml`.
+- **`public/seo.css`** exists only for those pages.
+- **`public/favicon.svg` and `public/budgetspacelogo.png`** are both the furniture icon. `index.html` now
+  points at `favicon.svg` (resolves, HTTP 200) — but **the artwork is still the old product's**, and a
+  replacement is a design decision, not a cleanup. Do not invent one.
+
+Decide with the owner whether the three pages belong to the *other* product — if BudgetSpaceAI still lives
+somewhere, they should move there rather than be deleted. If it does not, they come out with the sitemap,
+robots and `seo.css`.
+
+Done when: nothing under `frontend/public/` names budgetspaceai.com, and `npm run build` + Playwright are green.
+
+**Already fixed on 2026-08-07** (recorded here so the rest is not mistaken for the whole problem):
+`frontend/index.html` served `<title>BudgetSpaceAI – Furnish Your Space Within Budget</title>`, `lang="en"`, a
+furniture description, OG/Twitter cards to match, a canonical + `og:url` to `budgetspaceai.com`, and a Google
+Search Console verification token for that domain. Every one of those was visible in the browser tab or in any
+shared link. Replaced with Kitiva's own Croatian identity; the canonical and `og:url` were **removed rather
+than invented**, because there is still no public URL (#9) — add both, with the real host, on the day there is
+one.
+
+Also fixed there: `index.html` loaded three Google font families — Bricolage Grotesque, Playfair Display and
+Inter — and the beauty CSS references **none** of them by name. Only `Inter` appears at all, deep in the
+`--nk-sans` fallback chain after Segoe UI. Three render-blocking third-party requests, fired before the
+consent banner has said a word, for one occasionally-used fallback. Now only Inter is fetched.
 
 ### 5. Protect the `ProdSchemaBootIT` guard — `TODO`
 

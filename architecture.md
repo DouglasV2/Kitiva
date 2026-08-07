@@ -24,8 +24,7 @@ browser ──HTTP/JSON──> Spring Boot :8080 ──> in-memory catalog (JSON
 
 ## 2. Backend
 
-Root package is still `ai.budgetspace` (see `tasks.md` #1). Two packages carry the product, one carries
-cross-cutting HTTP concerns.
+Root package is `hr.kitiva`. Two packages carry the product, one carries cross-cutting HTTP concerns.
 
 ### 2.1 `beauty/nail` — the nail vertical
 
@@ -202,7 +201,7 @@ backend were down. `docs/nail-pilot-staging.md` has the verified minimal deploy.
 
 ## 8. Known architectural debt
 
-Tracked with owners and evidence in [`tasks.md`](tasks.md). In short: the Java package is still
-`ai.budgetspace`; two nail renderers exist and will drift; `docker-compose.prod.yml` still carries Stripe and
-Google OAuth env for code that no longer exists; and the frontend still ships 12 unreferenced locale files
-plus three furniture-era check scripts, one of which crashes.
+Tracked with owners and evidence in [`tasks.md`](tasks.md). In short: two nail renderers exist and will
+drift; the compose files still carry Stripe and Google OAuth env for code that no longer exists; the frontend
+still ships three furniture SEO pages plus a sitemap and robots.txt naming another domain; and there are 12
+unreferenced locale files and three furniture-era check scripts, one of which crashes.

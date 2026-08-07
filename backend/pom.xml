@@ -10,11 +10,11 @@
     <relativePath/>
   </parent>
 
-  <groupId>ai.budgetspace</groupId>
-  <artifactId>budgetspace-backend</artifactId>
+  <groupId>hr.kitiva</groupId>
+  <artifactId>kitiva-backend</artifactId>
   <version>0.1.0</version>
-  <name>BudgetSpace AI Backend</name>
-  <description>Full-stack MVP backend for AI furnishing planner</description>
+  <name>Kitiva Backend</name>
+  <description>Croatian beauty kit planner - nail and makeup verticals over a captured retail catalog</description>
 
   <properties>
     <java.version>17</java.version>

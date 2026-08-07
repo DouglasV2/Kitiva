@@ -148,6 +148,27 @@ Catalogs: nail **63 products**, coverage **20/56 cells** · makeup **194 product
 
 Newest first. One entry per session that changed something worth remembering.
 
+### 2026-08-07 — the package rename, done and verified
+`ai.budgetspace` → `hr.kitiva`, `BudgetspaceApplication` → `KitivaApplication`, Maven
+`hr.kitiva:kitiva-backend`, `spring.application.name: kitiva-backend`, jar `kitiva-backend-0.1.0.jar`, npm
+`kitiva-frontend`. Verified with 127/127 backend, 68/68 Playwright, 14/14 vitest, a real boot, and live calls
+to both verticals. Deliberately NOT renamed: the `BUDGETSPACE_BOOTTEST_DB_*` variables, the
+`BUDGETSPACE_ADMIN_ENDPOINTS_ENABLED` / `budgetspace:` config prefix, and every Postgres database, user,
+volume and container name — the database ones would orphan existing volumes, including CI's.
+
+Two scars from this one:
+
+**Port 8080 was serving deleted code.** A `spring-boot:run` left over from an earlier session was still
+running `ai.budgetspace.BudgetspaceApplication` — a class that no longer exists in the tree. Any e2e run
+would have passed against the old app and proved nothing about the rename. **Check what is actually listening
+before you verify anything on 8080.** `Get-CimInstance Win32_Process -Filter "ProcessId = <pid>"` shows the
+main class in the command line.
+
+**`mvn -q` hides the verdict but not the noise.** The quiet run printed a long JUnit stack trace and nothing
+else, which reads exactly like a failure — it was a deliberately-tested error path being logged. The suite was
+green the whole time. Re-run without `-q` and read `Tests run:` / `BUILD SUCCESS` / the exit code before
+concluding anything from a stack trace.
+
 ### 2026-08-06 — working docs added, four new findings
 Created `tasks.md`, `architecture.md`, `memory.md`. While mapping the repo, found and recorded (all verified,
 none fixed yet): `npm run check` crashes because `check-i18n.mjs` reads a deleted `src/i18n.ts`;

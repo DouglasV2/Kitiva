@@ -1,6 +1,6 @@
-# Production backend image for BudgetSpace AI.
+# Production backend image for Kitiva.
 # Multi-stage: a Maven build stage compiles the Spring Boot fat jar, the run stage ships only a slim JRE + the jar.
-# Build from the repo root with:  docker build -t budgetspace-backend ./backend
+# Build from the repo root with:  docker build -t kitiva-backend ./backend
 #
 # Inside the container Maven resolves from Maven Central directly (the host's corporate-mirror settings.xml is a
 # host-only workaround and is never copied in), so no custom settings file is needed here.
@@ -24,7 +24,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && useradd -r -u 1001 -m -d /home/app app
 WORKDIR /app
-COPY --from=build /build/target/budgetspace-backend-*.jar app.jar
+COPY --from=build /build/target/kitiva-backend-*.jar app.jar
 
 # The prod Spring profile is LOAD-BEARING and baked in on purpose: it is the only thing that flips ddl-auto to a
 # non-destructive strategy, disables the dev/admin endpoints, makes the session cookie Secure, and requires an

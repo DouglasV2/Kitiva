@@ -1,4 +1,4 @@
-// Phase B — the beauty/nail contract, mirroring backend ai.budgetspace.beauty.dto.
+// Phase B — the beauty/nail contract, mirroring backend hr.kitiva.beauty.dto.
 //
 // Kept as a SEPARATE file from types/index.ts rather than extending it. The furniture unions there
 // (Retailer / RoomType / StyleType / ProductCategory) feed three total-mapped Record<> tables — category

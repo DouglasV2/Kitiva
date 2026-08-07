@@ -1,6 +1,6 @@
 # Backend
 
-Spring Boot API for BudgetSpace AI.
+Spring Boot API for Kitiva.
 
 ## Requirements
 

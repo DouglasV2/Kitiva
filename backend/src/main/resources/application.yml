@@ -1,6 +1,6 @@
 spring:
   application:
-    name: budgetspace-backend
+    name: kitiva-backend
   datasource:
     url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/budgetspace}
     username: ${DATABASE_USERNAME:budgetspace}
