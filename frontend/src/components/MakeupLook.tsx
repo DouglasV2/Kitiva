@@ -15,9 +15,9 @@
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
-  buildKit, fetchCatalog, fetchLooks,
+  buildKit, fetchCatalog, fetchLooks, parseMakeupPrompt,
   type CatalogItem, type CatalogQuery, type CatalogResponse, type Facet,
-  type LooksResponse, type LookSummary, type MakeupKit,
+  type LooksResponse, type LookSummary, type MakeupKit, type MakeupParseResponse,
 } from '../api/makeup';
 import {
   AssumptionList, KitRow, KitTotals, ProductThumb, Section, eur, statusTone,
@@ -49,6 +49,35 @@ export function MakeupLook() {
   const [kitError, setKitError] = useState<string | null>(null);
   const resultRef = useRef<HTMLDivElement | null>(null);
 
+  // The prompt box. It does NOT bypass the form — it fills it in, which is what makes the parser's reading
+  // correctable. A box that went straight to a shopping list would be asking her to trust a regex with money.
+  const [prompt, setPrompt] = useState('');
+  const [parsing, setParsing] = useState(false);
+  const [parsed, setParsed] = useState<MakeupParseResponse | null>(null);
+  const [parseError, setParseError] = useState<string | null>(null);
+  const [excluded, setExcluded] = useState<string[]>([]);
+
+  const runParse = useCallback(async () => {
+    if (!prompt.trim() || parsing) return;
+    setParsing(true);
+    setParseError(null);
+    try {
+      const res = await parseMakeupPrompt(prompt.trim());
+      setParsed(res);
+      setKit(null);
+      setPinned({});
+      if (res.brief.look) setLookKey(res.brief.look);
+      if (res.brief.budgetCents > 0) setBudget(String(Math.round(res.brief.budgetCents / 100)));
+      setFinish(res.brief.finish ?? '');
+      setOwned(res.brief.ownedItems.map((o) => o.slot));
+      setExcluded(res.brief.excludedSlots ?? []);
+    } catch {
+      setParseError('Trenutačno se ne možemo spojiti. Pokušaj ponovno za nekoliko trenutaka.');
+    } finally {
+      setParsing(false);
+    }
+  }, [prompt, parsing]);
+
   useEffect(() => {
     fetchLooks().then(setLooksData).catch(() => setLoadError(
       'Trenutačno se ne možemo spojiti na katalog. Osvježi stranicu za nekoliko trenutaka.'));
@@ -78,7 +107,11 @@ export function MakeupLook() {
         budgetCents: Number.isFinite(parsedBudget) && parsedBudget > 0
           ? Math.round(parsedBudget * 100) : 0,
         finish: finish || undefined,
+        skinType: parsed?.brief.skinType || undefined,
         ownedCategories: owned,
+        // "bez ruža" has to survive all the way to the kit, or the parser understood her and the kit
+        // ignored her — which is worse than not having understood.
+        excludedCategories: excluded.length ? excluded : undefined,
         pinnedBySlot: overrides?.pinnedBySlot ?? pinned,
         preferCheapest: overrides?.preferCheapest ?? preferCheapest,
         singleRetailer: overrides?.singleRetailer !== undefined
@@ -139,6 +172,56 @@ export function MakeupLook() {
         <p>Odaberi look, reci koliko želiš potrošiti i što već imaš — dobiješ točan popis proizvoda
           iz hrvatskih trgovina, s cijenama i poveznicama.</p>
       </header>
+
+      {/* ------------------------------------------------------- 0. describe it in your own words */}
+      <Section labelHr="Opiši svojim riječima" testid="mk-prompt-section">
+        <div className="mk-prompt">
+          <textarea
+            id="mk-prompt"
+            className="nk-input mk-prompt-input"
+            aria-label="Opiši šminku koju želiš"
+            rows={2}
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
+            onKeyDown={(e) => { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) runParse(); }}
+            placeholder="npr. idem na vjenčanje, imam podlogu, bez ruža, mješovita koža, do 40 eura"
+            data-testid="mk-prompt"
+          />
+          <button type="button" className="nk-btn nk-btn-primary" onClick={runParse}
+            disabled={!prompt.trim() || parsing} data-testid="mk-prompt-go">
+            {parsing ? 'Čitamo…' : 'Pretvori u komplet'}
+          </button>
+        </div>
+
+        {parseError && <p className="nk-error" data-testid="mk-prompt-error">{parseError}</p>}
+
+        {parsed && (
+          <div className="mk-parsed" data-testid="mk-parsed">
+            {/* Show the reading BEFORE the kit, and show it as editable. The fields below are now filled
+                in from this — if we read something wrong, she changes it there and nothing is lost. */}
+            {parsed.recognisedHr.length > 0 && (
+              <p className="mk-parsed-read" data-testid="mk-recognised">
+                Pročitali smo: {parsed.recognisedHr.join(' · ')}
+              </p>
+            )}
+            {parsed.needsLookAnswer && (
+              <p className="mk-parsed-ask" data-testid="mk-needs-look">
+                Nismo prepoznali prigodu, pa smo odabrali <strong>{parsed.lookLabelHr}</strong>.
+                Odaberi drugi look ispod ako ne odgovara.
+              </p>
+            )}
+            {parsed.brief.excludedSlots.length > 0 && (
+              <p className="mk-parsed-read" data-testid="mk-excluded">
+                Izostavljamo: {parsed.brief.excludedSlots.join(', ')}
+              </p>
+            )}
+            {parsed.brief.assumptions.length > 0 && (
+              <AssumptionList items={parsed.brief.assumptions} headingHr="Što smo pretpostavili"
+                testid="mk-prompt-assumptions" />
+            )}
+          </div>
+        )}
+      </Section>
 
       {/* ------------------------------------------------------------------ 1. the looks */}
       <Section labelHr="Odaberi look" testid="look-picker">

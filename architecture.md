@@ -72,13 +72,26 @@ stateless calls.
 
 ### 2.2 `beauty/makeup` — the makeup vertical
 
-One controller, three endpoints, no parsing stage — the user picks from 7 fixed looks instead of typing.
+One controller, four endpoints. The 7-look picker is still there; the prompt box was added beside it.
 
 ```
 GET  /api/makeup/looks     the 7 looks + their metadata
 GET  /api/makeup/catalog   server-side filtering: facets, search, paging (194 products, 16 categories)
-POST /api/makeup/kit       look + budget + finish + owned → kit, per-row swaps, totals, application order
+POST /api/makeup/parse     Croatian free text → an editable brief, and it STOPS there
+POST /api/makeup/kit       brief (authoritative if present) OR the flat picker fields → kit, swaps, totals
 ```
+
+`MakeupIntentExtractor` is the makeup counterpart of `NailIntentExtractor` and keeps the same habit:
+everything it infers it records as an `Assumption`, and the UI prints those. It is deterministic regex, not
+a model — the output is a shopping list with prices on it, and a parser that occasionally hallucinates
+"matte" produces a bill nobody can trace back to a sentence they wrote.
+
+It never guesses skin tone depth, undertone or a reference shade. A foundation in the wrong depth is the one
+mistake here that costs real money and cannot be returned once opened, so those stay empty when unstated.
+
+**The prompt fills the form; it does not bypass it.** `/parse` returns a brief, the UI writes it into the
+existing look/budget/finish/owned controls, and only then does the user press build. That ordering is what
+makes the parser's reading correctable instead of something to be trusted.
 
 Filtering lives on the **server**, not in the browser, so the browser never has to hold 194 rows with
 descriptions and shade lists. The response is gzipped by Tomcat above 1 KB.

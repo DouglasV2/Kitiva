@@ -265,3 +265,46 @@
   .mk-filters { padding: 13px 14px; gap: 12px; }
   .mk-setup { grid-template-columns: 1fr; }
 }
+
+/* --- the prompt box ------------------------------------------------------------------------------
+   It sits ABOVE the look picker and fills the form below rather than replacing it. That ordering is the
+   whole point: the parser's reading arrives as editable fields, not as a shopping list to be trusted. */
+.mk-prompt {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.mk-prompt-input {
+  flex: 1;
+  min-height: 62px;
+  resize: vertical;
+  font-family: var(--nk-sans);
+  line-height: 1.45;
+}
+
+.mk-prompt .nk-btn { white-space: nowrap; }
+
+.mk-parsed {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--nk-line);
+  border-radius: var(--nk-r);
+  background: var(--nk-tint);
+}
+
+.mk-parsed-read,
+.mk-parsed-ask {
+  margin: 0 0 6px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--nk-ink-2);
+}
+
+.mk-parsed-ask { color: var(--nk-ink); }
+.mk-parsed > :last-child { margin-bottom: 0; }
+
+@media (max-width: 640px) {
+  .mk-prompt { flex-direction: column; }
+  .mk-prompt .nk-btn { width: 100%; }
+}

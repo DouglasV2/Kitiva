@@ -202,3 +202,62 @@ test.describe('Makeup section', () => {
     await expect(page.getByTestId('makeup-kit').getByTestId('kit-total')).toHaveText(total);
   });
 });
+
+/**
+ * The prompt box. It is the makeup counterpart of the nail vertical's parse step, and it is held to the
+ * same standard: the parser's reading arrives as EDITABLE FIELDS, never as a shopping list to be trusted.
+ *
+ * The two assertions that matter most are the ones about honesty rather than function — that a guessed
+ * occasion is admitted out loud, and that "bez ruža" actually survives into the kit. A parser that
+ * understood her and a kit that ignored her would be worse than not understanding at all.
+ */
+test.describe('Makeup prompt box', () => {
+  test('9. a Croatian sentence fills in the form, and the parser shows its work', async ({ page }) => {
+    await openMakeup(page);
+
+    await page.getByTestId('mk-prompt').fill(
+      'idem na vjenčanje, imam podlogu i maskaru, bez ruža, mješovita koža, do 40 eura, mat');
+    await page.getByTestId('mk-prompt-go').click();
+
+    await expect(page.getByTestId('mk-parsed')).toBeVisible();
+
+    // It names what it matched rather than silently appearing to understand everything.
+    const read = await page.getByTestId('mk-recognised').innerText();
+    expect(read).toContain('vjenčanje');
+    expect(read).toContain('40');
+
+    // The occasion was explicit, so nothing should be guessed and nothing should be asked.
+    await expect(page.getByTestId('mk-needs-look')).toHaveCount(0);
+
+    // And it filled the form BELOW rather than jumping straight to a result.
+    await expect(page.getByTestId('look-bridal')).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.getByTestId('mk-budget')).toHaveValue('40');
+    await expect(page.getByTestId('mk-kit-status')).toHaveCount(0);
+  });
+
+  test('10. an exclusion survives all the way into the kit', async ({ page }) => {
+    await openMakeup(page);
+
+    await page.getByTestId('mk-prompt').fill('puni glam za tulum, bez ruža');
+    await page.getByTestId('mk-prompt-go').click();
+    await expect(page.getByTestId('mk-excluded')).toContainText('lipstick');
+
+    await page.getByTestId('mk-build').click();
+    await expect(page.getByTestId('mk-kit-status')).toBeVisible();
+
+    // Not one row in the finished kit may be a lipstick.
+    const rows = page.locator('[data-testid^="kit-row-"]');
+    await expect(rows.first()).toBeVisible();
+    expect(await page.locator('[data-testid="kit-row-lipstick"]').count()).toBe(0);
+  });
+
+  test('11. an unrecognised occasion is admitted, not quietly decided', async ({ page }) => {
+    await openMakeup(page);
+
+    await page.getByTestId('mk-prompt').fill('nešto lijepo');
+    await page.getByTestId('mk-prompt-go').click();
+
+    await expect(page.getByTestId('mk-needs-look')).toBeVisible();
+    await expect(page.getByTestId('mk-prompt-assumptions')).toBeVisible();
+  });
+});

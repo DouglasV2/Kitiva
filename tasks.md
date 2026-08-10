@@ -10,6 +10,47 @@ Companions: [`architecture.md`](architecture.md) · [`memory.md`](memory.md) · 
 
 ---
 
+## P0 — Makeup: prompt box shipped, markets outstanding
+
+### M1. Free-text prompt → makeup kit — `DONE` *(2026-08-10)*
+
+`POST /api/makeup/parse` + `MakeupIntentExtractor` + a prompt box above the look picker. Croatian sentence →
+editable brief → the existing kit flow. Reads occasion, budget (with "do 40" as a ceiling), finish, skin
+type, what she already owns and what to leave out.
+
+Two defects were found by calling the running endpoint rather than by reading the code, and both are now
+regression tests: a conjunction list lost its second half ("imam podlogu i maskaru" kept only the podloga),
+and a Croatian declension slipped past a word boundary ("bez ruža" did not exclude lipstick, because the
+pattern wanted a word break straight after `ruz`). Categories are now attributed to the nearest preceding
+marker, which also fixes "imam podlogu i ne nosim maskaru" — one clause, two opposite instructions.
+
+Verified: backend **139/139**, Playwright **74/74**, vitest 14/14, plus live calls. The e2e test that matters
+most asserts an exclusion survives all the way into the finished kit — a parser that understood her and a kit
+that ignored her would be worse than not understanding.
+
+### M2. Catalog for HR + AT + DE — `TODO` *(sources probed 2026-08-10)*
+
+Probed from this machine, one honest request each:
+
+| Source | Verdict |
+|---|---|
+| **dm HR / DE / AT** | OK — all three return products. The AT 429 was the known throttle, not a block. |
+| Golden Rose HR (Shopify `/products.json`) | OK |
+| **mueller.de** | OK — reachable, permissive `robots.txt`, sitemap 200; needs a JSON-LD collector |
+| **Notino (hr/de/at)** | CONDITIONAL — **IP-dependent.** `robots.txt` 200, but homepage, category and sitemap all 403 with `cf-mitigated: challenge`, on both an honest and a browser UA. Returns 200 from the owner's machine. |
+| **Douglas (hr/de/at)** | CLOSED — **403 on everything including `/robots.txt`.** Not a fallback for anything. |
+
+So dm alone covers all three markets, and it already has a proven collector. The work is real but bounded:
+the existing dm collector categorises on **Croatian** title words (`rumenilo`, `puder`, `maskara`), so DE/AT
+needs German query terms and German title patterns before a run is worth starting.
+
+Notino's own `robots.txt` says `Disallow: /api/` while publishing a sitemap. If it is collected at all it is
+via the sitemap and the JSON-LD on product pages, never `/api/` — and the run has to happen from an IP it
+answers.
+
+**Decide market scope before building it.** The UI and the parser are Croatian-only; a German prompt will not
+parse, and shipping a German-market catalog behind a Croatian-only box is half a feature.
+
 ## P1 — Finish the separation from BudgetSpace
 
 ### 1. Rename the Java package `ai.budgetspace` → `hr.kitiva` — `DONE` *(2026-08-07)*

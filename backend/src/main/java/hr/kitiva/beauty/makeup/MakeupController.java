@@ -38,10 +38,43 @@ public class MakeupController {
 
     private final MakeupPilotCatalog catalog;
     private final MakeupKitAssembler assembler;
+    private final MakeupIntentExtractor extractor;
 
-    public MakeupController(MakeupPilotCatalog catalog, MakeupKitAssembler assembler) {
+    public MakeupController(MakeupPilotCatalog catalog, MakeupKitAssembler assembler,
+                            MakeupIntentExtractor extractor) {
         this.catalog = catalog;
         this.assembler = assembler;
+        this.extractor = extractor;
+    }
+
+    // ------------------------------------------------------------------------------------ parse
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public record ParseRequest(String prompt, Integer budgetCents) { }
+
+    /**
+     * @param brief           editable; whatever comes back from the UI is what {@code /kit} builds
+     * @param needsLookAnswer the prompt named no occasion, so the UI should ask instead of letting an
+     *                        assumed look silently decide every category in the kit
+     * @param recognisedHr    the phrases we actually matched, so the parser can show its work rather than
+     *                        appearing to have understood more than it did
+     */
+    public record ParseResponse(BeautyBriefDto brief, boolean needsLookAnswer, List<String> recognisedHr,
+                                String lookLabelHr) { }
+
+    /**
+     * Croatian free text → an editable brief, and then it stops.
+     *
+     * <p>Same two-call shape as the nail vertical, for the same reason: the brief is shown and corrected
+     * before anything is priced. A parser that went straight to a shopping list would be asking someone to
+     * trust a regex's reading of their sentence, with money attached.</p>
+     */
+    @PostMapping("/parse")
+    public ParseResponse parse(@RequestBody ParseRequest request) {
+        var parsed = extractor.parse(request.prompt(),
+                request.budgetCents() == null ? 0 : request.budgetCents());
+        return new ParseResponse(parsed.brief(), parsed.needsLookAnswer(), parsed.recognisedHr(),
+                MakeupLook.byKeyOrDefault(parsed.brief().look()).labelHr());
     }
 
     // ------------------------------------------------------------------------------------ looks
@@ -319,8 +352,15 @@ public class MakeupController {
 
     // -------------------------------------------------------------------------------------- kit
 
+    /**
+     * {@code brief} is an edited brief straight from {@code /parse}. When present it is AUTHORITATIVE and
+     * the flat fields below are ignored — correcting the brief in the UI has to be the thing that decides
+     * the kit, or making it editable was theatre. The flat fields remain for the 7-look picker, which never
+     * goes through the parser.
+     */
     @JsonIgnoreProperties(ignoreUnknown = true)
     public record KitRequest(
+            BeautyBriefDto brief,
             String look,
             Integer budgetCents,
             String finish,
@@ -343,6 +383,17 @@ public class MakeupController {
      */
     @PostMapping("/kit")
     public KitResponse kit(@RequestBody KitRequest request) {
+        // A brief from /parse, possibly corrected by the user, wins outright. Refinements still travel on
+        // the request, so a swapped or cheapened kit is re-derived from that same brief rather than patched.
+        if (request.brief() != null && !request.brief().look().isBlank()) {
+            var editedPrefs = new MakeupKitAssembler.Preferences(
+                    request.pinnedBySlot(), request.preferCheapest(), request.singleRetailer(),
+                    MakeupLook.isKnown(request.brief().look()) ? request.brief().look() : null);
+            var editedKit = assembler.assemble(request.brief(), editedPrefs);
+            return new KitResponse(editedKit, request.brief(),
+                    assembler.singleStoreOptions(editedKit.lookKey()));
+        }
+
         List<OwnedItemDto> owned = new ArrayList<>();
         if (request.ownedCategories() != null) {
             for (String c : request.ownedCategories()) owned.add(OwnedItemDto.owned(c, c));

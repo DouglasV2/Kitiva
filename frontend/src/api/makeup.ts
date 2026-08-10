@@ -193,6 +193,28 @@ export interface KitResponse {
   singleStoreOptions: string[];
 }
 
+/** Only the brief fields the makeup UI reads back. The server record is wider. */
+export interface MakeupBrief {
+  prompt: string;
+  look: string;
+  budgetCents: number;
+  budgetStrict: boolean;
+  finish: string;
+  skinType: string;
+  ownedItems: { slot: string; status: string }[];
+  excludedSlots: string[];
+  assumptions: { field: string; assumed: string; labelHr: string; reasonHr: string }[];
+}
+
+export interface MakeupParseResponse {
+  brief: MakeupBrief;
+  /** The prompt named no occasion. Ask instead of letting an assumed look decide the whole kit. */
+  needsLookAnswer: boolean;
+  /** The phrases the parser actually matched, so it can show its work rather than seem omniscient. */
+  recognisedHr: string[];
+  lookLabelHr: string;
+}
+
 // ------------------------------------------------------------------------------------------ calls
 
 async function getJson<T>(path: string): Promise<T> {
@@ -237,3 +259,7 @@ export const fetchCatalog = (query: CatalogQuery) =>
   getJson<CatalogResponse>(`/api/makeup/catalog?${catalogQueryString(query)}`);
 
 export const buildKit = (request: KitRequest) => postJson<KitResponse>('/api/makeup/kit', request);
+
+/** Croatian free text -> an editable brief. It stops there on purpose; nothing is priced yet. */
+export const parseMakeupPrompt = (prompt: string, budgetCents?: number) =>
+  postJson<MakeupParseResponse>('/api/makeup/parse', { prompt, budgetCents });

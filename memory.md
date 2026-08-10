@@ -91,7 +91,18 @@ backend were down. Staging and prod must be HTTPS.
 **beauty-shop.hr returns HTTP 200 with a refusal body.** A naive fetch looks like a success. Its images also
 415 from anywhere but its own pages, which is why those rows carry `imageUrl: null`.
 
-**dm.hr rate-limits hard.** 18 s between queries, one 45 s backoff, then abandon the term.
+**dm.hr rate-limits hard.** 18 s between queries, one 45 s backoff, then abandon the term. dm serves
+**HR, DE and AT** from the same path shape (`/hr`, `/de`, `/at` + `/search/crawl`), all three verified
+working — a 429 there is the throttle, not a wall.
+
+**Retailer reachability, re-probed 2026-08-10 — the earlier record was wrong in both directions.**
+*Douglas* is the one that is truly closed: 403 on every domain including `/robots.txt`, so it cannot serve as
+anyone's fallback. *Notino* is not the flat 403 the README claimed — `robots.txt` returns 200, but the
+homepage, category pages and sitemap return 403 with `cf-mitigated: challenge`, from this IP, on both an
+honest and a browser user-agent. It returns 200 from the owner's machine. **Notino is IP-dependent, not
+blocked**, so a Notino collector has to run from an address it answers, and the only meaningful test is the
+one run from the host the app will actually deploy on. Its `robots.txt` also says `Disallow: /api/` while
+publishing a sitemap, so the permitted route is sitemap → product page → JSON-LD, never the API.
 
 **A rebuild can add rows and silently delete a capability.** dm's ranking churn once dropped the only Cat Eye
 and the balerina press-on sets — the sole proof of `CAT_EYE` and `SHAPE_COFFIN`. Always diff a rebuild, and
