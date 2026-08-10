@@ -118,7 +118,9 @@ applied-but-missing migration — so renumbering breaks every deployed database.
 
 ## 3. Frontend
 
-22 source files. React 19, Vite, TypeScript. **No router, no Redux/Zustand, no i18n runtime.**
+React 19, Vite, TypeScript. **No router, no Redux/Zustand, no i18n runtime** — the UI is hardcoded Croatian.
+(`src/legal.ts` is the one multilingual file left, and it is a problem rather than a feature — see `tasks.md`
+#4c.)
 
 ```
 main.tsx → App.tsx
@@ -201,7 +203,7 @@ backend were down. `docs/nail-pilot-staging.md` has the verified minimal deploy.
 
 ## 8. Known architectural debt
 
-Tracked with owners and evidence in [`tasks.md`](tasks.md). In short: two nail renderers exist and will
-drift; the compose files still carry Stripe and Google OAuth env for code that no longer exists; the frontend
-still ships three furniture SEO pages plus a sitemap and robots.txt naming another domain; and there are 12
-unreferenced locale files and three furniture-era check scripts, one of which crashes.
+Tracked with owners and evidence in [`tasks.md`](tasks.md). In short: `src/legal.ts` still tells users their
+data may go to Stripe, Gemini and eBay, none of which this app touches (#4c, and `npm run check` fails on it
+deliberately); two nail renderers exist and will drift (#6); the compose files still carry billing, OAuth, LLM
+and eBay env for code that no longer exists (#3); and nothing in either catalog is hand-verified (#7).
