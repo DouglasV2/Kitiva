@@ -76,23 +76,54 @@ app takes payments, signs people in and calls an LLM. It does none of those.
 Done when: the dead env is gone from both files, `docker compose -f docker-compose.prod.yml config` still
 resolves, and a prod-image boot still works. Leave the Postgres database/user/volume names alone (see #1).
 
-### 4. Frontend carries furniture-era dead weight — `TODO` *(found 2026-08-06)*
+### 4. Frontend furniture-era dead weight — `DONE` *(2026-08-07)*
 
-Three separate things, one cleanup:
+Removed: the **12 locale files** in `src/messages/` (`da, de, es, fi, fr, it, nl, no, pt, sk, sl, sv`) and
+`src/banner.png`, plus the `check-i18n.mjs`, `check-move-in.mjs` and `check-copy-refit.mjs` scripts and their
+`package.json` entries.
 
-- **`npm run check` is broken.** `frontend/scripts/check-i18n.mjs` reads `frontend/src/i18n.ts`, which no
-  longer exists — verified, it crashes with `ENOENT`. `check-move-in.mjs` and `check-copy-refit.mjs` are
-  furniture-era too. Either delete the scripts and their `package.json` entries, or rewrite them for
-  Kitiva. A `check` script that has always failed teaches everyone to ignore it.
-- **12 unreferenced locale files** in `frontend/src/messages/` (`da, de, es, fi, fr, it, nl, no, pt, sk, sl,
-  sv`). No application code imports them — the app is hardcoded Croatian. Their **only** reader is
-  `check-i18n.mjs`, the broken script above. Keeping them implies an i18n chain that was deleted with the
-  planner. Note: they are also the only artefact of the translation work, so if DE/AT (#12) is real, archive
-  them rather than deleting them outright.
-- **`frontend/src/banner.png` is unreferenced** — confirmed, no hit in any `.ts/.tsx/.css/.html/.json`. (The
-  "banner" hits in `App.tsx` / `base.css` / `ConsentBanner.tsx` are all the consent banner.) Remove it.
+The earlier note here said to archive the locale files rather than delete them, on the theory that they were
+the only artefact of the translation work and might seed DE/AT (#12). **That was wrong** — they are 697 keys
+of *furniture planner* UI (`nav.planner` → "Planer", `planner.eyebrow` → "Einkaufsplaner", room and furnishing
+copy throughout). Nothing in them describes nails or makeup. They are in the git history if anyone wants them.
 
-Done when: `npm run check` either passes or is gone, `npm run build` green, vitest 14/14, Playwright 68/68.
+`check-legal.mjs` was **rewritten rather than deleted**, because its guards are worth more to Kitiva than they
+were to the furniture app: operator identity, no invented OIB/VAT number, GA stays consent-gated, `ad_storage`
+never granted, and no raw user prompt in an analytics event. It had been reading `src/i18n.ts`,
+`Planner.tsx`, `PlannerForm.tsx` and `PlanResults.tsx` — all deleted — so it crashed with `ENOENT` and had
+**never once reported a result on this codebase**. `npm run check` now runs it alone.
+
+Verified: `npm run build` green, vitest 14/14, Playwright 68/68.
+
+### 4c. The privacy policy describes a different product — `BLOCKED` (owner/legal decision) *(found 2026-08-07)*
+
+**The sharpest contradiction in the repo.** This product's whole claim is that nothing is invented, and the one
+document a user is legally entitled to rely on currently states facts about data processing that are untrue.
+
+`src/legal.ts` is shown in the app through the footer → `LegalModal`. In the **Croatian** text a user actually
+reads:
+
+- *"Stripe — naplata Design Sessiona; trenutno neaktivno (besplatna beta), pa se sada ne obrađuju podaci o
+  plaćanju."* — there is no Design Session, no billing, and no Stripe anywhere in the code.
+- *"eBay nije primatelj tvojih podataka — dohvaćamo javne oglase po kategoriji i tržištu…"* — this app never
+  touches eBay.
+- *"Neki pružatelji (Google, Stripe) mogu obrađivati podatke izvan EU-a…"* — Stripe is not involved.
+- **Gemini appears 14 times** as the AI processor. There is no LLM in this app; the nail parser is a
+  deterministic Croatian extractor.
+- It also documents *"dijeljeni planovi"* (public shared plan links), a furniture feature that no longer exists.
+
+The file is 1781 lines covering 14 languages (`hr, en, de, it, sl, fi, fr, nl, sk, es, pt, no, sv, da`) while
+the app is Croatian-only and `legalDoc()` falls back to English for anything else.
+
+**Deliberately not fixed here.** Rewriting a GDPR document means asserting new facts about processors,
+retention and transfers on the owner's behalf — exactly the kind of invention this codebase forbids, and wrong
+to guess at. It needs the owner, and probably a lawyer.
+
+`npm run check` **fails on this today, on purpose**, with the processor names printed. That is the guard doing
+its job, not a broken script — the other 18 of 19 pass. CI does not run `check` (it runs `npm ci && npm run
+build`), so nothing else goes red in the meantime.
+
+Done when: `src/legal.ts` describes Kitiva's actual processing, and `npm run check` is 19/19.
 
 ### 4b. `frontend/public/` served the furniture product — `DONE` *(2026-08-07)*
 

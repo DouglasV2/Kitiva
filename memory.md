@@ -149,6 +149,19 @@ Catalogs: nail **63 products**, coverage **20/56 cells** · makeup **194 product
 
 Newest first. One entry per session that changed something worth remembering.
 
+### 2026-08-07 — the privacy policy still describes the furniture app
+Cleaning the frontend's dead weight turned up the worst inconsistency in the repo. `src/legal.ts` — rendered
+to users through the footer — names **Stripe** (billing a "Design Session"), **Gemini** (14 times, as the AI
+processor) and **eBay**, and documents public shared-plan links. None of it exists in this app. Left untouched
+on purpose: rewriting a GDPR document means asserting new facts about processors and transfers on the owner's
+behalf, which is the exact invention this codebase forbids. Tracked as `tasks.md` #4c.
+
+The guard that should have caught it had never run. `check-legal.mjs` read four files deleted with the
+furniture app, so it crashed with ENOENT on every invocation — and `npm run check` had therefore never
+reported anything on this codebase. Rewritten for Kitiva; 18 of 19 guards pass and the 19th fails on exactly
+this. **A check script that errors is not a check that passes** — confirm a guard actually produced a verdict
+before trusting a green pipeline.
+
 ### 2026-08-07 — the furniture came out of `frontend/public/`
 Deleted the three BudgetSpaceAI SEO landing pages, `sitemap.xml`, `seo.css` and `budgetspacelogo.png`, and
 stripped the foreign `Sitemap:` line from `robots.txt`. None of it was referenced by any code — being static
