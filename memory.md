@@ -103,6 +103,14 @@ request; a Playwright test asserting gold was unbuyable. Check which it is befor
 
 **`ProdSchemaBootIT` skips silently** without `BUDGETSPACE_BOOTTEST_DB_URL`. A green CI does not mean the
 prod-schema guard ran. (The vars are `_DB_URL` / `_DB_USER` / `_DB_PASSWORD`, and `ci.yml` matches them today.)
+CI has now been confirmed green on the renamed code — and that is exactly the state in which a skipping guard
+is invisible, so it proves nothing about the prod schema.
+
+**CI can be read without `gh`.** The repo is public:
+<https://github.com/DouglasV2/Kitiva/actions?query=is%3Afailure> answers "did anything fail" in one fetch.
+Do not read a run's status off the commit page — the checks there are rendered client-side and a text fetch
+silently returns the commit message instead, which is how a commit claiming CI was unreachable got summarised
+back as proof that CI was unreachable.
 
 **DevTools flips error responses to include stack traces.** A 500 thrown inside a servlet filter bypasses both
 `@RestControllerAdvice` and the Tomcat ErrorReportValve — which once leaked a full filter-chain stack trace on

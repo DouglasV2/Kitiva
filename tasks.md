@@ -45,19 +45,20 @@ listening first**; it is very easy to test deleted code and call it a pass.
 Also fixed in passing: `KitivaApplication`'s comment claimed `@EnableScheduling` drove retention, catalog-audit
 and billing crons. Those went with the furniture. One `@Scheduled` remains — `RateLimitFilter`'s bucket cleanup.
 
-### 2. Confirm CI has ever run green — `TODO`
+### 2. Confirm CI has ever run green — `DONE` *(2026-08-07)*
 
-`.github/workflows/ci.yml` triggers only on `main`; all work until the separation lived on
-`beauty-kit-pivot`, so **CI has never executed against this code**. The recent pushes to `main` should have
-fired it.
+**CI has run, and it is green.** The handoff's assumption that it had never executed was wrong — the repo is
+public and the Actions page shows 7 runs. Filtering `is:failure` returns nothing; `is:success` returns CI
+#4–#7, which covers the separation, the fixture cleanup, **the `hr.kitiva` rename** (run #6 sits on `513c4c9`,
+which has the rename as an ancestor) and the docs commit.
 
-Done when: you have looked at an actual run and can say whether `backend` and `frontend` both passed, and
-specifically whether `ProdSchemaBootIT` **ran** rather than skipped.
+Read it from a browser, not the shell — `gh` is not installed here:
+<https://github.com/DouglasV2/Kitiva/actions?query=is%3Afailure> is the one-glance version.
 
-**Blocked on tooling from this machine** *(2026-08-07)*: the `gh` CLI is not installed, so the run list cannot
-be read from here. Either install it, or open
-<https://github.com/DouglasV2/Kitiva/actions> in a browser. Note also that nothing on `kitiva-standalone` has
-reached CI yet — the branch is ahead of `origin/main` and the workflow only triggers on `main`.
+**Green does not mean the prod-schema guard ran** — see #5, which stays open. Runs #4–#7 finish in 43–55s
+against 5–6 minutes for runs #1–#3. The obvious explanation is that #1–#3 were the furniture codebase with a
+far larger suite, but a silently-skipping `ProdSchemaBootIT` produces exactly the same symptom, and nothing
+here distinguishes the two.
 
 ### 3. The compose files still configure deleted code — `TODO` *(scope widened 2026-08-07)*
 
@@ -173,6 +174,10 @@ disables itself while CI still shows green.
 
 Done when: there is a check that fails if the guard skips in CI — e.g. `-DfailIfNoTests` on the IT, or a CI
 step that greps the surefire/failsafe report for the disabled reason.
+
+Sharper now that #2 is closed: CI is **green**, and that is precisely the state in which a skipping guard is
+invisible. The 43–55s run times are consistent both with a much smaller suite and with the IT never
+executing. Until this is closed, "CI is green" says nothing about whether the prod schema still boots.
 
 ---
 
