@@ -1,22 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
-  <!-- app-icon tile -->
-  <rect width="32" height="32" rx="6.5" fill="#211e19"/>
-  <!-- the "furnish the space" settee, matching BrandMark.tsx -->
-  <g transform="translate(0 0.8)">
-    <path d="M5 22.8 H27" stroke="#f7f1e7" stroke-width="1.6" stroke-linecap="round" opacity="0.8"/>
-    <g stroke="#cf5f2a" stroke-width="1.7" stroke-linecap="round">
-      <path d="M9 19 L7.9 22.3"/>
-      <path d="M13.2 19 L12.7 22.3"/>
-      <path d="M18.8 19 L19.3 22.3"/>
-      <path d="M23 19 L24.1 22.3"/>
-    </g>
-    <rect x="8" y="8" width="16" height="6" rx="2.2" fill="#cf5f2a"/>
-    <rect x="8" y="14" width="16" height="5" rx="2" fill="#cf5f2a"/>
-    <rect x="5.5" y="11.5" width="3" height="7" rx="1.5" fill="#cf5f2a"/>
-    <rect x="23.5" y="11.5" width="3" height="7" rx="1.5" fill="#cf5f2a"/>
-    <g stroke="#211e19" stroke-width="1" stroke-linecap="round">
-      <path d="M9 14 H23"/>
-      <path d="M16 8.8 V18.2"/>
-    </g>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-label="Kitiva">
+  <!-- Placeholder mark, not brand artwork (tasks.md #4b). It invents nothing: the tile and the dot are the ink
+       and wine tokens from nailkit.css, the almond is the shape HandPreview already draws, and the dot is the
+       one the wordmark ends on ("nokti." / "šminka.").
+       Keep double hyphens out of this comment: an SVG served as image/svg+xml is parsed as XML, where they are
+       illegal, and the whole icon fails to render rather than degrading. -->
+  <rect width="32" height="32" rx="6.5" fill="#2a1620"/>
+  <path
+    d="M16 3.5 C20.2 8, 21.3 14.2, 20.4 19.2 C19.9 22.2, 18.2 23.2, 16 23.2 C13.8 23.2, 12.1 22.2, 11.6 19.2 C10.7 14.2, 11.8 8, 16 3.5 Z"
+    fill="#fdfafb"
+  />
+  <circle cx="16" cy="27.6" r="2.1" fill="#8e1b3a"/>
 </svg>

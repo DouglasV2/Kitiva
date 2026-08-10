@@ -94,41 +94,41 @@ Three separate things, one cleanup:
 
 Done when: `npm run check` either passes or is gone, `npm run build` green, vitest 14/14, Playwright 68/68.
 
-### 4b. `frontend/public/` still serves the furniture product — `TODO` *(found 2026-08-07)*
+### 4b. `frontend/public/` served the furniture product — `DONE` *(2026-08-07)*
 
-**The most visible thing on this list, and the one that does damage on the day Kitiva gets a URL.** It is
-public, static and shipped by the nginx image; nothing in the app code has to reference it for a visitor or a
-crawler to reach it.
+It was the most visible item on this list and the one that would have done damage the day Kitiva got a URL:
+public, static, shipped by the nginx image, reachable by any visitor or crawler without a line of app code
+referencing it.
 
-- **Three furniture landing pages** under `frontend/public/hr/` — `opremanje-prvog-stana`,
-  `dnevni-boravak-do-1000-eura`, `popis-stvari-za-useljenje`. Croatian furniture content, titled
-  *BudgetSpaceAI*, each with `robots: index,follow` and a canonical pointing at `budgetspaceai.com`.
-- **`public/sitemap.xml`** lists those three plus `/`, all on `https://budgetspaceai.com/`. Served from
-  Kitiva's host it hands a crawler four URLs on a domain this deploy does not serve.
-- **`public/robots.txt`** points `Sitemap:` at `https://budgetspaceai.com/sitemap.xml`.
-- **`public/seo.css`** exists only for those pages.
-- **`public/favicon.svg` and `public/budgetspacelogo.png`** are both the furniture icon. `index.html` now
-  points at `favicon.svg` (resolves, HTTP 200) — but **the artwork is still the old product's**, and a
-  replacement is a design decision, not a cleanup. Do not invent one.
+Removed: `public/hr/opremanje-prvog-stana/`, `public/hr/dnevni-boravak-do-1000-eura/`,
+`public/hr/popis-stvari-za-useljenje/` (Croatian furniture content titled *BudgetSpaceAI*, each `index,follow`
+with a canonical to budgetspaceai.com), `public/sitemap.xml` (four URLs on a domain this deploy does not
+serve), `public/seo.css` (existed only for those pages) and `public/budgetspacelogo.png`.
 
-Decide with the owner whether the three pages belong to the *other* product — if BudgetSpaceAI still lives
-somewhere, they should move there rather than be deleted. If it does not, they come out with the sitemap,
-robots and `seo.css`.
+`public/robots.txt` no longer points `Sitemap:` at another domain — it is now just `User-agent: * / Allow: /`.
+The sitemap goes back, with the real host, on the day there is a public URL (#9).
 
-Done when: nothing under `frontend/public/` names budgetspaceai.com, and `npm run build` + Playwright are green.
+Also fixed earlier the same day, in `frontend/index.html`: the tab said *BudgetSpaceAI – Furnish Your Space
+Within Budget*, with `lang="en"`, furniture OG/Twitter cards, a canonical and `og:url` to budgetspaceai.com,
+and that domain's Search Console token. Now Kitiva's own Croatian identity; the canonical and `og:url` were
+**removed rather than invented**, because there is still no public URL. The head also fetched three Google font
+families that the beauty CSS names none of — only `Inter` appears at all, deep in the `--nk-sans` fallback
+chain behind Segoe UI. Three render-blocking third-party requests, fired before the consent banner had said a
+word, for one occasional fallback. Now only Inter.
 
-**Already fixed on 2026-08-07** (recorded here so the rest is not mistaken for the whole problem):
-`frontend/index.html` served `<title>BudgetSpaceAI – Furnish Your Space Within Budget</title>`, `lang="en"`, a
-furniture description, OG/Twitter cards to match, a canonical + `og:url` to `budgetspaceai.com`, and a Google
-Search Console verification token for that domain. Every one of those was visible in the browser tab or in any
-shared link. Replaced with Kitiva's own Croatian identity; the canonical and `og:url` were **removed rather
-than invented**, because there is still no public URL (#9) — add both, with the real host, on the day there is
-one.
+Verified: `dist/` after `npm run build` contains exactly `index.html`, `favicon.svg`, `robots.txt` and the
+four hashed assets — nothing else. Playwright **68/68**. Nothing in `e2e/`, `scripts/` or `src/` referenced
+any removed file.
 
-Also fixed there: `index.html` loaded three Google font families — Bricolage Grotesque, Playfair Display and
-Inter — and the beauty CSS references **none** of them by name. Only `Inter` appears at all, deep in the
-`--nk-sans` fallback chain after Segoe UI. Three render-blocking third-party requests, fired before the
-consent banner has said a word, for one occasionally-used fallback. Now only Inter is fetched.
+**Still open — the favicon artwork.** `public/favicon.svg` was a settee, the furniture app's icon. It is now a
+placeholder built only from things the app already ships: the tile and dot use the ink and wine tokens from
+`nailkit.css`, the almond is the shape `HandPreview` draws, and the dot is the one the wordmark ends on
+("nokti." / "šminka."). **This is not brand artwork** — replace it when there is real artwork, and do not let
+anyone mistake it for a design decision that was made.
+
+One trap worth keeping: an SVG served as `image/svg+xml` is parsed as **XML**, where `--` inside a comment is
+illegal. A first version of this file mentioned `--nk-ink` in its comment and the whole icon failed to parse —
+it does not degrade, it renders nothing. Caught by parsing it in the browser rather than by looking at it.
 
 ### 5. Protect the `ProdSchemaBootIT` guard — `TODO`
 

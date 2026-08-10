@@ -149,6 +149,21 @@ Catalogs: nail **63 products**, coverage **20/56 cells** · makeup **194 product
 
 Newest first. One entry per session that changed something worth remembering.
 
+### 2026-08-07 — the furniture came out of `frontend/public/`
+Deleted the three BudgetSpaceAI SEO landing pages, `sitemap.xml`, `seo.css` and `budgetspacelogo.png`, and
+stripped the foreign `Sitemap:` line from `robots.txt`. None of it was referenced by any code — being static
+files under `public/` was enough to ship them. `dist/` is now index.html + favicon + robots + four assets.
+Playwright 68/68 after.
+
+**An SVG favicon is parsed as XML.** The replacement icon's comment mentioned `--nk-ink`, and `--` inside an
+XML comment is illegal, so the whole file failed to parse and the icon rendered as nothing at all — no partial
+render, no console complaint in the tab. Found by fetching it and running it through `DOMParser` in the page,
+not by looking at it. Keep double hyphens out of SVG comments.
+
+The favicon that replaced the settee is a **placeholder**, assembled only from things already shipped (the ink
+and wine tokens, the `HandPreview` almond, the wordmark's dot). It is not brand artwork and must not harden
+into it by default.
+
 ### 2026-08-07 — the package rename, done and verified
 `ai.budgetspace` → `hr.kitiva`, `BudgetspaceApplication` → `KitivaApplication`, Maven
 `hr.kitiva:kitiva-backend`, `spring.application.name: kitiva-backend`, jar `kitiva-backend-0.1.0.jar`, npm
